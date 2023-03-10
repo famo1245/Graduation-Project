@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MemberController {
@@ -42,8 +43,22 @@ public class MemberController {
         return "members/loginForm";
     }
 
+    /*
     @PostMapping("/members/login")
-    public String afterLogin() {
-        return "redirect:/";
+    public String afterLogin(@RequestParam("id") String id,
+                             @RequestParam("password") String password) {
+        Member member = new Member();
+        member.setId(id);
+        member.setPassword(password);
+
+        if(memberService.login(member) == 1)
+            return "redirect:/";
+
+        return "/member/login";
+    }
+     */
+    @RequestMapping("/login")
+    public String login() {
+        return "index";
     }
 }

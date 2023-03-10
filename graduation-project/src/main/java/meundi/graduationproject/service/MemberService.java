@@ -27,7 +27,7 @@ public class MemberService {
     * 회원 가입시
     * 아이디, 닉네임
     * 중복 확인
-     */
+    */
     private void validateDuplicated(Member member) {
         memberRepository.findById(member.getId()).ifPresent(m -> {
             throw new IllegalArgumentException("이미 사용중인 아이디입니다");
@@ -37,4 +37,17 @@ public class MemberService {
             throw new IllegalArgumentException("이미 사용중인 닉네임입니다");
         });
     }
+
+    /*
+    * 로그인
+      아직 구현 x
+    public int login(Member member) {
+        memberRepository.findById(member.getId()).ifPresent(m -> {
+            if(!m.getPassword().equals(member.getPassword()))
+                throw new IllegalArgumentException("비밀 번호가 일치하지 않습니다");
+        });
+
+        return 1;
+    }
+    */
 }
