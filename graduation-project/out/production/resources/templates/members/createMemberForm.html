@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div class="container">
+
+    <form action="/members/new" method="post">
+        <div class="form-group">
+            <label for="id">id</label>
+            <input type="text" id="id" name="id" placeholder="Input ID">
+            <div></div>
+            <label for="nickName">nickname</label>
+            <input type="text" id="nickName" name="nickName" placeholder="Input Nickname">
+            <div></div>
+            <label for="password">password</label>
+            <input type="text" id="password" name="password" placeholder="Input Password">
+            <div></div>
+            <label for="sex">sex</label>
+            <input type="text" id="sex" name="sex" placeholder="Input sex">
+            <div></div>
+            <label for="age">age</label>
+            <input type="number" id="age" name="age" placeholder="Input Age">
+            <div></div>
+            <label for="district">district</label>
+            <input type="text" id="district" name="district" placeholder="Input district">
+            <div></div>
+            <label for="favoriteCategory">favoriteCategory</label>
+            <input type="text" id="favoriteCategory" name="favoriteCategory" placeholder="Input favorite category">
+        </div>
+        <button type="submit">submit</button>
+    </form>
+
+</div> <!-- /container -->
+</body>
+</html>
