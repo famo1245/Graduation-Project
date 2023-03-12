@@ -28,7 +28,7 @@ public class MemberController {
         member.setId(form.getId());
         member.setPassword(form.getPassword());
         member.setNickName(form.getNickName());
-        member.setSex(form.getSex());
+        member.setGender(form.getSex());
         member.setAge(form.getAge());
         member.setDistrict(form.getDistrict());
         member.setFavoriteCategory(form.getFavoriteCategory());
@@ -38,27 +38,13 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @GetMapping("/members/login")
-    public String loginForm() {
-        return "members/loginForm";
-    }
+//    @GetMapping("/members/login")
+//    public String loginForm() {
+//        return "members/loginForm";
+//    }
 
-    /*
-    @PostMapping("/members/login")
-    public String afterLogin(@RequestParam("id") String id,
-                             @RequestParam("password") String password) {
-        Member member = new Member();
-        member.setId(id);
-        member.setPassword(password);
-
-        if(memberService.login(member) == 1)
-            return "redirect:/";
-
-        return "/member/login";
-    }
-     */
-    @RequestMapping("/login")
+    @RequestMapping("/members/login")
     public String login() {
-        return "index";
+        return "members/loginForm";
     }
 }
