@@ -17,14 +17,15 @@ public class HomeController {
     @Autowired
     private KaKaoAPI kakao;
 
-    @GetMapping("/")
+    @RequestMapping("/")
     public String home() {
         return "index";
     }
 
-    @RequestMapping("/member/home")
+    @RequestMapping("/home/member")
     public String home(@RequestParam("code") String code, HttpSession session) {
         String accessToken = kakao.getAccessToken(code);
+        log.info("access token={}", accessToken);
         HashMap<String, Object> userInfo = kakao.getUserInfo(accessToken);
         log.info("userInfo={}", userInfo);
 
@@ -33,6 +34,14 @@ public class HomeController {
             session.setAttribute("access_Token", accessToken);
         }
 
+        return "login-home";
+    }
+
+    @RequestMapping("/members/logout")
+    public String logout(HttpSession session) {
+        kakao.kakaoLogout((String)session.getAttribute("access_Token"));
+        session.removeAttribute("access_Token");
+        session.removeAttribute("userId");
         return "redirect:/";
     }
 }

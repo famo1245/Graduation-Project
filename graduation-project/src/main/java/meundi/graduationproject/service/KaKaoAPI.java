@@ -15,6 +15,7 @@ import java.util.HashMap;
 @Service
 public class KaKaoAPI {
     public String getAccessToken(String authorize_code) {
+        log.debug("method:getAccessToken");
         String accessToken = "";
         String refreshToken = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -32,7 +33,7 @@ public class KaKaoAPI {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=92fbf81b06d378a41d55ee603e5b6bd0");
-            sb.append("&redirect_uri=http://localhost:8080/member/home");
+            sb.append("&redirect_uri=http://localhost:8080/home/member");
             sb.append("&code=" + authorize_code);
             bw.write(sb.toString());
             bw.flush();
@@ -72,7 +73,7 @@ public class KaKaoAPI {
     }
 
     public HashMap<String, Object> getUserInfo (String access_Token) {
-        log.info("method:getUserInfo");
+        log.debug("method:getUserInfo");
 
         //요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
         HashMap<String, Object> userInfo = new HashMap<>();
@@ -117,6 +118,33 @@ public class KaKaoAPI {
         }
 
         return userInfo;
+    }
+
+    public void kakaoLogout(String access_Token) {
+        log.debug("method: kakaoLogout");
+        String reqURL = "https://kapi.kakao.com/v1/user/logout";
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+
+            int responseCode = conn.getResponseCode();
+            log.info("responseCode={}", responseCode);
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            String result = "";
+            String line = "";
+
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            log.info("result={}", result);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }
