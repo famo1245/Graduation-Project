@@ -4,6 +4,7 @@ import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,8 @@ public class MemberController {
         member.setNickName(form.getNickName());
         member.setGender(form.getGender());
         member.setDistrict(form.getDistrict());
+        member.setAge_range(form.getAge_range());
+        member.setEmail(form.getEmail());
         member.setFavoriteCategory(form.getFavoriteCategory());
 
         memberService.join(member);
