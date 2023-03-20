@@ -1,6 +1,7 @@
 package meundi.graduationproject.controller;
 
 import meundi.graduationproject.domain.Member;
+import meundi.graduationproject.domain.Tiers;
 import meundi.graduationproject.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ public class MemberController {
         member.setAge_range(form.getAge_range());
         member.setEmail(form.getEmail());
         member.setFavoriteCategory(form.getFavoriteCategory());
+        member.setTiers(Tiers.BRONZE);  //초기 티어는 브론즈
 
         memberService.join(member);
 
