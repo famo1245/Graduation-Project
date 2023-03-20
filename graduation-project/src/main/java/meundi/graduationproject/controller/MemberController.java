@@ -26,10 +26,8 @@ public class MemberController {
     public String create(MemberForm form) {
         Member member = new Member();
         member.setId(form.getId());
-        member.setPassword(form.getPassword());
         member.setNickName(form.getNickName());
-        member.setGender(form.getSex());
-        member.setAge(form.getAge());
+        member.setGender(form.getGender());
         member.setDistrict(form.getDistrict());
         member.setFavoriteCategory(form.getFavoriteCategory());
 
@@ -37,15 +35,4 @@ public class MemberController {
 
         return "redirect:/";
     }
-
-//    @GetMapping("/members/login")
-//    public String loginForm() {
-//        return "members/loginForm";
-//    }
-
-    @RequestMapping("/members/login")
-    public String login() {
-        return "members/loginForm";
-    }
-
 }

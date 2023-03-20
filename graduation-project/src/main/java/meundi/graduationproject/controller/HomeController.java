@@ -41,6 +41,11 @@ public class HomeController {
         return "redirect:/";
     }
 
+    @RequestMapping("/members/login")
+    public String login() {
+        return "members/loginForm";
+    }
+
     @RequestMapping("/members/logout")
     public String logout(HttpSession session) {
         kakao.kakaoLogout((String)session.getAttribute("access_Token"));
