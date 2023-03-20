@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -23,7 +24,9 @@ public class HomeController {
     }
 
     @RequestMapping("/home/member")
-    public String home(@RequestParam("code") String code, HttpSession session) {
+    public String home(@RequestParam("code") String code,
+                       HttpSession session,
+                       RedirectAttributes redirectAttributes) {
         String accessToken = kakao.getAccessToken(code);
         log.info("access token={}", accessToken);
         HashMap<String, Object> userInfo = kakao.getUserInfo(accessToken);
@@ -32,9 +35,10 @@ public class HomeController {
         if (userInfo.get("email") != null) {
             session.setAttribute("userId", userInfo.get("email"));
             session.setAttribute("access_Token", accessToken);
+            redirectAttributes.addAttribute("status", true);
         }
 
-        return "login-home";
+        return "redirect:/";
     }
 
     @RequestMapping("/members/logout")
