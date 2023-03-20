@@ -9,8 +9,14 @@
 
     <form action="/members/new" method="post">
         <div class="form-group">
-            <label for="id">아이디: </label>
-            <input type="text" id="id" name="id" placeholder="아이디">
+            <label th:for="id">아이디: </label>
+            <span th:id="id" th:text="${id}">아이디</span>
+            <br>
+            <label th:for="gender">성별: </label>
+            <span th:id="gender" th:text="${gender}">성별</span>
+            <br>
+            <label th:for="age_range">나이대: </label>
+            <span th:id="age_range" th:text="${age_range}">나이대</span>
             <br>
             <label for="nickName">닉네임: </label>
             <input type="text" id="nickName" name="nickName" placeholder="Input Nickname">
@@ -18,18 +24,12 @@
             <label for="password">비밀번호: </label>
             <input type="text" id="password" name="password" placeholder="Input Password">
             <br>
-            <label for="gender">성별: </label>
-            <input type="text" id="gender" name="gender" placeholder="Gender">
-            <br>
-            <label for="age_range">나이대: </label>
-            <input type="number" id="age_range" name="age_range" placeholder="Age Range">
-            <br>
             <label for="district">거주 지역: </label>
             <input type="text" id="district" name="district" placeholder="Input district">
             <br>
             <label for="favoriteCategory">선호 카테고리: </label>
             <input type="text" id="favoriteCategory" name="favoriteCategory" placeholder="Input favorite category">
-        </div>
+        </span></div>
         <button type="submit">확인</button>
     </form>
 
