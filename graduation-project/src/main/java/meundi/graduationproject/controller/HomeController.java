@@ -51,7 +51,7 @@ public class HomeController {
                 model.addAttribute("age_range", userInfo.get("age_range"));
                 return "/members/createMemberForm";
             }
-            session.setAttribute("userId", userInfo.get("email"));
+            session.setAttribute("userId", userInfo.get("id"));
             session.setAttribute("access_Token", accessToken);
             redirectAttributes.addAttribute("status", true);
         }
