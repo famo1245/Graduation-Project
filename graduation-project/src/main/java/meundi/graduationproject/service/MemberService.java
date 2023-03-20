@@ -1,10 +1,12 @@
 package meundi.graduationproject.service;
 
+import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
