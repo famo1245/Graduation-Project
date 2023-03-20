@@ -12,4 +12,5 @@ public class Member {
     private String age_range;
     private String district;
     private String favoriteCategory;    // 일단 1개 받기
+    private Tiers tiers;
 }
