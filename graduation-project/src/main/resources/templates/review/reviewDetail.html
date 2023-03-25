@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2>리뷰 상세</h2>
+    </div>
+
+    <!-- 추가 -->
+    <h2 th:if="${param.status}" th:text="'저장 완료'"></h2>
+
+    <div>
+        <label for="reviewTitle">리뷰 제목</label>
+        <input type="text" id="reviewTitle" name="reviewTitle" class="form-control" value="1" th:value="${reviewDetail.reviewTitle}" readonly>
+    </div>
+    <div>
+        <label for="cultureId">리뷰 문화</label>
+        <input type="text" id="cultureId" name="cultureId" class="form-control" value="1" th:value="${reviewDetail.cultureId}" readonly>
+    </div>
+    <div>
+        <label for="reviewGrade">리뷰 별점</label>
+        <input type="text" id="reviewGrade" name="reviewGrade" class="form-control" value="1" th:value="${reviewDetail.reviewGrade}" readonly>
+    </div>
+    <div>
+        <label for="reviewContents">리뷰 내용</label>
+        <input type="text" id="reviewContents" name="reviewContents" class="form-control" value="1" th:value="${reviewDetail.reviewContents}" readonly>
+    </div>
+    <div>
+        <label for="reviewDateTime">리뷰 작성일자</label>
+        <input type="text" id="reviewDateTime" name="reviewDateTime" class="form-control" value="1" th:value="${reviewDetail.reviewDateTime}" readonly>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="row">
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg"
+                    onclick="location.href='reviewHome.html'"
+                    th:onclick="|location.href='@{/review}'|"
+                    type="button">목록으로</button>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>
