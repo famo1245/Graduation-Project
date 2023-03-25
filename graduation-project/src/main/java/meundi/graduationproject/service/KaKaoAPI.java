@@ -102,8 +102,10 @@ public class KaKaoAPI {
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(result);
 
-            JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
+            String id = element.getAsJsonObject().get("id").getAsString();
+            userInfo.put("id", id);
 
+            JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
             String gender = kakao_account.getAsJsonObject().get("gender").getAsString();
             String email = kakao_account.getAsJsonObject().get("email").getAsString();
             String ageRange = kakao_account.getAsJsonObject().get("age_range").getAsString();

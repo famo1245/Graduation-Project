@@ -1,10 +1,12 @@
 package meundi.graduationproject.service;
 
+import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
@@ -37,17 +39,4 @@ public class MemberService {
             throw new IllegalArgumentException("이미 사용중인 닉네임입니다");
         });
     }
-
-    /*
-    * 로그인
-      아직 구현 x
-    public int login(Member member) {
-        memberRepository.findById(member.getId()).ifPresent(m -> {
-            if(!m.getPassword().equals(member.getPassword()))
-                throw new IllegalArgumentException("비밀 번호가 일치하지 않습니다");
-        });
-
-        return 1;
-    }
-    */
 }
