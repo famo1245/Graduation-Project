@@ -17,7 +17,7 @@
         <div class="col">
             <button class="btn btn-primary float-end"
                     onclick="location.href='addReview.html'"
-                    th:onclick="|location.href='@{review/reviewWrite}'|"type="button">리뷰 등록</button>
+                    th:onclick="|location.href='@{review/reviewWrite}'|" type="button">리뷰 등록</button>
         </div>
     </div>
 
@@ -35,7 +35,8 @@
             </thead>
             <tbody>
             <tr th:each="review : ${reviewAll}">
-                <td><a href="reviewDetail.html" th:href="@{/review/reviewDetail/{review_id}(review_id=${review.id})}" th:text="${review.reviewTitle}">제목</a></td>
+                <td><a href="reviewDetail.html" th:href="@{/review/reviewDetail/{review_id}(review_id=${review.id})}"
+                       th:text="${review.reviewTitle}">제목</a></td>
                 <td th:text="${review.cultureId}">문화</td>
                 <td th:text="${review.reviewGrade}">별점</td>
                 <td th:text="${review.userId}">작성자</td>
