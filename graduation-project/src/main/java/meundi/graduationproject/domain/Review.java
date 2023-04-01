@@ -3,21 +3,20 @@ package meundi.graduationproject.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 public class Review {
-    /** userId와 cultureID 일단 제외
-     *  user 객체와 culture 객체로 제공해야함
-     * */
+    /**
+     * userId와 cultureID 일단 제외
+     * user 객체와 culture 객체로 제공해야함
+     */
     /*리뷰 고유 번호*/
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "review_id")
     private Long id;
     /*리뷰 작성 시간 */
@@ -32,5 +31,14 @@ public class Review {
     private Long userId;
     /*cultureId for 어떤 문화에 대한 리뷰인지*/
     private Long cultureId;
+    private String cultureTitle;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "culture_id")
+    private Culture culture;
+
+    public void InsertCulture(Culture culture) {
+        this.cultureTitle = culture.getTitle();
+        this.cultureId = culture.getId();
+    }
 
 }
