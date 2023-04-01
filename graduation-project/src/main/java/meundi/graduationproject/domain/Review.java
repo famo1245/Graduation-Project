@@ -30,14 +30,12 @@ public class Review {
     /*userId for 어떤유저가 작성했는지 알기 위해*/
     private Long userId;
     /*cultureId for 어떤 문화에 대한 리뷰인지*/
-    private Long cultureId;
+
     private String cultureTitle;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "culture_id")
     private Culture culture;
 
-    public void InsertCulture(Culture culture) {
-        this.cultureId = culture.getId();
-    }
+
 
 }
