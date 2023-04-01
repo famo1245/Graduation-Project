@@ -37,7 +37,6 @@ public class Review {
     private Culture culture;
 
     public void InsertCulture(Culture culture) {
-        this.cultureTitle = culture.getTitle();
         this.cultureId = culture.getId();
     }
 

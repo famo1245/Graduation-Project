@@ -2,6 +2,7 @@ package meundi.graduationproject.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.domain.Review;
 import meundi.graduationproject.service.CultureService;
 import meundi.graduationproject.service.ReviewService;
@@ -54,6 +55,10 @@ public class ReviewController {
     @PostMapping("/reviewWrite")/*리뷰 작성시, 내용 넘겨주고, 작성된 화면으로 넘어감*/
     public String addReview(@ModelAttribute Review review, RedirectAttributes redirectAttributes) {
         review.setReviewDateTime(LocalDateTime.now());
+
+        Culture culture = cultureService.findOneByTitle(review.getCultureTitle()); /* 문화 제목(입력)으로 문화 찾기*/
+        review.setCulture(culture); /*리뷰 객체에 문화 객체 넣기 */
+        review.InsertCulture(culture); /* cultureId 세팅 */
 
         Review review1 = reviewService.insertReview(review);
         redirectAttributes.addAttribute("reviewId", review1.getId());
