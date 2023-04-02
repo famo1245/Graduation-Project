@@ -1,24 +1,5 @@
-<!--<!DOCTYPE HTML>-->
-<!--<html lang="ko" xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>메운디 7.4</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div class="container">-->
-<!--    <div>-->
-<!--        <h1>메운디 7.4</h1>-->
-<!--        <p>-->
-<!--            <a href="/members/new">join</a>-->
-<!--            <a href="/members/login">login</a>-->
-<!--        </p>-->
-<!--    </div>-->
-<!--</div> &lt;!&ndash; /container &ndash;&gt;-->
-<!--</body>-->
-<!--</html>-->
-
 <!DOCTYPE HTML>
-<html lang="ko" xmlns="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,7 +11,7 @@
     <div th:if="${param.status}">
         <h1>메운디 7.4</h1>
         <p>
-            <a href="/members/info">내 정보</a>
+            <a href="/members/info">마이페이지</a>
             <a href="/members/logout">로그아웃</a>
         </p>
     </div>
@@ -39,6 +20,11 @@
         <p>
             <a href="/members/new">회원가입</a>
             <a href="/members/login">로그인</a>
+        </p>
+    </div>
+    <div>
+        <p>
+            <a href="/review">리뷰 게시판</a>
         </p>
     </div>
 </div> <!-- /container -->
