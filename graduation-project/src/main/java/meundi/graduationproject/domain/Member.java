@@ -1,67 +1,32 @@
 package meundi.graduationproject.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+@Entity
+@Getter @Setter
 public class Member {
-    private String id;  //unique
-    private String password;    //encryption
-    private String nickName;    //unique
-    private char sex;
-    private int age;
+
+    @Id
+    @Column(name = "member_id")
+    /* 사용자의 id, api에서 넘어 옴 */
+    private Long id;
+    /* 사용자의 email 주소 api에서 넘어 옴 */
+    private String email;
+    /* 닉네임 unique */
+    @Column(unique = true)
+    private String nickName;
+    /* 성별 */
+    private String gender;
+    /* 나이대, 범위로 api에서 제공 */
+    private String age_range;
+    /* 사용자의 관심 지역 */
     private String district;
-    private String favoriteCategory;    // 일단 1개 받기
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public char getSex() {
-        return sex;
-    }
-
-    public void setSex(char sex) {
-        this.sex = sex;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
-    public String getFavoriteCategory() {
-        return favoriteCategory;
-    }
-
-    public void setFavoriteCategory(String favoriteCategory) {
-        this.favoriteCategory = favoriteCategory;
-    }
+    /* 사용자의 관심 카테고리 */
+    private String favoriteCategory;
+    /* 사용자의 등급, 이름은 추후 정할 것 */
+    @Enumerated(EnumType.STRING)
+    private Tiers tiers;
 }
