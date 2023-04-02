@@ -26,7 +26,9 @@ public class Review {
     /*평점: 1~5*/
     private int reviewGrade;
     /*userId for 어떤유저가 작성했는지 알기 위해*/
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
     /*cultureId for 어떤 문화에 대한 리뷰인지*/
     @ManyToOne
     @JoinColumn(name = "culture_id")
