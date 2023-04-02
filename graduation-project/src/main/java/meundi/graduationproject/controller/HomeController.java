@@ -1,5 +1,6 @@
 package meundi.graduationproject.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.repository.MemberRepository;
 import meundi.graduationproject.service.KaKaoAPI;
@@ -17,16 +18,11 @@ import java.util.HashMap;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
-    private KaKaoAPI kakao;
 
-    private MemberRepository memberRepository;
-
-    @Autowired
-    public HomeController(KaKaoAPI kakao, MemberRepository memberRepository) {
-        this.kakao = kakao;
-        this.memberRepository = memberRepository;
-    }
+    private final KaKaoAPI kakao;
+    private final MemberRepository memberRepository;
 
     @RequestMapping("/")
     public String home() {
@@ -44,7 +40,7 @@ public class HomeController {
         log.info("userInfo={}", userInfo);
 
         if (userInfo.get("email") != null) {
-            if(memberRepository.findById((String) userInfo.get("id")).isEmpty()) {
+            if(memberRepository.findById((Long) userInfo.get("id")) == null) {
                 model.addAttribute("id", userInfo.get("id"));
                 model.addAttribute("email", userInfo.get("email"));
                 model.addAttribute("gender", userInfo.get("gender"));

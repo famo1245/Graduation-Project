@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class MemberForm {
-    private String id;  //unique
+    private Long id;  //unique
     private String email;
     private String nickName;    //unique
     private String gender;
