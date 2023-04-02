@@ -3,14 +3,30 @@ package meundi.graduationproject.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
+
+@Entity
 @Getter @Setter
 public class Member {
-    private String id;  //unique
+
+    @Id
+    @Column(name = "member_id")
+    /* 사용자의 id, api에서 넘어 옴 */
+    private Long id;
+    /* 사용자의 email 주소 api에서 넘어 옴 */
     private String email;
-    private String nickName;    //unique
+    /* 닉네임 unique */
+    @Column(unique = true)
+    private String nickName;
+    /* 성별 */
     private String gender;
+    /* 나이대, 범위로 api에서 제공 */
     private String age_range;
+    /* 사용자의 관심 지역 */
     private String district;
-    private String favoriteCategory;    // 일단 1개 받기
+    /* 사용자의 관심 카테고리 */
+    private String favoriteCategory;
+    /* 사용자의 등급, 이름은 추후 정할 것 */
+    @Enumerated(EnumType.STRING)
     private Tiers tiers;
 }
