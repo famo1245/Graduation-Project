@@ -4,28 +4,23 @@ import lombok.RequiredArgsConstructor;
 import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.repository.CultureRepository;
 import org.springframework.stereotype.Service;
-<<<<<<< HEAD
+
 
 import javax.transaction.Transactional;
-=======
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
->>>>>>> origin/master
+
 import java.util.List;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class CultureService {
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
     private final CultureRepository cultureRepository;
 
     public Culture insertCulture(Culture culture) {
@@ -43,8 +38,6 @@ public class CultureService {
     public Culture findOneByTitle(String title) {
         return cultureRepository.findByName(title);
     }
-<<<<<<< HEAD
-=======
 
     public String getCulture() throws Exception {
         StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
@@ -82,5 +75,5 @@ public class CultureService {
         conn.disconnect();
         return sb.toString();
     }
->>>>>>> origin/master
+
 }
