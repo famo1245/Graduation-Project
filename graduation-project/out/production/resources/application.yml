@@ -13,6 +13,9 @@ spring:
   h2:
     console:
       enabled: true
+  output:
+    ansi:
+      enabled: always
 
 logging.level:
   org.hibernate.SQL: debug
