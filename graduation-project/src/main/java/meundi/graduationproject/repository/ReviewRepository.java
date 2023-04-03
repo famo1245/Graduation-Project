@@ -23,6 +23,7 @@ public class ReviewRepository {
         return em.find(Review.class, id);
     }
 
+    //culture id가 pk가 아닌지 위랑 차이점이 없는듯
     public List<Review> findByCultureId(Long cultureId){
         return em.createQuery("select r from Review r where r.cultureId= :cultureId", Review.class)
                 .setParameter("cultureId", cultureId)

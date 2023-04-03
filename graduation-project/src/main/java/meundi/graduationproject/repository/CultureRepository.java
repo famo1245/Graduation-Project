@@ -2,7 +2,10 @@ package meundi.graduationproject.repository;
 
 import lombok.RequiredArgsConstructor;
 import meundi.graduationproject.domain.Culture;
+<<<<<<< HEAD
 import meundi.graduationproject.domain.Review;
+=======
+>>>>>>> origin/master
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -11,6 +14,10 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class CultureRepository {
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
     private final EntityManager em;
 
     public void save(Culture culture) {
@@ -30,6 +37,9 @@ public class CultureRepository {
         return em.createQuery("select c from Culture c", Culture.class)
                 .getResultList();
     }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/master
 }

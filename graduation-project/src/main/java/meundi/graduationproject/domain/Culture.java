@@ -10,11 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+<<<<<<< HEAD
 @Setter
 @Getter
 public class Culture {
     @Id
     @GeneratedValue
+=======
+@Getter @Setter
+public class Culture {
+
+    @Id @GeneratedValue
+>>>>>>> origin/master
     @Column(name = "culture_id")
     private Long id;
     /*문화/공연 제목*/
@@ -53,6 +60,9 @@ public class Culture {
      * 국악,콘서트,축제-문화/예술,축제-전통/역사,축제-시민화합,
      * 클래식,축제-기타,축제-자연/경관,독주/독창회
      * */
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/master
 }
