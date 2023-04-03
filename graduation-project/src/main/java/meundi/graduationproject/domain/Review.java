@@ -3,10 +3,7 @@ package meundi.graduationproject.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -29,8 +26,12 @@ public class Review {
     /*평점: 1~5*/
     private int reviewGrade;
     /*userId for 어떤유저가 작성했는지 알기 위해*/
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
     /*cultureId for 어떤 문화에 대한 리뷰인지*/
-    private Long cultureId;
+    @ManyToOne
+    @JoinColumn(name = "culture_id")
+    private Culture culture;
 
 }

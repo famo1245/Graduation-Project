@@ -102,7 +102,7 @@ public class KaKaoAPI {
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(result);
 
-            String id = element.getAsJsonObject().get("id").getAsString();
+            Long id = Long.valueOf(element.getAsJsonObject().get("id").getAsString());
             userInfo.put("id", id);
 
             JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
