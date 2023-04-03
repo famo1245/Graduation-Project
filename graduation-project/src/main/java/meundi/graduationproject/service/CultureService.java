@@ -40,11 +40,11 @@ public class CultureService {
     }
 
     public Culture findOne(Long id) {
-        return cultureRepository.findOne(id);
+        return cultureRepository.findOneById(id);
     }
 
     public Culture findOneByTitle(String title) {
-        return cultureRepository.findByName(title);
+        return cultureRepository.findByTitle(title);
     }
 
     public String getCulture() throws Exception {
@@ -55,7 +55,7 @@ public class CultureService {
         urlBuilder.append("/" + URLEncoder.encode("culturalEventInfo","UTF-8")); /*서비스명*/
         // 데이터 호출은 한번에 1000개를 넘을 수 없음
         urlBuilder.append("/" + URLEncoder.encode("1","UTF-8")); /*요청시작위치*/
-        urlBuilder.append("/" + URLEncoder.encode("100","UTF-8")); /*요청종료위치*/
+        urlBuilder.append("/" + URLEncoder.encode("10","UTF-8")); /*요청종료위치*/
         // 상위 5개는 필수적으로 순서바꾸지 않고 호출해야 합니다.
 
         URL url = new URL(urlBuilder.toString());
