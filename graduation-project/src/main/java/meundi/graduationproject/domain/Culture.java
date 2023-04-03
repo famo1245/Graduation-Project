@@ -23,8 +23,10 @@ public class Culture {
     /*출연자*/
     private String player;
     /*홈페이지 주소(url)*/
+    @Column(length = 500)
     private String org_link;
     /*포스터 (url)*/
+    @Column(length = 500)
     private String main_img;
     /*구 이름*/
     private String guname;
@@ -55,6 +57,7 @@ public class Culture {
      * 클래식,축제-기타,축제-자연/경관,독주/독창회
      * */
 
+    // 생성 매서드 //
     public void InsertCultureFromJson(String title, String player,
                    String org_link, String main_img, String guname,
                    String date, String rgstDate, String codeName,
