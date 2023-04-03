@@ -1,6 +1,11 @@
 package meundi.graduationproject.service;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.repository.CultureRepository;
 import org.springframework.stereotype.Service;
@@ -14,11 +19,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class CultureService {
 
     private final CultureRepository cultureRepository;
@@ -76,4 +84,82 @@ public class CultureService {
         return sb.toString();
     }
 
+    public String JsonToCulture(String result) {
+        /*이용할 객체들 선언*/
+        JsonParser parser = new JsonParser();
+        JsonObject jsonObject1 = parser.parse(result).getAsJsonObject();
+        log.info("jsonObject1: {}", jsonObject1);
+        JsonObject jsonObject2 = jsonObject1.getAsJsonObject("culturalEventInfo");
+        log.info("jsonObject2: {}", jsonObject2);
+        JsonArray jsonArray = jsonObject2.getAsJsonArray("row");
+        log.info("jsonArray: {}", jsonArray);
+
+        /* 문화 데이터 하나씩 받기 */
+            for (Object obj : jsonArray) {
+                JsonObject childObj = (JsonObject) obj;
+
+                String title = null;
+                String player = null;
+                String orgLink = null;
+                String mainImg = null;
+                String guname = null;
+                String date = null;
+                String rgstdate = null;
+                String codename = null;
+                String userTrgt = null;
+                String place = null;
+                /* 문화 field 채우기 */
+                try {
+                    if (childObj.has("TITLE")) {
+                        title = childObj.get("TITLE").getAsString();
+                    }
+                   ;
+                    if (childObj.has("PLAYER")) {
+                        player = childObj.get("PLAYER").getAsString();
+                    }
+
+                    if (childObj.has("ORG_LINK")) {
+                        orgLink = childObj.get("ORG_LINK").getAsString();
+                    }
+
+                    if (childObj.has("MAIN_IMG")) {
+                        mainImg = childObj.get("MAIN_IMG").getAsString();
+                    }
+
+                    if (childObj.has("GUNAME")) {
+                        guname = childObj.get("GUNAME").getAsString();
+                    }
+
+                    if (childObj.has("DATE")) {
+                        date = childObj.get("DATE").getAsString();
+                    }
+
+                    if (childObj.has("RGSTDATE")) {
+                        rgstdate = childObj.get("RGSTDATE").getAsString();
+                    }
+
+                    if (childObj.has("CODENAME")) {
+                        codename = childObj.get("CODENAME").getAsString();
+                    }
+
+                    if (childObj.has("USER_TRGT")) {
+                        userTrgt = childObj.get("USER_TRGT").getAsString();
+                    }
+
+                    if (childObj.has("PLACE")) {
+                        place = childObj.get("PLACE").getAsString();
+                    }
+                } catch (Exception e) {
+                    System.out.println("에러 발생!: " + e);
+                }
+                /* 문화 객체 생성하여, 넣기 */
+                Culture culture = new Culture();
+                culture.InsertCultureFromJson(title, player, orgLink, mainImg,
+                        guname, date, rgstdate,
+                        codename, userTrgt, place);
+                insertCulture(culture);
+            }
+        return "OK";
+        }
 }
+

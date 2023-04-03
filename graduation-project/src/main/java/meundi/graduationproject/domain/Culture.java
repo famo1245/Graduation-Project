@@ -12,6 +12,8 @@ import java.util.List;
 @Entity
 @Getter @Setter
 public class Culture {
+    public Culture() {
+    }
 
     @Id @GeneratedValue
     @Column(name = "culture_id")
@@ -21,15 +23,15 @@ public class Culture {
     /*출연자*/
     private String player;
     /*홈페이지 주소(url)*/
-    private URL org_link;
+    private String org_link;
     /*포스터 (url)*/
-    private URL main_img;
+    private String main_img;
     /*구 이름*/
     private String guname;
     /*일정*/
     private String Date;
     /*신청일*/
-    private LocalDateTime rgstDate;
+    private String rgstDate;
     /*분류*/
     private String codeName;
     /*이용대상*/
@@ -53,4 +55,19 @@ public class Culture {
      * 클래식,축제-기타,축제-자연/경관,독주/독창회
      * */
 
+    public void InsertCultureFromJson(String title, String player,
+                   String org_link, String main_img, String guname,
+                   String date, String rgstDate, String codeName,
+                   String use_trgt, String place) {
+        this.title = title;
+        this.player = player;
+        this.org_link = org_link;
+        this.main_img = main_img;
+        this.guname = guname;
+        Date = date;
+        this.rgstDate = rgstDate;
+        this.codeName = codeName;
+        this.use_trgt = use_trgt;
+        this.place = place;
+    }
 }
