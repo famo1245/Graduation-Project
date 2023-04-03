@@ -18,19 +18,18 @@ public class ReviewRepository {
         em.persist(review);
 
     }
-
+    /* 리뷰 이름으로 검색*/
     public Review findOne(Long id) {
         return em.find(Review.class, id);
     }
 
-    //culture id가 pk가 아닌지 위랑 차이점이 없는듯
-    public List<Review> findByCultureId(Long cultureId){
-        return em.createQuery("select r from Review r where r.cultureId= :cultureId", Review.class)
-                .setParameter("cultureId", cultureId)
+    /*문화 제목으로 검색 */
+    public List<Review> findByCultureTitle(String cultureTitle){
+        return em.createQuery("select r from Review r where r.cultureTitle= :cultureTitle", Review.class)
+                .setParameter("cultureTitle", cultureTitle)
                 .getResultList();
-
     }
-
+    /*모든 리뷰 검색 */
     public List<Review> findAll(){
         return em.createQuery("select r from Review r", Review.class)
                 .getResultList();
