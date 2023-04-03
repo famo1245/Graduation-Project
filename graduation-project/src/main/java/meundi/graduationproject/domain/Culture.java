@@ -55,6 +55,7 @@ public class Culture {
      * 클래식,축제-기타,축제-자연/경관,독주/독창회
      * */
 
+    /*CultureService의 JsonToCulture을 위해 생성*/
     public void InsertCultureFromJson(String title, String player,
                    String org_link, String main_img, String guname,
                    String date, String rgstDate, String codeName,

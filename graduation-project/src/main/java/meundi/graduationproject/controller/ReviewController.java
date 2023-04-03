@@ -54,11 +54,6 @@ public class ReviewController {
     * */
     @PostMapping("/reviewWrite")/*리뷰 작성시, 내용 넘겨주고, 작성된 화면으로 넘어감*/
     public String addReview(@ModelAttribute Review review, RedirectAttributes redirectAttributes) {
-        /*TEST용: 문화 삽입 */
-        Culture cul = new Culture();
-        cul.setTitle("test");
-        cultureService.insertCulture(cul);
-
         review.setReviewDateTime(LocalDateTime.now());
 
         Culture culture = cultureService.findOneByTitle(review.getCultureTitle()); /* 문화 제목(입력)으로 문화 찾기*/
