@@ -22,8 +22,8 @@ public class ReviewService {
     public List<Review> findReviewAll(){
         return reviewRepository.findAll();
     }
-    public List<Review> findReviewSearch(Long cultureId) {
-        return reviewRepository.findByCultureId(cultureId);
+    public List<Review> findReviewSearch(String cultureTitle) {
+        return reviewRepository.findByCultureTitle(cultureTitle);
     }
 
     public Review findOne(Long id) {
