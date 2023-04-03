@@ -19,3 +19,13 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
+
+sns.google:
+  url: https://accounts.google.com/o/oauth2/v2/auth
+  client:
+    id: 700692001238-mfd7ltevs0i9m5t1qf1i5dmurj850jtm.apps.googleusercontent.com
+    secret: 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
+  callback:
+    url: http://localhost:8080/auth/google/callback
+  token:
+    url: https://oauth2.googleapis.com/token
