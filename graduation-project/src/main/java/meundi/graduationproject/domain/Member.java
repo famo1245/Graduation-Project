@@ -4,12 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
 public class Member {
 
-    @Id
+    @Id @GeneratedValue
     @Column(name = "member_id")
     /* 사용자의 id, api에서 넘어 옴 */
     private Long id;
@@ -29,4 +31,7 @@ public class Member {
     /* 사용자의 등급, 이름은 추후 정할 것 */
     @Enumerated(EnumType.STRING)
     private Tiers tiers;
+
+    @OneToMany(mappedBy = "member")
+    private List<Review> reviews = new ArrayList<>();
 }

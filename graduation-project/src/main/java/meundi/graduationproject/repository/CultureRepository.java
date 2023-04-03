@@ -2,6 +2,9 @@ package meundi.graduationproject.repository;
 
 import lombok.RequiredArgsConstructor;
 import meundi.graduationproject.domain.Culture;
+
+import meundi.graduationproject.domain.Review;
+
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

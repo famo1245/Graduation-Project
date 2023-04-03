@@ -2,7 +2,9 @@ package meundi.graduationproject.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.domain.Review;
+import meundi.graduationproject.service.CultureService;
 import meundi.graduationproject.service.ReviewService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ import java.util.List;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final CultureService cultureService;
 
     @GetMapping /*home*/
     public String reviewHome(Model model
@@ -45,9 +48,22 @@ public class ReviewController {
         return "review/addReview";
     }
 
+    /* 내가 본 문화를 선택하는 것을 수정해야함
+    * 수정 전: 문화 제목으로 검색하여 매치
+    * 수정 후: 문화 제목으로 검색하여, 문화들을 띄워주고, 문화를 선택하는 방식
+    * */
     @PostMapping("/reviewWrite")/*리뷰 작성시, 내용 넘겨주고, 작성된 화면으로 넘어감*/
     public String addReview(@ModelAttribute Review review, RedirectAttributes redirectAttributes) {
+        /*TEST용: 문화 삽입 */
+        Culture cul = new Culture();
+        cul.setTitle("test");
+        cultureService.insertCulture(cul);
+
         review.setReviewDateTime(LocalDateTime.now());
+
+        Culture culture = cultureService.findOneByTitle(review.getCultureTitle()); /* 문화 제목(입력)으로 문화 찾기*/
+        review.setCulture(culture); /*리뷰 객체에 문화 객체 넣기 */
+
         Review review1 = reviewService.insertReview(review);
         redirectAttributes.addAttribute("reviewId", review1.getId());
         redirectAttributes.addAttribute("status", true);

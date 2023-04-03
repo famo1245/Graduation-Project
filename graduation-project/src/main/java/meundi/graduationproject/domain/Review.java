@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class Review {
-    /** userId와 cultureID 일단 제외
-     *  user 객체와 culture 객체로 제공해야함
+    /** userId와 일단 제외
+     *  user 객체로 제공해야함
      * */
     /*리뷰 고유 번호*/
     @Id @GeneratedValue
@@ -33,5 +33,7 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "culture_id")
     private Culture culture;
+
+    private String cultureTitle;
 
 }

@@ -4,13 +4,16 @@ import lombok.RequiredArgsConstructor;
 import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.repository.CultureRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+
+import javax.transaction.Transactional;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+
 import java.util.List;
 
 @Service
@@ -72,4 +75,5 @@ public class CultureService {
         conn.disconnect();
         return sb.toString();
     }
+
 }
