@@ -11,9 +11,9 @@ import java.util.List;
 @Getter @Setter
 public class Member {
 
-    @Id @GeneratedValue
+    @Id
     @Column(name = "member_id")
-    /* 사용자의 id, api에서 넘어 옴 */
+    /* 사용자의 id, api에서 넘어 옴, generated 쓰지 말것 */
     private Long id;
     /* 사용자의 email 주소 api에서 넘어 옴 */
     private String email;
