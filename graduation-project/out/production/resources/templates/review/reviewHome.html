@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
+    <title>리뷰 게시판</title>
 </head>
 <body>
 
@@ -29,19 +30,22 @@
         <table class="table">
             <thead>
             <tr>
-                <th> 제목</th>
+                <th> 제목 </th>
                 <th> 문화 </th>
-                <th> 별점</th>
-           <!--     <th> 사용자</th>-->
-                <th> 작성일자</th>
+                <th> 별점 </th>
+                <th> 사용자 </th>
+                <th> 작성일자 </th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="review : ${reviewAll}">
-                <td><a href="reviewDetail.html" th:href="@{/review/reviewDetail/{review_id}(review_id=${review.id})}" th:text="${review.reviewTitle}">제목</a></td>
+                <td><a href="reviewDetail.html"
+                       th:href="@{/review/reviewDetail/{review_id}(review_id=${review.id})}"
+                       th:text="${review.reviewTitle}">제목</a>
+                </td>
                 <td th:text="${review.cultureTitle}">문화</td>
                 <td th:text="${review.reviewGrade}">별점</td>
-        <!--        <td th:text="${review.member.nickName}">작성자</td>-->
+                <td th:text="${review.member.nickName}">작성자</td>
                 <td th:text="${review.reviewDateTime}">작성일자</td>
             </tr>
             </tbody>
