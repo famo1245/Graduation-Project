@@ -23,9 +23,8 @@ public class ReviewController {
     private final CultureService cultureService;
 
     @GetMapping /*home*/
-    public String reviewHome(Model model
-    ) {
-        List reviewAll = reviewService.findReviewAll();
+    public String reviewHome(Model model) {
+        List<Review> reviewAll = reviewService.findReviewAll();
         model.addAttribute("reviewAll", reviewAll);
         return "review/reviewHome";
     }
@@ -64,10 +63,11 @@ public class ReviewController {
         Culture culture = cultureService.findOneByTitle(review.getCultureTitle()); /* 문화 제목(입력)으로 문화 찾기*/
         review.setCulture(culture); /*리뷰 객체에 문화 객체 넣기 */
 
-        Review review1 = reviewService.insertReview(review);
-        redirectAttributes.addAttribute("reviewId", review1.getId());
+        Review savedReview = reviewService.insertReview(review);
+        redirectAttributes.addAttribute("reviewId", savedReview.getId());
+        // 이거 뭔지 설명좀
         redirectAttributes.addAttribute("status", true);
-        /**
+        /*
          * model에 담긴 review 내용을 ReviewNote에 넣기
          * */
         return "redirect:/review/reviewDetail/{reviewId}";/*review_id를 통해, detail 열기*/
