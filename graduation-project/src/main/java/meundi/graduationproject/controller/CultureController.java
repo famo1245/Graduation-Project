@@ -12,7 +12,7 @@ public class CultureController {
 
     private final CultureService cultureService;
 
-    /*화면에 OK 찍히면, H2 dataBase에서 Culture 엔티티 확인 */
+    /*우선 api 읽어와서 화면에 찍음*/
     @GetMapping("/culture/get")
     @ResponseBody
     public String getCulture() throws Exception {
