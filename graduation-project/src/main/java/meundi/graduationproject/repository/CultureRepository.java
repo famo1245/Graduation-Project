@@ -44,7 +44,7 @@ public class CultureRepository {
      * @param endId
      * @return List<Culture>
      */
-/*    public List<Culture> findByIdBetween(long startId, long endId) {
+    /*    public List<Culture> findByIdBetween(long startId, long endId) {
         return em.createQuery("select c from Culture c where c.id between ?1 and ?2", Culture.class)
                 .setParameter("?1", startId)
                 .setParameter("?2", endId)

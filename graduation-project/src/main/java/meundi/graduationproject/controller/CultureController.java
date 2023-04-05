@@ -16,6 +16,7 @@ public class CultureController {
     @GetMapping("/culture/get")
     @ResponseBody
     public String getCulture() throws Exception {
+        cultureService.CultureTotalCount(cultureService.getCulture());
         return cultureService.JsonToCulture(cultureService.getCulture());
     }
 }

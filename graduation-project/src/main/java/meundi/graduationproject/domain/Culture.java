@@ -64,7 +64,7 @@ public class Culture {
         this.org_link = org_link;
         this.main_img = main_img;
         this.guname = guname;
-        Date = date;
+        this.Date = date;
         this.rgstDate = rgstDate;
         this.codeName = codeName;
         this.use_trgt = use_trgt;
