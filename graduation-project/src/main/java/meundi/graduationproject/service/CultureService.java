@@ -83,7 +83,7 @@ public class CultureService {
     }
 
     /* 문화 전체 갯수 출력 */
-    public int CultureTotalCount(String result) {
+    public String CultureTotalCount(String result) {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject1 = parser.parse(result).getAsJsonObject();
         log.info("jsonObject1: {}", jsonObject1);
@@ -91,8 +91,7 @@ public class CultureService {
         log.info("jsonObject2: {}", jsonObject2);
         String s = jsonObject2.get("list_total_count").getAsString();
         log.info(" CultureTotalCount: {}",s);
-        int count = Integer.parseInt(s);
-        return count;
+        return s;
     }
 
 
@@ -102,7 +101,6 @@ public class CultureService {
         JsonObject jsonObject1 = parser.parse(result).getAsJsonObject();
         JsonObject jsonObject2 = jsonObject1.getAsJsonObject("culturalEventInfo");
         JsonArray jsonArray = jsonObject2.getAsJsonArray("row");
-
 
         /* 문화 데이터 하나씩 받기 */
         for (Object obj : jsonArray) {
