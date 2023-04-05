@@ -21,10 +21,13 @@ public class Culture {
     /*문화/공연 제목*/
     private String title;
     /*출연자*/
+    @Column(length = 800)
     private String player;
     /*홈페이지 주소(url)*/
+    @Column(length = 400)
     private String org_link;
     /*포스터 (url)*/
+    @Column(length = 400)
     private String main_img;
     /*구 이름*/
     private String guname;

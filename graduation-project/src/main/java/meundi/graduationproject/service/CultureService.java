@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.repository.CultureRepository;
+import org.hibernate.type.TrueFalseType;
 import org.springframework.stereotype.Service;
 
 
@@ -48,40 +49,23 @@ public class CultureService {
         return cultureRepository.findByTitle(title);
     }
 
-    public String getCulture() throws Exception {
-        StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
-        urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
-        urlBuilder.append("/" + URLEncoder.encode("json", "UTF-8")); /*요청파일타입*/
-        urlBuilder.append("/" + URLEncoder.encode("culturalEventInfo", "UTF-8")); /*서비스명*/
 
-        // 데이터 호출은 한번에 1000개를 넘을 수 없음
-        urlBuilder.append("/" + URLEncoder.encode("50", "UTF-8")); /*요청시작위치*/
-        urlBuilder.append("/" + URLEncoder.encode("100", "UTF-8")); /*요청종료위치*/
-
-        // 상위 5개는 필수적으로 순서바꾸지 않고 호출해야 합니다.
-        URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        log.debug("Response code: {}", conn.getResponseCode()); /* 연결 자체에 대한 확인이 필요하므로 추가합니다.*/
-        BufferedReader rd;
-
-        // 서비스코드가 정상이면 200~300사이의 숫자가 나옵니다.
-        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+    /*최종 문화데이터 전체출력하는 메소드 */
+    public String getCultureTotal() throws Exception {
+        int count = Integer.parseInt(CultureTotalCount(getCultureHeader()));
+        log.info("count= {}",count);
+        while (true) {
+            if (count < 1001) { /*1~1000이면 마지막 999개*/
+                JsonToCulture(getCulture1000(String.valueOf(count)));
+                break;
+            }
+            else {
+                JsonToCulture(getCulture1000(String.valueOf(count)));
+                count -= 1000;
+            }
         }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();
-        return sb.toString();
+        return String.valueOf(count);
     }
-
     /* 문화 전체 갯수 출력 */
     public String CultureTotalCount(String result) {
         JsonParser parser = new JsonParser();
@@ -90,11 +74,12 @@ public class CultureService {
         JsonObject jsonObject2 = jsonObject1.getAsJsonObject("culturalEventInfo");
         log.info("jsonObject2: {}", jsonObject2);
         String s = jsonObject2.get("list_total_count").getAsString();
-        log.info(" CultureTotalCount: {}",s);
+        log.info(" CultureTotalCount: {}", s);
+        /*String k = String.valueOf(Integer.parseInt(s) - 10);*/
         return s;
     }
 
-
+    /* Json을 문화 엔티티에 넣어주는 메소드 */
     public String JsonToCulture(String result) {
         /*이용할 객체들 선언*/
         JsonParser parser = new JsonParser();
@@ -170,9 +155,53 @@ public class CultureService {
         }
         return "OK";
     }
+
+    /* 1000개씩 문화 받아오기 */
+    public String getCulture1000(String count) throws Exception {
+        String start = null;
+        if (Integer.parseInt(count) < 1000) { /*마지막 단락 */
+            start = "1";
+        } else {
+            start = String.valueOf(Integer.parseInt(count) - 999);
+        }
+        log.info("start = {}",start);
+        log.info("count = {}",count);
+        StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
+        urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
+        urlBuilder.append("/" + URLEncoder.encode("json", "UTF-8")); /*요청파일타입*/
+        urlBuilder.append("/" + URLEncoder.encode("culturalEventInfo", "UTF-8")); /*서비스명*/
+
+        // 데이터 호출은 한번에 1000개를 넘을 수 없음
+        urlBuilder.append("/" + URLEncoder.encode(start, "UTF-8")); /*요청시작위치*/
+        urlBuilder.append("/" + URLEncoder.encode(count, "UTF-8")); /*요청종료위치*/
+
+        // 상위 5개는 필수적으로 순서바꾸지 않고 호출해야 합니다.
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        log.debug("Response code: {}", conn.getResponseCode()); /* 연결 자체에 대한 확인이 필요하므로 추가합니다.*/
+        BufferedReader rd;
+
+        // 서비스코드가 정상이면 200~300사이의 숫자가 나옵니다.
+        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        return sb.toString();
+    }
+
     /* 문화 내용이 목적이 아닌, Header 목적
-    * {"list_total_count":3332,"RESULT":{"CODE":"INFO-000","MESSAGE":"정상 처리되었습니다"}
-    * */
+     * {"list_total_count":3332,"RESULT":{"CODE":"INFO-000","MESSAGE":"정상 처리되었습니다"}
+     * */
     public String getCultureHeader() throws Exception {
         StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
         urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
@@ -206,6 +235,42 @@ public class CultureService {
         conn.disconnect();
         return sb.toString();
     }
+
+    public String getCultureEx() throws Exception {
+        StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
+        urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
+        urlBuilder.append("/" + URLEncoder.encode("json", "UTF-8")); /*요청파일타입*/
+        urlBuilder.append("/" + URLEncoder.encode("culturalEventInfo", "UTF-8")); /*서비스명*/
+
+        // 데이터 호출은 한번에 1000개를 넘을 수 없음
+        urlBuilder.append("/" + URLEncoder.encode("1", "UTF-8")); /*요청시작위치*/
+        urlBuilder.append("/" + URLEncoder.encode("100", "UTF-8")); /*요청종료위치*/
+
+        // 상위 5개는 필수적으로 순서바꾸지 않고 호출해야 합니다.
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        log.debug("Response code: {}", conn.getResponseCode()); /* 연결 자체에 대한 확인이 필요하므로 추가합니다.*/
+        BufferedReader rd;
+
+        // 서비스코드가 정상이면 200~300사이의 숫자가 나옵니다.
+        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        return sb.toString();
+    }
 }
+
+
 
 
