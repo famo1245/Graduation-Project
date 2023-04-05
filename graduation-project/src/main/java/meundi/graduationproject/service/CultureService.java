@@ -86,10 +86,9 @@ public class CultureService {
         JsonObject jsonObject1 = parser.parse(result).getAsJsonObject();
         JsonObject jsonObject2 = jsonObject1.getAsJsonObject("culturalEventInfo");
         JsonArray jsonArray = jsonObject2.getAsJsonArray("row");
-
         /* 문화 데이터 하나씩 받기 */
-        for (Object obj : jsonArray) {
-            JsonObject childObj = (JsonObject) obj;
+        for (int i=jsonArray.size()-1; i>=0;i--) {
+            JsonObject childObj = (JsonObject) jsonArray.get(i);
 
             String title = null;
             String player = null;
