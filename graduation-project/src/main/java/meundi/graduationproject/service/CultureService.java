@@ -170,5 +170,42 @@ public class CultureService {
         }
         return "OK";
     }
+    /* 문화 내용이 목적이 아닌, Header 목적
+    * {"list_total_count":3332,"RESULT":{"CODE":"INFO-000","MESSAGE":"정상 처리되었습니다"}
+    * */
+    public String getCultureHeader() throws Exception {
+        StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
+        urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
+        urlBuilder.append("/" + URLEncoder.encode("json", "UTF-8")); /*요청파일타입*/
+        urlBuilder.append("/" + URLEncoder.encode("culturalEventInfo", "UTF-8")); /*서비스명*/
+
+        // 데이터 호출은 한번에 1000개를 넘을 수 없음
+        urlBuilder.append("/" + URLEncoder.encode("1", "UTF-8")); /*요청시작위치*/
+        urlBuilder.append("/" + URLEncoder.encode("2", "UTF-8")); /*요청종료위치*/
+
+        // 상위 5개는 필수적으로 순서바꾸지 않고 호출해야 합니다.
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        log.debug("Response code: {}", conn.getResponseCode()); /* 연결 자체에 대한 확인이 필요하므로 추가합니다.*/
+        BufferedReader rd;
+
+        // 서비스코드가 정상이면 200~300사이의 숫자가 나옵니다.
+        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        return sb.toString();
+    }
 }
+
 
