@@ -280,6 +280,7 @@ public class CultureService {
         // 한번에 데이터 50개 씩 받아와서 비교
         urlBuilder.append("/" + URLEncoder.encode("1", "UTF-8")); /*요청시작위치*/
         urlBuilder.append("/" + URLEncoder.encode("50", "UTF-8")); /*요청종료위치*/
+        return "";
     }
 }
 
