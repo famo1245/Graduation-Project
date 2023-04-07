@@ -1,5 +1,7 @@
 package meundi.graduationproject.service;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ public class NaverAPI {
     private String NAVER_CLIENT_SECRET;
     @Value("${api.naver.token.url}")
     private String NAVER_TOKEN_URL;
+    @Value("${api.naver.user.url}")
+    private String NAVER_USER_URL;
 
 
     public String getOauthRedirectURL() {
@@ -81,13 +85,49 @@ public class NaverAPI {
                 sb.append(line);
             }
             if(conn.getResponseCode() == 200){
+                String result = sb.toString();
                 log.info("response={}", sb.toString());
-                return sb.toString();
+                JsonParser parser = new JsonParser();
+                JsonElement element = parser.parse(result);
+
+                String accessToken = element.getAsJsonObject().get("access_token").getAsString();
+                String refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
+
+                return accessToken;
             }
             return "네이버 로그인 요청 처리 실패";
 
         } catch (IOException e) {
             throw new IllegalArgumentException("알 수 없는 네이저 로그인Access Token 요청 URL 입니다 :: " + NAVER_TOKEN_URL);
         }
+    }
+
+    public String getUserInfo(String access_token) {
+        log.debug("naver: getUserInfo");
+        try {
+            URL url = new URL(NAVER_USER_URL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+
+            //요청에 필요한 Header 에 포함될 내용
+            conn.setRequestProperty("Authorization", "Bearer " + access_token);
+
+            int responseCode = conn.getResponseCode();
+            log.info("responseCode={}", responseCode);
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            String line = "";
+            String result = "";
+
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            return result;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return access_token;
     }
 }
