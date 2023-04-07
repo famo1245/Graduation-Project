@@ -29,3 +29,13 @@ sns.google:
     url: http://localhost:8080/auth/google/callback
   token:
     url: https://oauth2.googleapis.com/token
+
+api.naver:
+  url: https://nid.naver.com/oauth2.0/authorize
+  client:
+    id: MVC4nhG5uQd9ZjCb2gaq
+    secret: Ewaf59sA0F
+  callback:
+    url: http://localhost:8080/auth/naver/callback
+  token:
+    url: https://nid.naver.com/oauth2.0/token

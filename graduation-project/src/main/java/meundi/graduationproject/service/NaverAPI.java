@@ -1,5 +1,6 @@
 package meundi.graduationproject.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,26 +18,29 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class NaverAPI {
 
     @Value("${api.naver.url}")
     private String NAVER_URL;
-    @Value("${api.naver.client_id}")
+    @Value("${api.naver.client.id}")
     private String NAVER_CLIENT_ID;
     @Value("${api.naver.callback.url}")
     private String NAVER_CALLBACK_URL;
-    @Value("${api.naver.client_secret}")
+    @Value("${api.naver.client.secret}")
     private String NAVER_CLIENT_SECRET;
     @Value("${api.naver.token.url}")
     private String NAVER_TOKEN_URL;
 
 
     public String getOauthRedirectURL() {
+        Long state = System.currentTimeMillis();
         Map<String, Object> params = new HashMap<>();
-        params.put("scope", "profile");
+//        params.put("scope", "profile");
         params.put("response_type", "code");
         params.put("client_id", NAVER_CLIENT_ID);
+        params.put("state", state.toString());
         params.put("redirect_uri", NAVER_CALLBACK_URL);
 
         String parameterString = params.entrySet().stream()
@@ -45,7 +49,7 @@ public class NaverAPI {
 
         return NAVER_URL + "?" + parameterString;
     }
-    public String requestAccessToken(String code) {
+    public String requestAccessToken(String code, String state) {
         try {
             URL url = new URL(NAVER_TOKEN_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -54,11 +58,13 @@ public class NaverAPI {
             conn.setDoOutput(true);
 
             Map<String, Object> params = new HashMap<>();
-            params.put("code", code);
+            params.put("grant_type", "authorization_code");
             params.put("client_id", NAVER_CLIENT_ID);
             params.put("client_secret", NAVER_CLIENT_SECRET);
+            params.put("code", code);
+            params.put("state", state);
             params.put("redirect_uri", NAVER_CALLBACK_URL);
-            params.put("grant_type", "authorization_code");
+
 
             String parameterString = params.entrySet().stream()
                     .map(x -> x.getKey() + "=" + x.getValue())
