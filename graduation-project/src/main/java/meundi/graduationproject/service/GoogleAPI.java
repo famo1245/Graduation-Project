@@ -1,5 +1,7 @@
 package meundi.graduationproject.service;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,10 +36,12 @@ public class GoogleAPI {
     private String GOOGLE_SNS_CLIENT_SECRET;
     @Value("${sns.google.token.url}")
     private String GOOGLE_SNS_TOKEN_BASE_URL;
+    @Value("${sns.google.user.url}")
+    private String GOOGLE_USER_URL;
 
     public String getOauthRedirectURL() {
         Map<String, Object> params = new HashMap<>();
-        params.put("scope", "profile");
+        params.put("scope", "email profile openid");
         params.put("response_type", "code");
         params.put("client_id", GOOGLE_SNS_CLIENT_ID);
         params.put("redirect_uri", GOOGLE_SNS_CALLBACK_URL);
@@ -82,12 +86,50 @@ public class GoogleAPI {
             }
 
             if (conn.getResponseCode() == 200) {
-                log.info("response={}", sb.toString());
-                return sb.toString();
+                String result = sb.toString();
+                log.info("response={}", result);
+                JsonParser parser = new JsonParser();
+                JsonElement element = parser.parse(result);
+
+                String accessToken = element.getAsJsonObject().get("access_token").getAsString();
+                String id_token = element.getAsJsonObject().get("id_token").getAsString();
+
+                return accessToken;
             }
             return "구글 로그인 요청 처리 실패";
         } catch (IOException e) {
             throw new IllegalArgumentException("알 수 없는 구글 로그인 Access Token 요청 URL 입니다 :: " + GOOGLE_SNS_TOKEN_BASE_URL);
         }
+    }
+
+    public String getUserInfo(String access_token) {
+        log.info("google: getUserInfo");
+        try {
+            URL url = new URL(GOOGLE_USER_URL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+
+            //요청에 필요한 Header 에 포함될 내용
+//            conn.setRequestProperty("Content-Length", "256");
+            conn.setRequestProperty("Authorization", "Bearer " + access_token);
+
+            log.info("request: {}", conn.toString());
+            int responseCode = conn.getResponseCode();
+            log.info("responseCode={}", responseCode);
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            String line = "";
+            String result = "";
+
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            return result;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return access_token;
     }
 }
