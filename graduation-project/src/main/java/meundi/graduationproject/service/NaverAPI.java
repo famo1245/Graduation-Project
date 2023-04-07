@@ -35,12 +35,10 @@ public class NaverAPI {
 
 
     public String getOauthRedirectURL() {
-        Long state = System.currentTimeMillis();
         Map<String, Object> params = new HashMap<>();
-//        params.put("scope", "profile");
+        params.put("scope", "profile");
         params.put("response_type", "code");
         params.put("client_id", NAVER_CLIENT_ID);
-        params.put("state", state.toString());
         params.put("redirect_uri", NAVER_CALLBACK_URL);
 
         String parameterString = params.entrySet().stream()
@@ -49,7 +47,7 @@ public class NaverAPI {
 
         return NAVER_URL + "?" + parameterString;
     }
-    public String requestAccessToken(String code, String state) {
+    public String requestAccessToken(String code) {
         try {
             URL url = new URL(NAVER_TOKEN_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -62,7 +60,6 @@ public class NaverAPI {
             params.put("client_id", NAVER_CLIENT_ID);
             params.put("client_secret", NAVER_CLIENT_SECRET);
             params.put("code", code);
-            params.put("state", state);
             params.put("redirect_uri", NAVER_CALLBACK_URL);
 
 
