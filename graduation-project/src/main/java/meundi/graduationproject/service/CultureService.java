@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.repository.CultureRepository;
 import org.hibernate.type.TrueFalseType;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 
@@ -271,16 +272,118 @@ public class CultureService {
     }
 
     // 매일 밤 9시마다 호출되어 업데이트를 하는 함수
-    public String update() throws Exception {
+    @Scheduled(cron = "0 0 21 * * *", zone = "Asia/Seoul")
+    public void update() throws Exception {
+        log.info("update run");
         StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
         urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
         urlBuilder.append("/" + URLEncoder.encode("json", "UTF-8")); /*요청파일타입*/
         urlBuilder.append("/" + URLEncoder.encode("culturalEventInfo", "UTF-8")); /*서비스명*/
 
-        // 한번에 데이터 50개 씩 받아와서 비교
+        // 업데이트 시, 한번에 데이터 50개 씩 받아와서 비교
         urlBuilder.append("/" + URLEncoder.encode("1", "UTF-8")); /*요청시작위치*/
         urlBuilder.append("/" + URLEncoder.encode("50", "UTF-8")); /*요청종료위치*/
-        return "";
+
+        // 상위 5개는 필수적으로 순서바꾸지 않고 호출해야 합니다.
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/json");
+        log.debug("Response code: {}", conn.getResponseCode()); /* 연결 자체에 대한 확인이 필요하므로 추가합니다.*/
+        BufferedReader rd;
+
+        // 서비스코드가 정상이면 200~300사이의 숫자가 나옵니다.
+        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+
+        /*이용할 객체들 선언*/
+        JsonParser parser = new JsonParser();
+        JsonObject jsonObject1 = parser.parse(sb.toString()).getAsJsonObject();
+        JsonObject jsonObject2 = jsonObject1.getAsJsonObject("culturalEventInfo");
+        JsonArray jsonArray = jsonObject2.getAsJsonArray("row");
+
+        Culture lastOne = cultureRepository.findLastOne();
+
+        /* 문화 데이터 하나씩 받기 */
+        for (int i=jsonArray.size()-1; i>=0; i--) {
+            JsonObject childObj = (JsonObject) jsonArray.get(i);
+
+            String title = null;
+            String player = null;
+            String orgLink = null;
+            String mainImg = null;
+            String guname = null;
+            String date = null;
+            String rgstdate = null;
+            String codename = null;
+            String userTrgt = null;
+            String place = null;
+
+            /* 문화 field 채우기 */
+            try {
+                if (childObj.has("TITLE")) {
+                    title = childObj.get("TITLE").getAsString();
+                }
+
+                if (childObj.has("PLAYER")) {
+                    player = childObj.get("PLAYER").getAsString();
+                }
+
+                if (childObj.has("ORG_LINK")) {
+                    orgLink = childObj.get("ORG_LINK").getAsString();
+                }
+
+                if (childObj.has("MAIN_IMG")) {
+                    mainImg = childObj.get("MAIN_IMG").getAsString();
+                }
+
+                if (childObj.has("GUNAME")) {
+                    guname = childObj.get("GUNAME").getAsString();
+                }
+
+                if (childObj.has("DATE")) {
+                    date = childObj.get("DATE").getAsString();
+                }
+
+                if (childObj.has("RGSTDATE")) {
+                    rgstdate = childObj.get("RGSTDATE").getAsString();
+                }
+
+                if (childObj.has("CODENAME")) {
+                    codename = childObj.get("CODENAME").getAsString();
+                }
+
+                if (childObj.has("USER_TRGT")) {
+                    userTrgt = childObj.get("USER_TRGT").getAsString();
+                }
+
+                if (childObj.has("PLACE")) {
+                    place = childObj.get("PLACE").getAsString();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            /* 문화 객체 생성하여, 넣기 */
+            Culture culture = new Culture();
+            culture.InsertCultureFromJson(title, player, orgLink, mainImg,
+                    guname, date, rgstdate,
+                    codename, userTrgt, place);
+            if(lastOne.getTitle().equals(culture.getTitle())) {
+                insertCulture(culture);
+            } else {
+                return;
+            }
+        }
     }
 }
 
