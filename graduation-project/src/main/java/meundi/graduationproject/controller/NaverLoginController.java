@@ -25,8 +25,12 @@ public class NaverLoginController {
     }
 
     @GetMapping(value = "/naver/callback")
+    @ResponseBody
     public String callback(@RequestParam(name = "code") String code) {
         log.info(">> 소셜 로그인 API 서버로부터 받은 code :: {}", code);
-        return naverAPI.requestAccessToken(code);
+        String access_token = naverAPI.requestAccessToken(code);
+        log.info("access token: {}", access_token);
+        String responseBody = naverAPI.getUserInfo(access_token);
+        return responseBody;
     }
 }
