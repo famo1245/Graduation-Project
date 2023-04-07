@@ -67,7 +67,7 @@ public class CultureService {
         return String.valueOf(count);
     }
     /* 문화 전체 갯수 출력 */
-    public String CultureTotalCount(String result) {
+    private String CultureTotalCount(String result) {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject1 = parser.parse(result).getAsJsonObject();
         log.info("jsonObject1: {}", jsonObject1);
@@ -80,7 +80,7 @@ public class CultureService {
     }
 
     /* Json을 문화 엔티티에 넣어주는 메소드 */
-    public String JsonToCulture(String result) {
+    private String JsonToCulture(String result) {
         /*이용할 객체들 선언*/
         JsonParser parser = new JsonParser();
         JsonObject jsonObject1 = parser.parse(result).getAsJsonObject();
@@ -106,7 +106,7 @@ public class CultureService {
                 if (childObj.has("TITLE")) {
                     title = childObj.get("TITLE").getAsString();
                 }
-                ;
+
                 if (childObj.has("PLAYER")) {
                     player = childObj.get("PLAYER").getAsString();
                 }
@@ -156,7 +156,8 @@ public class CultureService {
     }
 
     /* 1000개씩 문화 받아오기 */
-    public String getCulture1000(String count) throws Exception {
+    //getCulture 메서드는 묶을 수 있을듯
+    private String getCulture1000(String count) throws Exception {
         String start = null;
         if (Integer.parseInt(count) < 1000) { /*마지막 단락 */
             start = "1";
@@ -267,6 +268,19 @@ public class CultureService {
         rd.close();
         conn.disconnect();
         return sb.toString();
+    }
+
+    // 매일 밤 9시마다 호출되어 업데이트를 하는 함수
+    public String update() throws Exception {
+        StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
+        urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
+        urlBuilder.append("/" + URLEncoder.encode("json", "UTF-8")); /*요청파일타입*/
+        urlBuilder.append("/" + URLEncoder.encode("culturalEventInfo", "UTF-8")); /*서비스명*/
+
+        // 한번에 데이터 50개 씩 받아와서 비교
+        urlBuilder.append("/" + URLEncoder.encode("1", "UTF-8")); /*요청시작위치*/
+        urlBuilder.append("/" + URLEncoder.encode("50", "UTF-8")); /*요청종료위치*/
+        return "";
     }
 }
 
