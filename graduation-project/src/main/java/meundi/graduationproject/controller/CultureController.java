@@ -24,6 +24,12 @@ public class CultureController {
         return cultureService.getCultureTotal();
     }
 
+    @GetMapping("/culture/update")
+    @ResponseBody
+    public String updateCulture() throws Exception {
+        return "ok";
+    }
+
     /* 우선 10개만 읽어와서 화면에 출력 */
     @GetMapping("/cultures")
     public String cultureList(Model model) {
