@@ -36,6 +36,13 @@ public class CultureRepository {
                 .getResultList();
     }
 
+    // 마지막으로 저장한 값을 찾기
+    public Culture findLastOne() {
+        List<Culture> cultures = findAll();
+        int lastIndex = cultures.size() - 1;
+        return cultures.get(lastIndex);
+    }
+
     /**
      * 문화 리스트 페이지에서
      * 한 페이지 별로 10개 정도 끊어서
