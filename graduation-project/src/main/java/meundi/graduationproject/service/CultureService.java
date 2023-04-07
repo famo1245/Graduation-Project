@@ -1,19 +1,17 @@
 package meundi.graduationproject.service;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.repository.CultureRepository;
-import org.hibernate.type.TrueFalseType;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-
-import javax.transaction.Transactional;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -21,8 +19,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,6 +26,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class CultureService {
+
+    @Value("${culture.url}")
+    private String CULTURE_URL;
+    @Value("${culture.service}")
+    private String CULTURE_SERVICE;
 
     private final CultureRepository cultureRepository;
 
@@ -72,7 +73,7 @@ public class CultureService {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject1 = parser.parse(result).getAsJsonObject();
         log.info("jsonObject1: {}", jsonObject1);
-        JsonObject jsonObject2 = jsonObject1.getAsJsonObject("culturalEventInfo");
+        JsonObject jsonObject2 = jsonObject1.getAsJsonObject(CULTURE_SERVICE);
         log.info("jsonObject2: {}", jsonObject2);
         String s = jsonObject2.get("list_total_count").getAsString();
         log.info(" CultureTotalCount: {}", s);
@@ -85,7 +86,7 @@ public class CultureService {
         /*이용할 객체들 선언*/
         JsonParser parser = new JsonParser();
         JsonObject jsonObject1 = parser.parse(result).getAsJsonObject();
-        JsonObject jsonObject2 = jsonObject1.getAsJsonObject("culturalEventInfo");
+        JsonObject jsonObject2 = jsonObject1.getAsJsonObject(CULTURE_SERVICE);
         JsonArray jsonArray = jsonObject2.getAsJsonArray("row");
         /* 문화 데이터 하나씩 받기 */
         for (int i=jsonArray.size()-1; i>=0;i--) {
@@ -167,10 +168,10 @@ public class CultureService {
         }
         log.info("start = {}",start);
         log.info("count = {}",count);
-        StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
+        StringBuilder urlBuilder = new StringBuilder(CULTURE_URL); /*URL*/
         urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
         urlBuilder.append("/" + URLEncoder.encode("json", "UTF-8")); /*요청파일타입*/
-        urlBuilder.append("/" + URLEncoder.encode("culturalEventInfo", "UTF-8")); /*서비스명*/
+        urlBuilder.append("/" + URLEncoder.encode(CULTURE_SERVICE, "UTF-8")); /*서비스명*/
 
         // 데이터 호출은 한번에 1000개를 넘을 수 없음
         urlBuilder.append("/" + URLEncoder.encode(start, "UTF-8")); /*요청시작위치*/
@@ -204,10 +205,10 @@ public class CultureService {
      * {"list_total_count":3332,"RESULT":{"CODE":"INFO-000","MESSAGE":"정상 처리되었습니다"}
      * */
     public String getCultureHeader() throws Exception {
-        StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
+        StringBuilder urlBuilder = new StringBuilder(CULTURE_URL); /*URL*/
         urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
         urlBuilder.append("/" + URLEncoder.encode("json", "UTF-8")); /*요청파일타입*/
-        urlBuilder.append("/" + URLEncoder.encode("culturalEventInfo", "UTF-8")); /*서비스명*/
+        urlBuilder.append("/" + URLEncoder.encode(CULTURE_SERVICE, "UTF-8")); /*서비스명*/
 
         // 데이터 호출은 한번에 1000개를 넘을 수 없음
         urlBuilder.append("/" + URLEncoder.encode("1", "UTF-8")); /*요청시작위치*/
@@ -238,10 +239,10 @@ public class CultureService {
     }
 
     public String getCultureEx() throws Exception {
-        StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
+        StringBuilder urlBuilder = new StringBuilder(CULTURE_URL); /*URL*/
         urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
         urlBuilder.append("/" + URLEncoder.encode("json", "UTF-8")); /*요청파일타입*/
-        urlBuilder.append("/" + URLEncoder.encode("culturalEventInfo", "UTF-8")); /*서비스명*/
+        urlBuilder.append("/" + URLEncoder.encode(CULTURE_SERVICE, "UTF-8")); /*서비스명*/
 
         // 데이터 호출은 한번에 1000개를 넘을 수 없음
         urlBuilder.append("/" + URLEncoder.encode("1", "UTF-8")); /*요청시작위치*/
@@ -272,13 +273,14 @@ public class CultureService {
     }
 
     // 매일 밤 9시마다 호출되어 업데이트를 하는 함수
+    // cron = "초 분 시 일 월 요일"
     @Scheduled(cron = "0 0 21 * * *", zone = "Asia/Seoul")
     public void update() throws Exception {
         log.info("update run");
-        StringBuilder urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088"); /*URL*/
+        StringBuilder urlBuilder = new StringBuilder(CULTURE_URL); /*URL*/
         urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
         urlBuilder.append("/" + URLEncoder.encode("json", "UTF-8")); /*요청파일타입*/
-        urlBuilder.append("/" + URLEncoder.encode("culturalEventInfo", "UTF-8")); /*서비스명*/
+        urlBuilder.append("/" + URLEncoder.encode(CULTURE_SERVICE, "UTF-8")); /*서비스명*/
 
         // 업데이트 시, 한번에 데이터 50개 씩 받아와서 비교
         urlBuilder.append("/" + URLEncoder.encode("1", "UTF-8")); /*요청시작위치*/
