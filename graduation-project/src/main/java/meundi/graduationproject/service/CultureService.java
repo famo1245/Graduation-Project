@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
@@ -85,7 +86,7 @@ public class CultureService {
     }
 
     /* Json을 문화 엔티티에 넣어주는 메소드 */
-    private String JsonToCulture(String result) {
+    private String JsonToCulture(String result) throws MalformedURLException {
         /*이용할 객체들 선언*/
         JsonParser parser = new JsonParser();
         JsonObject jsonObject1 = parser.parse(result).getAsJsonObject();
