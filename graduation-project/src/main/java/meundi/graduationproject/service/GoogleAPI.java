@@ -5,11 +5,7 @@ import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -104,6 +100,8 @@ public class GoogleAPI {
 
     public String getUserInfo(String access_token) {
         log.info("google: getUserInfo");
+
+        HashMap<String, Object> userInfo = new HashMap<>();
         try {
             URL url = new URL(GOOGLE_USER_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -126,7 +124,22 @@ public class GoogleAPI {
                 result += line;
             }
             return result;
+            //google people api 사용으로 다시 할 것
+            /*log.info("response body={}", result);
 
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(result);
+
+            Long id = Long.valueOf(element.getAsJsonObject().get("id").getAsString());
+            userInfo.put("id", id);
+
+            String gender = element.getAsJsonObject().get("gender").getAsString();
+            String email = element.getAsJsonObject().get("email").getAsString();
+            String ageRange = element.getAsJsonObject().get("age_range").getAsString();
+
+            userInfo.put("gender", gender);
+            userInfo.put("email", email);
+            userInfo.put("age_range", ageRange);*/
         } catch (IOException e) {
             e.printStackTrace();
         }
