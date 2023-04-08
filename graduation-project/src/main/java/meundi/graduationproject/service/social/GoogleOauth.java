@@ -41,7 +41,7 @@ public class GoogleOauth implements SocialLoginOauth{
         return GOOGLE_SNS_BASE_URL + "?" + parameterString;
     }
 
-//    @Override
+    @Override
     public String requestAccessToken(String code){
         RestTemplate restTemplate = new RestTemplate();
 
