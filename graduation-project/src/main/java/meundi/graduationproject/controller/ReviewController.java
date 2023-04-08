@@ -55,6 +55,10 @@ public class ReviewController {
     * */
     @PostMapping("/reviewWrite")/*리뷰 작성시, 내용 넘겨주고, 작성된 화면으로 넘어감*/
     public String addReview(@Validated @ModelAttribute Review review, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        /* 문화 객체 받아오기 귀찮아서 제목만 있는 테스트용 문화 DB에 넣기*/
+        Culture TestCulture = new Culture();
+        TestCulture.setTitle("test");
+        cultureService.insertCulture(TestCulture);
         /* 검증에 문제 발생 시, 다시 add */
         if (bindingResult.hasErrors()) {
             return "/review/addReview";
@@ -74,5 +78,6 @@ public class ReviewController {
          * */
         return "redirect:/review/reviewDetail/{reviewId}";/*review_id를 통해, detail 열기*/
     }
+    /* 리뷰 수정 화면 추가해야함 */
 }
 

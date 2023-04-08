@@ -33,7 +33,7 @@
                 <th> 제목 </th>
                 <th> 문화 </th>
                 <th> 별점 </th>
-                <th> 사용자 </th>
+     <!--           <th> 사용자 </th>-->
                 <th> 작성일자 </th>
             </tr>
             </thead>
@@ -45,7 +45,7 @@
                 </td>
                 <td th:text="${review.cultureTitle}">문화</td>
                 <td th:text="${review.reviewGrade}">별점</td>
-                <td th:text="${review.member.nickName}">작성자</td>
+        <!--        <td th:text="${review.member.nickName}">작성자</td>-->
                 <td th:text="${review.reviewDateTime}">작성일자</td>
             </tr>
             </tbody>
