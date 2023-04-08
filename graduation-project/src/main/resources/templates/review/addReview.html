@@ -8,6 +8,10 @@
         .container {
             max-width: 560px;
         }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
     </style>
 </head>
 <body>
@@ -19,9 +23,17 @@
     </div>
 
     <form action="reviewDetail.html" th:action th:object="${review}" method="post">
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.hasGlobalErrors()}" th:text="${err}"> 글로벌 오류 메시지</p>
+
+        </div>
+
         <div>
             <label for="reviewTitle">제목</label>
-            <input type="text" id="reviewTitle" th:field="*{reviewTitle}" class="form-control" placeholder="리뷰 제목을 입력하세요.">
+            <input type="text" id="reviewTitle" th:field="*{reviewTitle}"
+                   th:errorclass="field-error" class="form-control" placeholder="리뷰 제목을 입력하세요.">
+            <div class="field-error" th:errors="*{reviewTitle}"> 제목 오류
+            </div>
         </div>
         <div>
             <label for="cultureTitle">본 문화 제목</label>
@@ -29,11 +41,17 @@
         </div>
         <div>
             <label for="reviewGrade">별점</label>
-            <input type="text" id="reviewGrade" th:field="*{reviewGrade}" class="form-control" placeholder="별점을 입력하세요">
+            <input type="text" id="reviewGrade" th:field="*{reviewGrade}"
+                   th:errorclass="field-error" class="form-control" placeholder="별점을 입력하세요">
+            <div class="field-error" th:errors="*{reviewGrade}"> 평점 오류
+            </div>
         </div>
         <div>
             <label for="reviewContents">리뷰 내용</label>
-            <input type="text" id="reviewContents" th:field="*{reviewContents}" class="form-control" placeholder="내용을 입력하세요">
+            <input type="text" id="reviewContents" th:field="*{reviewContents}"
+                   th:errorclass="field-error" class="form-control" placeholder="내용을 입력하세요">
+            <div class="field-error" th:errors="*{reviewContents}"> 내용 오류
+            </div>
         </div>
 
         <hr class="my-4">

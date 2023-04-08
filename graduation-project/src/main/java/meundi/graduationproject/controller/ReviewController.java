@@ -8,6 +8,8 @@ import meundi.graduationproject.service.CultureService;
 import meundi.graduationproject.service.ReviewService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -52,7 +54,12 @@ public class ReviewController {
     * 수정 후: 문화 제목으로 검색하여, 문화들을 띄워주고, 문화를 선택하는 방식
     * */
     @PostMapping("/reviewWrite")/*리뷰 작성시, 내용 넘겨주고, 작성된 화면으로 넘어감*/
-    public String addReview(@ModelAttribute Review review, RedirectAttributes redirectAttributes) {
+    public String addReview(@Validated @ModelAttribute Review review, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        /* 검증에 문제 발생 시, 다시 add */
+        if (bindingResult.hasErrors()) {
+            return "/review/addReview";
+        }
+
         review.setReviewDateTime(LocalDateTime.now());
 
         Culture culture = cultureService.findOneByTitle(review.getCultureTitle()); /* 문화 제목(입력)으로 문화 찾기*/

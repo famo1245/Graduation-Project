@@ -46,3 +46,4 @@ api.naver:
 
 culture:
   url: http://openapi.seoul.go.kr:8088
+  service: culturalEventInfo
