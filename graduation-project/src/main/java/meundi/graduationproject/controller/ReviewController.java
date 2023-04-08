@@ -2,6 +2,7 @@ package meundi.graduationproject.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.domain.Review;
 import meundi.graduationproject.service.CultureService;
@@ -15,7 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/review")
@@ -59,19 +62,23 @@ public class ReviewController {
         Culture TestCulture = new Culture();
         TestCulture.setTitle("test");
         cultureService.insertCulture(TestCulture);
+
+        /* 같은 문화 제목이 없을때, 오류*/
+        if (cultureService.findOneByTitle(review.getCultureTitle()).isEmpty()) {
+            bindingResult.reject("NoCulture");
+        }
         /* 검증에 문제 발생 시, 다시 add */
         if (bindingResult.hasErrors()) {
             return "/review/addReview";
         }
 
         review.setReviewDateTime(LocalDateTime.now());
-
-        Culture culture = cultureService.findOneByTitle(review.getCultureTitle()); /* 문화 제목(입력)으로 문화 찾기*/
+        Culture culture = cultureService.findOneByTitle(review.getCultureTitle()).get(); /* 문화 제목(입력)으로 문화 찾기*/
         review.setCulture(culture); /*리뷰 객체에 문화 객체 넣기 */
 
         Review savedReview = reviewService.insertReview(review);
         redirectAttributes.addAttribute("reviewId", savedReview.getId());
-        // 이거 뭔지 설명좀
+        // 이거 뭔지 설명좀 -> 저장 후 넘어간 리뷰 상세화면인지, 그냥 홈화면에서 들어간 리뷰 상세화면인지를 나타내기 위한 status
         redirectAttributes.addAttribute("status", true);
         /*
          * model에 담긴 review 내용을 ReviewNote에 넣기

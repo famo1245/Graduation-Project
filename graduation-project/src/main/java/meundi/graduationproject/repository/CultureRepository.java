@@ -3,13 +3,17 @@ package meundi.graduationproject.repository;
 import lombok.RequiredArgsConstructor;
 import meundi.graduationproject.domain.Culture;
 
+import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.domain.Review;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.swing.event.ListDataEvent;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -24,12 +28,12 @@ public class CultureRepository {
         return em.find(Culture.class, id);
     }
 
-    public Culture findByTitle(String title) {
-        return em.createQuery("select c from Culture c where c.title= :title", Culture.class)
+    public Optional<Culture> findByTitle(String title) {
+        List<Culture> cultures=em.createQuery("select c from Culture c where c.title= :title", Culture.class)
                 .setParameter("title", title)
-                .getSingleResult();
+                .getResultList();
+        return cultures.stream().findAny();
     }
-
 
     public List<Culture> findAll() {
         return em.createQuery("select c from Culture c", Culture.class)

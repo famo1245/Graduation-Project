@@ -15,6 +15,10 @@ public class Culture {
     public Culture() {
     }
 
+    public Culture(String title) {
+        this.title = title;
+    }
+
     @Id @GeneratedValue
     @Column(name = "culture_id")
     private Long id;

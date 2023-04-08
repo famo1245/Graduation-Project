@@ -44,6 +44,7 @@ public class Review {
     @JoinColumn(name = "culture_id")
     private Culture culture;
 
+    @NotBlank
     private String cultureTitle;
 
 }

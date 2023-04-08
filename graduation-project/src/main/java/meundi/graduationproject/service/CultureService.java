@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.repository.CultureRepository;
+import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -47,7 +49,8 @@ public class CultureService {
         return cultureRepository.findOneById(id);
     }
 
-    public Culture findOneByTitle(String title) {
+    /* Culture 객체로 받고 싶으면 .get()하면 받아짐 */
+    public Optional<Culture> findOneByTitle(String title) {
         return cultureRepository.findByTitle(title);
     }
 
