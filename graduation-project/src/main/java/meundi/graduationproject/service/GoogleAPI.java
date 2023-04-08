@@ -37,7 +37,7 @@ public class GoogleAPI {
 
     public String getOauthRedirectURL() {
         Map<String, Object> params = new HashMap<>();
-        params.put("scope", "email profile openid");
+        params.put("scope", "https://www.googleapis.com/auth/profile.agerange.read https://www.googleapis.com/auth/profile.emails.read https://www.googleapis.com/auth/user.gender.read https://www.googleapis.com/auth/userinfo.profile");
         params.put("response_type", "code");
         params.put("client_id", GOOGLE_SNS_CLIENT_ID);
         params.put("redirect_uri", GOOGLE_SNS_CALLBACK_URL);
@@ -88,7 +88,6 @@ public class GoogleAPI {
                 JsonElement element = parser.parse(result);
 
                 String accessToken = element.getAsJsonObject().get("access_token").getAsString();
-                String id_token = element.getAsJsonObject().get("id_token").getAsString();
 
                 return accessToken;
             }
@@ -98,12 +97,13 @@ public class GoogleAPI {
         }
     }
 
+    // 수정 예정
     public String getUserInfo(String access_token) {
         log.info("google: getUserInfo");
 
         HashMap<String, Object> userInfo = new HashMap<>();
         try {
-            URL url = new URL(GOOGLE_USER_URL);
+            URL url = new URL("https://people.googleapis.com/v1/people/me");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
 
@@ -115,7 +115,12 @@ public class GoogleAPI {
             int responseCode = conn.getResponseCode();
             log.info("responseCode={}", responseCode);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            BufferedReader br;
+            if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+                br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            } else {
+                br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            }
 
             String line = "";
             String result = "";
