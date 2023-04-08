@@ -19,13 +19,19 @@ public class ReviewService {
        reviewRepository.save(review);
         return review;
     }
+
+    public void updateReview(Long id, String title, int grade, String content) {
+        Review one = reviewRepository.findOne(id);
+        one.setReviewTitle(title);
+        one.setReviewGrade(grade);
+        one.setReviewContents(content);
+    }
     public List<Review> findReviewAll(){
         return reviewRepository.findAll();
     }
     public List<Review> findReviewSearch(String cultureTitle) {
         return reviewRepository.findByCultureTitle(cultureTitle);
     }
-
     public Review findOne(Long id) {
         return reviewRepository.findOne(id);
     }

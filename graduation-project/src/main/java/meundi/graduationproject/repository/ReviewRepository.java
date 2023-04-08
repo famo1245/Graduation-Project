@@ -16,7 +16,6 @@ public class ReviewRepository {
 
     public void save(Review review) {
         em.persist(review);
-
     }
     /* 리뷰 이름으로 검색*/
     public Review findOne(Long id) {

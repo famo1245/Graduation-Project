@@ -46,16 +46,16 @@ public class ReviewController {
     public String addReviewForm(Model model) {
         /**
          * service인 reviewWrite를 통해, 써진 reviewNote를 반환해야함
-        * 입력 -> 출력
+         * 입력 -> 출력
          * */
         model.addAttribute("review", new Review());
         return "review/addReview";
     }
 
     /* 내가 본 문화를 선택하는 것을 수정해야함
-    * 수정 전: 문화 제목으로 검색하여 매치
-    * 수정 후: 문화 제목으로 검색하여, 문화들을 띄워주고, 문화를 선택하는 방식
-    * */
+     * 수정 전: 문화 제목으로 검색하여 매치
+     * 수정 후: 문화 제목으로 검색하여, 문화들을 띄워주고, 문화를 선택하는 방식
+     * */
     @PostMapping("/reviewWrite")/*리뷰 작성시, 내용 넘겨주고, 작성된 화면으로 넘어감*/
     public String addReview(@Validated @ModelAttribute Review review, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         /* 문화 객체 받아오기 귀찮아서 제목만 있는 테스트용 문화 DB에 넣기*/
@@ -85,6 +85,30 @@ public class ReviewController {
          * */
         return "redirect:/review/reviewDetail/{reviewId}";/*review_id를 통해, detail 열기*/
     }
+
     /* 리뷰 수정 화면 추가해야함 */
+    @GetMapping("reviewDetail/{review_id}/edit")
+    public String editReviewForm(@PathVariable("review_id") Long reviewId, Model model) {
+        Review review = reviewService.findOne(reviewId);
+        model.addAttribute("review", review);
+        return "review/editReview";
+    }
+
+    @PostMapping("reviewDetail/{review_id}/edit")
+    public String editReview(@Validated @ModelAttribute Review review, BindingResult bindingResult,@PathVariable("review_id")Long reviewId) {
+        /* 같은 문화 제목이 없을때, 오류*/
+        if (cultureService.findOneByTitle(review.getCultureTitle()).isEmpty()) {
+            bindingResult.reject("NoCulture");
+        }
+        /* 검증에 문제 발생 시, 다시 add */
+        if (bindingResult.hasErrors()) {
+            return "review/editReview";
+        }
+        reviewService.updateReview(reviewId, review.getCultureTitle()
+                , review.getReviewGrade(), review.getReviewContents());
+
+        return "redirect:/review";/*review_id를 통해, detail 열기*/
+
+    }
 }
 
