@@ -30,10 +30,12 @@ public class CultureController {
         return "ok";
     }
 
-    /* 우선 10개만 읽어와서 화면에 출력 */
-    @GetMapping("/cultures")
-    public String cultureList(Model model) {
-        List<Culture> cultureList = cultureService.findCultureAll();
+    /* 문화 10개씩 화면에 출력 */
+    @GetMapping("/cultures/{page}")
+    public String cultureList(@PathVariable int page, Model model) {
+        List<Culture> cultureListAll = cultureService.findCultureAll();
+        int lastIndex = cultureListAll.size() - 1;
+        List<Culture> cultureList = cultureListAll.subList(lastIndex - page * 10, lastIndex - (page - 1) * 10);
         model.addAttribute("cultureList", cultureList);
         return "culture/cultureList";
     }
