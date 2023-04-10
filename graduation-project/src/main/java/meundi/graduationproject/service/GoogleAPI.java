@@ -1,6 +1,8 @@
 package meundi.graduationproject.service;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -100,7 +102,7 @@ public class GoogleAPI {
     }
 
     // 수정 예정
-    public String getUserInfo(String access_token) {
+    public HashMap<String, Object> getUserInfo(String access_token) {
         log.info("google: getUserInfo");
 
         HashMap<String, Object> userInfo = new HashMap<>();
@@ -141,26 +143,74 @@ public class GoogleAPI {
             while ((line = br.readLine()) != null) {
                 result += line;
             }
-            return result;
             //google people api 사용으로 다시 할 것
-            /*log.info("response body={}", result);
+            log.info("response body={}", result);
 
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(result);
+            JsonObject jsonObject = element.getAsJsonObject();
+            JsonArray genders = jsonObject.get("genders").getAsJsonArray();
+            JsonArray emailAddresses = jsonObject.getAsJsonArray("emailAddresses");
 
-            Long id = Long.valueOf(element.getAsJsonObject().get("id").getAsString());
-            userInfo.put("id", id);
-
-            String gender = element.getAsJsonObject().get("gender").getAsString();
-            String email = element.getAsJsonObject().get("email").getAsString();
-            String ageRange = element.getAsJsonObject().get("age_range").getAsString();
+            String gender = genders.get(0).getAsJsonObject().get("value").getAsString();
+            log.info("age_range={}", jsonObject.get("ageRange").getAsString());
+            //변환
+            String ageRange = convertAgeRange(jsonObject.get("ageRange").getAsString());
+            log.info("ageRange={}", ageRange);
+            String email = emailAddresses.get(0).getAsJsonObject().get("value").getAsString();
+            //refactor 필요, 변환
+            Long id = convertId(emailAddresses.get(0).getAsJsonObject().get("metadata")
+                    .getAsJsonObject().get("source").getAsJsonObject()
+                    .get("id").getAsString());
 
             userInfo.put("gender", gender);
             userInfo.put("email", email);
-            userInfo.put("age_range", ageRange);*/
+            userInfo.put("age_range", ageRange);
+            userInfo.put("id", id);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return access_token;
+        return userInfo;
+    }
+
+    private String convertAgeRange(String ageRange) {
+        String convertedAge = "";
+        switch (ageRange) {
+            case "TWENTY_ONE_OR_OLDER":
+                convertedAge = "20-29";
+                break;
+
+            case "THIRTY_ONE_OR_OLDER":
+                convertedAge = "30-39";
+                break;
+
+            case "FORTY_ONE_OR_OLDER":
+                convertedAge = "40-49";
+                break;
+
+            case "FIFTY_ONE_OR_OLDER":
+                convertedAge = "50-59";
+                break;
+
+            case "SIXTY_ONE_OR_OLDER":
+                convertedAge = "60-69";
+                break;
+
+            case "SEVENTY_ONE_OR_OLDER":
+                convertedAge = "70-79";
+                break;
+        }
+
+        return convertedAge;
+    }
+
+    private Long convertId(String id) {
+        long convertedId = 0L;
+        char[] idList = id.toCharArray();
+        for (char c : idList) {
+            convertedId += c;
+        }
+
+        return convertedId;
     }
 }
