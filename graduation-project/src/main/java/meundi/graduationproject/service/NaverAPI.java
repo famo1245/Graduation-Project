@@ -1,6 +1,7 @@
 package meundi.graduationproject.service;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -102,8 +103,11 @@ public class NaverAPI {
         }
     }
 
-    public String getUserInfo(String access_token) {
+    public HashMap<String, Object> getUserInfo(String access_token) {
         log.debug("naver: getUserInfo");
+
+        //요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
+        HashMap<String, Object> userInfo = new HashMap<>();
         try {
             URL url = new URL(NAVER_USER_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -123,11 +127,48 @@ public class NaverAPI {
             while ((line = br.readLine()) != null) {
                 result += line;
             }
-            return result;
+            log.info("response body={}", result);
+
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(result);
+
+            JsonObject response = element.getAsJsonObject().get("response").getAsJsonObject();
+            //변환
+            Long id = convertId(response.getAsJsonObject().get("id").getAsString());
+            //변환
+            String gender = convertGender(response.getAsJsonObject().get("gender").getAsString());
+            String email = response.getAsJsonObject().get("email").getAsString();
+            String ageRange = response.getAsJsonObject().get("age").getAsString();
+
+            userInfo.put("id", id);
+            userInfo.put("gender", gender);
+            userInfo.put("email", email);
+            userInfo.put("age_range", ageRange);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return access_token;
+        return userInfo;
+    }
+
+    private String convertGender(String gender) {
+        String convertedGender = "";
+        if (gender.equals("M")) {
+            convertedGender = "male";
+        } else if (gender.equals("F")) {
+            convertedGender = "female";
+        }
+
+        return convertedGender;
+    }
+
+    private Long convertId(String id) {
+        long convertedId = 0L;
+        char[] idList = id.toCharArray();
+        for (char c : idList) {
+            convertedId += c;
+        }
+
+        return convertedId;
     }
 }
