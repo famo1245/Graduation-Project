@@ -30,7 +30,8 @@ sns.google:
   token:
     url: https://oauth2.googleapis.com/token
   user:
-    url: https://www.googleapis.com/oauth2/v1/userinfo
+    url: https://people.googleapis.com/v1/people/me
+  scope: https://www.googleapis.com/auth/contacts https://www.googleapis.com/auth/contacts.readonly https://www.googleapis.com/auth/directory.readonly https://www.googleapis.com/auth/user.addresses.read https://www.googleapis.com/auth/user.birthday.read https://www.googleapis.com/auth/user.emails.read https://www.googleapis.com/auth/user.gender.read https://www.googleapis.com/auth/user.organization.read https://www.googleapis.com/auth/user.phonenumbers.read https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile
 
 api.naver:
   url: https://nid.naver.com/oauth2.0/authorize
