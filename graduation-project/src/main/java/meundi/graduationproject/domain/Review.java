@@ -16,9 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class Review {
-    /** userId와 일단 제외
-     *  user 객체로 제공해야함
-     * */
+
     /*리뷰 고유 번호*/
     @Id @GeneratedValue
     @Column(name = "review_id")
