@@ -34,10 +34,12 @@ public class GoogleAPI {
     private String GOOGLE_SNS_TOKEN_BASE_URL;
     @Value("${sns.google.user.url}")
     private String GOOGLE_USER_URL;
+    @Value("${sns.google.scope}")
+    private String GOOGLE_SCOPE;
 
     public String getOauthRedirectURL() {
         Map<String, Object> params = new HashMap<>();
-        params.put("scope", "https://www.googleapis.com/auth/profile.agerange.read https://www.googleapis.com/auth/profile.emails.read https://www.googleapis.com/auth/user.gender.read https://www.googleapis.com/auth/userinfo.profile");
+        params.put("scope", GOOGLE_SCOPE);
         params.put("response_type", "code");
         params.put("client_id", GOOGLE_SNS_CLIENT_ID);
         params.put("redirect_uri", GOOGLE_SNS_CALLBACK_URL);
@@ -103,13 +105,24 @@ public class GoogleAPI {
 
         HashMap<String, Object> userInfo = new HashMap<>();
         try {
-            URL url = new URL("https://people.googleapis.com/v1/people/me");
+            //Query Parameter
+            Map<String, Object> params = new HashMap<>();
+            params.put("personFields", "ageRange%2CemailAddresses%2Cgenders");
+            params.put("key", "AIzaSyA-v6EtJVbbwUu9WVCjmyeUBD-z3nYxRYY");
+
+            String parameterString = params.entrySet().stream()
+                    .map(x -> x.getKey() + "=" + x.getValue())
+                    .collect(Collectors.joining("&"));
+            String infoUrl = GOOGLE_USER_URL + "?" + parameterString;
+
+            URL url = new URL(infoUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
             //요청에 필요한 Header 에 포함될 내용
-//            conn.setRequestProperty("Content-Length", "256");
             conn.setRequestProperty("Authorization", "Bearer " + access_token);
+            conn.setRequestProperty("Accept", "application/json");
 
             log.info("request: {}", conn.toString());
             int responseCode = conn.getResponseCode();
