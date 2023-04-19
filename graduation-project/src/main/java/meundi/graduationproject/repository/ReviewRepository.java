@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -39,23 +40,35 @@ public class ReviewRepository {
     public List<Review> SearchReview(ReviewSearch reviewSearch) {
         //language=JPAQL
         String jpql = "select r from Review r join r.culture c";
-        // User 검색도 넣어야 하므로 필요
-        boolean isFirstCondition = true;
-        //문화 제목 검색
-        if (StringUtils.hasText(reviewSearch.getCultureTitle())) {
-            if (isFirstCondition) {
-                jpql +=" where";
-                isFirstCondition = false;
-            }
-            else {
-                jpql += " and";
-            }
-            jpql += " c.title like :title";
+        // 문화 이름으로 검색 결과
+        if (StringUtils.hasText(reviewSearch.getTotal())) {
+            jpql += " where c.title like :title";
+            jpql += " or r.reviewTitle like :reviewTitle";
         }
-        TypedQuery<Review> query = em.createQuery(jpql, Review.class);
-        if (StringUtils.hasText(reviewSearch.getCultureTitle())){
-            query.setParameter("title", reviewSearch.getCultureTitle());
+        TypedQuery<Review> query1 = em.createQuery(jpql, Review.class);
+        if (StringUtils.hasText(reviewSearch.getTotal())){
+            query1.setParameter("title", reviewSearch.getTotal());
+            query1.setParameter("reviewTitle", reviewSearch.getTotal());
         }
-        return query.getResultList();
+        List<Review> resultList1 = query1.getResultList();
+        //중복제거 후 내보내기
+        return resultList1.stream().distinct().collect(Collectors.toList());
+
+
+
+
+//        //리뷰 제목으로 검색 결과
+//        if (StringUtils.hasText(reviewSearch.getTotal())) {
+//            jpql += " and r.reviewTitle like :reviewTitle";
+//        }
+//        TypedQuery<Review> query2 = em.createQuery(jpql, Review.class);
+//        if (StringUtils.hasText(reviewSearch.getTotal())){
+//            query2.setParameter("reviewTitle", reviewSearch.getTotal());
+//        }
+//        List<Review> resultList2 = query2.getResultList();
+//
+//        // 합치기
+//        resultList1.addAll(resultList2);
+
     }
 }

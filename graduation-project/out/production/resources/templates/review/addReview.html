@@ -43,7 +43,7 @@
         </div>
         <div>
             <label for="reviewGrade">별점</label>
-            <input type="text" id="reviewGrade" th:field="*{reviewGrade}"
+            <input type="number" id="reviewGrade" th:field="*{reviewGrade}"
                    th:errorclass="field-error" class="form-control" placeholder="별점을 입력하세요">
             <div class="field-error" th:errors="*{reviewGrade}"> 평점 오류
             </div>
