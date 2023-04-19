@@ -24,6 +24,12 @@
                     th:onclick="|location.href='@{/}'|" type="button">홈으로</button>
         </div>
     </div>
+    <form th:object="${reviewSearch}" class="form-inline">
+        <div class="form-group mb-2">
+            <input type="text" th:field="*{cultureTitle}" class="formcontrol" placeholder="회원명"/>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">검색</button>
+    </form>
 
     <hr class="my-4">
     <div>
