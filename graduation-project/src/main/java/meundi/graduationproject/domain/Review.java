@@ -11,14 +11,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
 public class Review {
-    /** userId와 일단 제외
-     *  user 객체로 제공해야함
-     * */
+
     /*리뷰 고유 번호*/
     @Id @GeneratedValue
     @Column(name = "review_id")
@@ -43,8 +42,19 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "culture_id")
     private Culture culture;
-
     @NotBlank
     private String cultureTitle;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Review review = (Review) o;
+        return getReviewGrade() == review.getReviewGrade() && Objects.equals(getId(), review.getId()) && Objects.equals(getReviewDateTime(), review.getReviewDateTime()) && Objects.equals(getReviewContents(), review.getReviewContents()) && Objects.equals(getReviewTitle(), review.getReviewTitle()) && Objects.equals(getMember(), review.getMember()) && Objects.equals(getCulture(), review.getCulture()) && Objects.equals(getCultureTitle(), review.getCultureTitle());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getReviewDateTime(), getReviewContents(), getReviewTitle(), getReviewGrade(), getMember(), getCulture(), getCultureTitle());
+    }
 }

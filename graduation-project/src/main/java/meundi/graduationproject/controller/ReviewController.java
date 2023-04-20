@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.domain.Review;
+import meundi.graduationproject.repository.ReviewSearch;
 import meundi.graduationproject.service.CultureService;
 import meundi.graduationproject.service.ReviewService;
 import org.springframework.stereotype.Controller;
@@ -28,8 +29,8 @@ public class ReviewController {
     private final CultureService cultureService;
 
     @GetMapping /*home*/
-    public String reviewHome(Model model) {
-        List<Review> reviewAll = reviewService.findReviewAll();
+    public String SearchReview(@ModelAttribute("reviewSearch") ReviewSearch reviewSearch, Model model) {
+        List<Review> reviewAll = reviewService.SearchReview(reviewSearch);
         model.addAttribute("reviewAll", reviewAll);
         return "review/reviewHome";
     }
@@ -107,8 +108,9 @@ public class ReviewController {
         reviewService.updateReview(reviewId, review.getCultureTitle()
                 , review.getReviewGrade(), review.getReviewContents());
 
-        return "redirect:/review";/*review_id를 통해, detail 열기*/
-
+        return "redirect:/review";
     }
+
+
 }
 

@@ -4,6 +4,7 @@ package meundi.graduationproject.service;
 import lombok.RequiredArgsConstructor;
 import meundi.graduationproject.domain.Review;
 import meundi.graduationproject.repository.ReviewRepository;
+import meundi.graduationproject.repository.ReviewSearch;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,9 @@ public class ReviewService {
         return reviewRepository.findOne(id);
     }
 
+    public List<Review> SearchReview(ReviewSearch reviewSearch) {
+        return reviewRepository.SearchReview(reviewSearch);
+    }
 
 
 }
