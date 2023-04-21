@@ -24,19 +24,19 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GoogleAPI {
 
-    @Value("${sns.google.url}")
+    @Value("${api.google.url}")
     private String GOOGLE_SNS_BASE_URL;
-    @Value("${sns.google.client.id}")
+    @Value("${api.google.client.id}")
     private String GOOGLE_SNS_CLIENT_ID;
-    @Value("${sns.google.callback.url}")
+    @Value("${api.google.callback.url}")
     private String GOOGLE_SNS_CALLBACK_URL;
-    @Value("${sns.google.client.secret}")
+    @Value("${api.google.client.secret}")
     private String GOOGLE_SNS_CLIENT_SECRET;
-    @Value("${sns.google.token.url}")
+    @Value("${api.google.token.url}")
     private String GOOGLE_SNS_TOKEN_BASE_URL;
-    @Value("${sns.google.user.url}")
+    @Value("${api.google.user.url}")
     private String GOOGLE_USER_URL;
-    @Value("${sns.google.scope}")
+    @Value("${api.google.scope}")
     private String GOOGLE_SCOPE;
 
     public String getOauthRedirectURL() {
@@ -137,13 +137,15 @@ public class GoogleAPI {
                 br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
             }
 
-            String line = "";
-            String result = "";
+            String line;
+            StringBuilder sb = new StringBuilder();
 
             while ((line = br.readLine()) != null) {
-                result += line;
+                sb.append(line);
             }
+
             //google people api 사용으로 다시 할 것
+            String result = sb.toString();
             log.info("response body={}", result);
 
             JsonParser parser = new JsonParser();
