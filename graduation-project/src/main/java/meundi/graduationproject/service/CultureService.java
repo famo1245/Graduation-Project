@@ -30,9 +30,9 @@ import java.util.Optional;
 @Slf4j
 public class CultureService {
 
-    @Value("${culture.url}")
+    @Value("${api.culture.url}")
     private String CULTURE_URL;
-    @Value("${culture.service}")
+    @Value("${api.culture.service}")
     private String CULTURE_SERVICE;
 
     private final CultureRepository cultureRepository;
