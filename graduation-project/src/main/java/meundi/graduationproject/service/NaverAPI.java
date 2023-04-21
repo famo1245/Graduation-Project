@@ -37,6 +37,8 @@ public class NaverAPI {
     private String NAVER_TOKEN_URL;
     @Value("${api.naver.user.url}")
     private String NAVER_USER_URL;
+//    @Value("${api.naver.logout.url}")
+//    private String NAVER_LOGOUT_URL;
 
 
     public String getOauthRedirectURL() {
