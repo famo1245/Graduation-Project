@@ -144,7 +144,7 @@ public class GoogleAPI {
                 sb.append(line);
             }
 
-            //google people api 사용으로 다시 할 것
+            //google people api 사용해 볼 것
             String result = sb.toString();
             log.info("response body={}", result);
 

@@ -7,7 +7,7 @@
 //import meundi.graduationproject.service.OauthService;
 //import org.springframework.web.bind.annotation.*;
 //
-//@RestController
+//@Controller
 //@CrossOrigin
 //@RequiredArgsConstructor
 //@RequestMapping(value = "/auth")
@@ -16,8 +16,9 @@
 //    private final OauthService oauthService;
 //
 //    @GetMapping(value = "/{socialLoginType}")
-//    public void socialLoginTyoe(@PathVariable(name = "socialLoginType")SocialLoginType socialLoginType){
+//    public void socialLoginType(@PathVariable(name = "socialLoginType")SocialLoginType socialLoginType){
 //        log.info(">>사용자로부터 SNS 로그인 요청을 받음 :: {} Social Login", socialLoginType);
 //        oauthService.request(socialLoginType);
+//        return;
 //    }
 //}
