@@ -43,7 +43,6 @@ public class GoogleLoginController {
     @GetMapping(value = "/google/callback")
     public String callback(@RequestParam(name = "code") String code,
                            HttpSession session,
-                           RedirectAttributes redirectAttributes,
                            Model model) {
         log.info(">> 소셜 로그인 API 서버로부터 받은 code :: {}", code);
         String accessToken = googleAPI.requestAccessToken(code);
@@ -61,9 +60,16 @@ public class GoogleLoginController {
             }
             session.setAttribute("userId", userInfo.get("id"));
             session.setAttribute("access_Token", accessToken);
-            redirectAttributes.addAttribute("status", true);
+            session.setAttribute("type", "GOOGLE");
+            session.setAttribute("status", "true");
         }
 
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout/GOOGLE")
+    public String logout(HttpSession session) {
+        session.invalidate();
         return "redirect:/";
     }
 }
