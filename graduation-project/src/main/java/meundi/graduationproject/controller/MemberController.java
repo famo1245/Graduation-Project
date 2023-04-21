@@ -10,22 +10,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/members")
 public class MemberController {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
 
-    @GetMapping("/members/new")
+    @GetMapping("/new")
     public String createForm() {
         return "members/loginForm";
     }
 
-    @PostMapping("/members/new")
+    @PostMapping("/new")
     public String create(MemberForm form) {
         Member member = new Member();
         member.setId(form.getId());
@@ -42,7 +44,7 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @GetMapping("/members/info")
+    @GetMapping("/info")
     public String myInfo(Model model, HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
         Member myInfo = memberRepository.findById(userId);
