@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class GoogleOauth implements SocialLoginOauth{
+public class GoogleOauth implements SocialLoginOauth {
 
     @Value("${api.google.url}")
     private String GOOGLE_SNS_BASE_URL;
