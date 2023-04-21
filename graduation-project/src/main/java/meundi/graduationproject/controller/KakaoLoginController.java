@@ -3,11 +3,13 @@ package meundi.graduationproject.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.repository.MemberRepository;
-import meundi.graduationproject.service.NaverAPI;
+import meundi.graduationproject.service.KaKaoAPI;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,27 +20,25 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 @RequestMapping(value = "/auth")
 @Slf4j
-public class NaverLoginController {
+public class KakaoLoginController {
 
-    private final NaverAPI naverAPI;
+    private final KaKaoAPI kakao;
     private final MemberRepository memberRepository;
 
-    @GetMapping(value = "/NAVER")
-    public void socialLoginType(HttpServletResponse response) throws Exception{
-        log.info("Naver Login");
-        String redirectURL = naverAPI.getOauthRedirectURL();
-        log.info("redirect url: {}", redirectURL);
+    @GetMapping(value = "/KAKAO")
+    public void socialLoginType(HttpServletResponse response) throws Exception {
+        log.info("Kakao login");
+        String redirectURL = kakao.getOauthRedirectUrl();
         response.sendRedirect(redirectURL);
     }
 
-    @GetMapping(value = "/naver/callback")
-    public String callback(@RequestParam(name = "code") String code,
-                           HttpSession session,
-                           Model model) {
-        log.info(">> 소셜 로그인 API 서버로부터 받은 code :: {}", code);
-        String access_token = naverAPI.requestAccessToken(code);
-        log.info("access token: {}", access_token);
-        HashMap<String, Object> userInfo = naverAPI.getUserInfo(access_token);
+    @GetMapping("/kakao/callback")
+    public String home(@RequestParam("code") String code,
+                       HttpSession session,
+                       Model model) {
+        String accessToken = kakao.getAccessToken(code);
+        log.info("access token={}", accessToken);
+        HashMap<String, Object> userInfo = kakao.getUserInfo(accessToken);
         log.info("userInfo={}", userInfo);
 
         if (userInfo.get("email") != null) {
@@ -50,16 +50,17 @@ public class NaverLoginController {
                 return "/members/createMemberForm";
             }
             session.setAttribute("userId", userInfo.get("id"));
-            session.setAttribute("access_Token", access_token);
-            session.setAttribute("type", "NAVER");
+            session.setAttribute("access_Token", accessToken);
+            session.setAttribute("type", "KAKAO");
             session.setAttribute("status", "true");
         }
 
         return "redirect:/";
     }
 
-    @GetMapping("/logout/NAVER")
+    @RequestMapping("/logout/KAKAO")
     public String logout(HttpSession session) {
+        kakao.logout((String)session.getAttribute("access_Token"));
         session.invalidate();
         return "redirect:/";
     }

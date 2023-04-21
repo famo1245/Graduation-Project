@@ -18,54 +18,15 @@ import java.util.HashMap;
 
 @Slf4j
 @Controller
-@RequiredArgsConstructor
 public class HomeController {
 
-    private final KaKaoAPI kakao;
-    private final MemberRepository memberRepository;
-
-    @RequestMapping("/")
+    @GetMapping("/")
     public String home() {
         return "index";
-    }
-
-    @GetMapping("/home/member")
-    public String home(@RequestParam("code") String code,
-                       HttpSession session,
-                       RedirectAttributes redirectAttributes,
-                       Model model) {
-        String accessToken = kakao.getAccessToken(code);
-        log.info("access token={}", accessToken);
-        HashMap<String, Object> userInfo = kakao.getUserInfo(accessToken);
-        log.info("userInfo={}", userInfo);
-
-        if (userInfo.get("email") != null) {
-            if(memberRepository.findById((Long) userInfo.get("id")) == null) {
-                model.addAttribute("id", userInfo.get("id"));
-                model.addAttribute("email", userInfo.get("email"));
-                model.addAttribute("gender", userInfo.get("gender"));
-                model.addAttribute("age_range", userInfo.get("age_range"));
-                return "/members/createMemberForm";
-            }
-            session.setAttribute("userId", userInfo.get("id"));
-            session.setAttribute("access_Token", accessToken);
-            redirectAttributes.addAttribute("status", true);
-        }
-
-        return "redirect:/";
     }
 
     @RequestMapping("/members/login")
     public String login() {
         return "members/loginForm";
-    }
-
-    @RequestMapping("/members/logout")
-    public String logout(HttpSession session) {
-        kakao.kakaoLogout((String)session.getAttribute("access_Token"));
-        session.removeAttribute("access_Token");
-        session.removeAttribute("userId");
-        session.invalidate();
-        return "redirect:/";
     }
 }
