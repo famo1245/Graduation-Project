@@ -34,7 +34,6 @@ public class NaverLoginController {
     @GetMapping(value = "/naver/callback")
     public String callback(@RequestParam(name = "code") String code,
                            HttpSession session,
-                           RedirectAttributes redirectAttributes,
                            Model model) {
         log.info(">> 소셜 로그인 API 서버로부터 받은 code :: {}", code);
         String access_token = naverAPI.requestAccessToken(code);
@@ -52,9 +51,16 @@ public class NaverLoginController {
             }
             session.setAttribute("userId", userInfo.get("id"));
             session.setAttribute("access_Token", access_token);
-            redirectAttributes.addAttribute("status", true);
+            session.setAttribute("type", "NAVER");
+            session.setAttribute("status", "true");
         }
 
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout/NAVER")
+    public String logout(HttpSession session) {
+        session.invalidate();
         return "redirect:/";
     }
 }
