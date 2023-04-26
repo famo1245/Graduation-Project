@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.domain.Tiers;
-import meundi.graduationproject.repository.MemberRepository;
 import meundi.graduationproject.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +19,6 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/members")
 public class MemberController {
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
 
     @GetMapping("/new")
     public String createForm() {
@@ -47,7 +45,7 @@ public class MemberController {
     @GetMapping("/info")
     public String myInfo(Model model, HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
-        Member myInfo = memberRepository.findById(userId);
+        Member myInfo = memberService.findById(userId);
         if(myInfo != null) {
             model.addAttribute("myInfo", myInfo);
         }
