@@ -2,7 +2,6 @@ package meundi.graduationproject.service;
 
 import lombok.RequiredArgsConstructor;
 import meundi.graduationproject.domain.login.SocialLoginType;
-import meundi.graduationproject.repository.MemberRepository;
 import meundi.graduationproject.service.social.GoogleOauth;
 import meundi.graduationproject.service.social.KakaoOauth;
 import meundi.graduationproject.service.social.NaverOauth;
