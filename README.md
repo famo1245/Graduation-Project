@@ -41,6 +41,7 @@
   - CultureService class의 메서드에서 중복되는 내용 refactor 필요
   - 네이버 로그인의 경우 id가 string으로 넘어오기 때문에 Long type으로 변환 로직 -> 조금 더 안전하게 구현 할 필요 있음
   - 나이대를 나이로 바꿀지 결정 필요
+  - 보안성을 위해 member dto 
   - ~~Login controller에서 repository 의존~~
   - ~~로그인 api 하나로 refactor 필요~~
   - ~~문화 생활 db pk 역순 저장~~
