@@ -1,8 +1,11 @@
 # 메운디 7.4
 
 - 문화 생활 공공 데이터를 이용한 커뮤니티 서비스
+---
+## Rule
 - Push 전 항상 Pull 한번 씩 하기
-- Push 후 진행 상황 최신화 할 것
+- Push 후, 카톡 방에 공지 & Readme에 진행 상황 최신화 할 것
+- 자신의 branch에 push 후 master branch에 pull request 할 것
 ---
 
 ## 개요
@@ -31,13 +34,14 @@
 - 04.08 보기 편하게 문화 상세 페이지에 페이지네이션 적용, DB에서 역순으로 읽어와서 화면에 출력
 - 04.09 구글 로그인 구글 api 내에서 테스트 완료, 코드 적용 
 - 04.10 구글 로그인, 네이버 로그인 사용자 정보 가져와서 DB에 저장 완료, 로그아웃 구현 필요
-- 04.21 git ignore 적용, 소셜 로그인 통합을 위한 refactoring 준비단계
+- 04.21 git ignore 적용, 소셜 로그인 통합을 위한 refactoring 준비단계, Member DTO 생성
 - **TODO**
   - **로그인 api 하나로 refactor 필요** 
   - jpa를 사용하는 repository 함수명 refactor 필요
   - CultureService class의 메서드에서 중복되는 내용 refactor 필요
   - 네이버 로그인의 경우 id가 string으로 넘어오기 때문에 Long type으로 변환 로직 -> 조금 더 안전하게 구현 할 필요 있음
   - 나이대를 나이로 바꿀지 결정 필요
+  - Login controller에서 repository 의존 
   - ~~문화 생활 db pk 역순 저장~~
   - ~~매일 업데이트 어떻게 할 건지~~
   - ~~구글 로그인으로 사용자 정보 받아오기~~
