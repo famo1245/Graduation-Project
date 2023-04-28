@@ -3,15 +3,9 @@ package meundi.graduationproject.repository;
 import lombok.RequiredArgsConstructor;
 import meundi.graduationproject.domain.Culture;
 
-import meundi.graduationproject.domain.Member;
-import meundi.graduationproject.domain.Review;
-
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.swing.event.ListDataEvent;
 import java.util.List;
 import java.util.Optional;
 

@@ -1,14 +1,12 @@
-package meundi.graduationproject.service;
+package meundi.graduationproject.service.social;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -23,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class NaverAPI {
+public class NaverOauth implements SocialLoginOauth {
 
     @Value("${api.naver.url}")
     private String NAVER_URL;
@@ -37,10 +35,8 @@ public class NaverAPI {
     private String NAVER_TOKEN_URL;
     @Value("${api.naver.user.url}")
     private String NAVER_USER_URL;
-//    @Value("${api.naver.logout.url}")
-//    private String NAVER_LOGOUT_URL;
 
-
+    @Override
     public String getOauthRedirectURL() {
         Map<String, Object> params = new HashMap<>();
         params.put("scope", "profile");
@@ -54,6 +50,8 @@ public class NaverAPI {
 
         return NAVER_URL + "?" + parameterString;
     }
+
+    @Override
     public String requestAccessToken(String code) {
         try {
             URL url = new URL(NAVER_TOKEN_URL);
@@ -89,7 +87,7 @@ public class NaverAPI {
             }
             if(conn.getResponseCode() == 200){
                 String result = sb.toString();
-                log.info("response={}", sb.toString());
+                log.info("response={}", result);
                 JsonParser parser = new JsonParser();
                 JsonElement element = parser.parse(result);
 
@@ -105,6 +103,7 @@ public class NaverAPI {
         }
     }
 
+    @Override
     public HashMap<String, Object> getUserInfo(String access_token) {
         log.debug("naver: getUserInfo");
 
@@ -151,6 +150,11 @@ public class NaverAPI {
             e.printStackTrace();
         }
         return userInfo;
+    }
+
+    @Override
+    public void logout(String access_Token) {
+        log.info("naver logout");
     }
 
     private String convertGender(String gender) {
