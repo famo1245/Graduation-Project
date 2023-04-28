@@ -7,13 +7,8 @@ import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpSession;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -134,7 +129,7 @@ public class GoogleOauth implements SocialLoginOauth {
             conn.setRequestProperty("Authorization", "Bearer " + access_token);
             conn.setRequestProperty("Accept", "application/json");
 
-            log.info("request: {}", conn.toString());
+            log.info("request: {}", conn);
             int responseCode = conn.getResponseCode();
             log.info("responseCode={}", responseCode);
 

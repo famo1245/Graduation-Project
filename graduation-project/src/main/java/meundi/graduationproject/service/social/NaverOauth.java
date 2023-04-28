@@ -87,7 +87,7 @@ public class NaverOauth implements SocialLoginOauth {
             }
             if(conn.getResponseCode() == 200){
                 String result = sb.toString();
-                log.info("response={}", sb.toString());
+                log.info("response={}", result);
                 JsonParser parser = new JsonParser();
                 JsonElement element = parser.parse(result);
 
