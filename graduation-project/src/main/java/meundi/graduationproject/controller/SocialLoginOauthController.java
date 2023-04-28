@@ -49,7 +49,7 @@ public class SocialLoginOauthController {
             }
             session.setAttribute("userId", userInfo.get("id"));
             session.setAttribute("access_Token", accessToken);
-            session.setAttribute("type", "GOOGLE");
+            session.setAttribute("type", socialLoginType);
             session.setAttribute("status", "true");
         }
         return "redirect:/";
