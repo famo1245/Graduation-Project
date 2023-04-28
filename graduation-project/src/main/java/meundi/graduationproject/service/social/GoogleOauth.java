@@ -185,6 +185,7 @@ public class GoogleOauth implements SocialLoginOauth {
 
     @Override
     public void logout(String access_Token) {
+        log.info("google logout");
     }
 
     private String convertAgeRange(String ageRange) {
