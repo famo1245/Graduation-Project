@@ -36,12 +36,14 @@
 - 04.10 구글 로그인, 네이버 로그인 사용자 정보 가져와서 DB에 저장 완료, 로그아웃 구현 필요
 - 04.21 git ignore 적용, 소셜 로그인 통합을 위한 refactoring 준비단계, Member DTO 생성
 - 04.28 소셜 로그인 통합 완료, 사용하지 않는 import문 삭제, 리뷰 게시판 로그인 할때만 글쓰기 버튼 보이게 함
+- 05.02 사용자 정보 수정 추가, 문화생활 요청 기능 추가, refactoring
 - **TODO**
+  - MemberForm class와 MemberDTO class가 동일하므로 통합 필요
   - jpa를 사용하는 repository 함수명 refactor 필요
   - CultureService class의 메서드에서 중복되는 내용 refactor 필요
-  - 네이버 로그인의 경우 id가 string으로 넘어오기 때문에 Long type으로 변환 로직 -> 조금 더 안전하게 구현 할 필요 있음
   - 나이대를 나이로 바꿀지 결정 필요
-  - 보안성을 위해 member dto 
+  - ~~네이버 로그인의 경우 id가 string으로 넘어오기 때문에 Long type으로 변환 로직 -> 조금 더 안전하게 구현 할 필요 있음~~
+  - ~~보안성을 위해 member dto~~ 
   - ~~Login controller에서 repository 의존~~
   - ~~로그인 api 하나로 refactor 필요~~
   - ~~문화 생활 db pk 역순 저장~~
