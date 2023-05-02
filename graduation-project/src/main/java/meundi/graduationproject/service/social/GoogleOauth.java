@@ -214,14 +214,4 @@ public class GoogleOauth implements SocialLoginOauth {
 
         return convertedAge;
     }
-
-    private Long convertId(String id) {
-        long convertedId = 0L;
-        char[] idList = id.toCharArray();
-        for (char c : idList) {
-            convertedId += c;
-        }
-
-        return convertedId;
-    }
 }

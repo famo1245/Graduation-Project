@@ -19,7 +19,8 @@ import java.util.Objects;
 public class Review {
 
     /*리뷰 고유 번호*/
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "review_id")
     private Long id;
     /*리뷰 작성 시간 */
@@ -32,7 +33,7 @@ public class Review {
     private String reviewTitle;
     /*평점: 1~5*/
     @NotNull
-    @Range(min = 1, max=5)
+    @Range(min = 1, max = 5)
     private int reviewGrade;
     /*userId for 어떤유저가 작성했는지 알기 위해*/
     @ManyToOne
@@ -50,11 +51,18 @@ public class Review {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Review review = (Review) o;
-        return getReviewGrade() == review.getReviewGrade() && Objects.equals(getId(), review.getId()) && Objects.equals(getReviewDateTime(), review.getReviewDateTime()) && Objects.equals(getReviewContents(), review.getReviewContents()) && Objects.equals(getReviewTitle(), review.getReviewTitle()) && Objects.equals(getMember(), review.getMember()) && Objects.equals(getCulture(), review.getCulture()) && Objects.equals(getCultureTitle(), review.getCultureTitle());
+        return getReviewGrade() == review.getReviewGrade() && Objects.equals(getId(), review.getId())
+                && Objects.equals(getReviewDateTime(), review.getReviewDateTime())
+                && Objects.equals(getReviewContents(), review.getReviewContents())
+                && Objects.equals(getReviewTitle(), review.getReviewTitle())
+                && Objects.equals(getMember(), review.getMember())
+                && Objects.equals(getCulture(), review.getCulture())
+                && Objects.equals(getCultureTitle(), review.getCultureTitle());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getReviewDateTime(), getReviewContents(), getReviewTitle(), getReviewGrade(), getMember(), getCulture(), getCultureTitle());
+        return Objects.hash(getId(), getReviewDateTime(), getReviewContents(),
+                getReviewTitle(), getReviewGrade(), getMember(), getCulture(), getCultureTitle());
     }
 }
