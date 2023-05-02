@@ -44,10 +44,11 @@
         <div class="col">
             <button class="btn btn-primary float-end"
                     onclick="location.href='index.html'"
-                    th:onclick="|location.href='@{/?status=true}'|"
+                    th:onclick="|location.href='@{/}'|"
                     type="button">홈 화면으로
             </button>
             <button class="btn btn-primary float-end"
+                    th:onclick="|location.href='@{/members/info/update}'|"
                     type="button">수정
             </button>
         </div>

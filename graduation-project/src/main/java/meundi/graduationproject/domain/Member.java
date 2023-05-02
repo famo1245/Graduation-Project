@@ -1,14 +1,14 @@
 package meundi.graduationproject.domain;
 
 import lombok.Getter;
-import lombok.Setter;
+import meundi.graduationproject.controller.MemberForm;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
+@Getter
 public class Member {
 
     @Id
@@ -34,4 +34,24 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Review> reviews = new ArrayList<>();
+
+    //==create logic==//
+    public void create(Long id, String email, String nickName, String gender, String district, String age_range,
+                               String favoriteCategory) {
+        this.id = id;
+        this.email = email;
+        this.nickName = nickName;
+        this.gender = gender;
+        this.district = district;
+        this.age_range = age_range;
+        this.favoriteCategory = favoriteCategory;
+        this.tiers = Tiers.BRONZE;
+    }
+
+    //==update logic==//
+    public void update(MemberForm form) {
+        this.nickName = form.getNickName();
+        this.district = form.getDistrict();
+        this.favoriteCategory = form.getFavoriteCategory();
+    }
 }
