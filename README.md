@@ -37,6 +37,7 @@
 - 04.21 git ignore 적용, 소셜 로그인 통합을 위한 refactoring 준비단계, Member DTO 생성
 - 04.28 소셜 로그인 통합 완료, 사용하지 않는 import문 삭제, 리뷰 게시판 로그인 할때만 글쓰기 버튼 보이게 함
 - 05.02 사용자 정보 수정 추가, 문화생활 요청 기능 추가, refactoring
+- 05.12 문화 상세페이지에서 목록으로 링크 수정
 - **TODO**
   - MemberForm class와 MemberDTO class가 동일하므로 통합 필요
   - jpa를 사용하는 repository 함수명 refactor 필요
