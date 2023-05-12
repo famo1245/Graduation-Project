@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.domain.Review;
+import meundi.graduationproject.domain.ReviewComment;
 import meundi.graduationproject.repository.ReviewSearch;
 import meundi.graduationproject.service.CultureService;
 import meundi.graduationproject.service.ReviewService;
@@ -32,7 +33,8 @@ public class ReviewController {
     public String SearchReview(@ModelAttribute("reviewSearch") ReviewSearch reviewSearch, Model model) throws MalformedURLException {
 //        테스트용 문화
         Culture testCulture = new Culture();
-        testCulture.InsertCultureFromJson("test"," ","http://www.gbcf.or.kr/load.asp?subPage=110.View&page=1&idx=114","\thttps://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=26774fbc85b14bc29865f3274b0951ab&thumb=Y",
+        testCulture.InsertCultureFromJson("test"," ","http://www.gbcf.or.kr/load.asp?subPage=110.View&page=1&idx=114",
+                "\thttps://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=26774fbc85b14bc29865f3274b0951ab&thumb=Y",
                 "강북구","2022-05-12","2022-04-25","뮤지컬/오페라"," ","강북문화예술회관 대공연장");
         cultureService.insertCulture(testCulture);
         // 테스트용 리뷰
@@ -55,7 +57,20 @@ public class ReviewController {
     public String reviewDetail(@PathVariable Long review_id, Model model) {
         Review reviewDetail = reviewService.findOne(review_id);
         model.addAttribute("reviewDetail", reviewDetail);
+        model.addAttribute("reviewComment",new ReviewComment());
         return "review/reviewDetail";
+    }
+    @PostMapping("/reviewDetail/{review_id}")
+    public String reviewAddComment(@Validated @ModelAttribute ReviewComment reviewComment
+            ,@PathVariable Long review_id, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        redirectAttributes.addAttribute("reviewId",review_id);
+        /* 이를 지나치지 않고 에러를 띄움 왜지*/
+        if(bindingResult.hasErrors()){
+            return "redirect:/review/reviewDetail/{reviewId}";
+        }
+        reviewComment.setReview(reviewService.findOne(review_id));
+        reviewService.insertReviewComment(reviewComment);
+        return "redirect:/review/reviewDetail/{reviewId}";
     }
 
     @GetMapping("/reviewWrite")/*리뷰 작성화면*/

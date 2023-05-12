@@ -8,6 +8,10 @@
         .container {
             max-width: 560px;
         }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
     </style>
 </head>
 <body>
@@ -52,11 +56,43 @@
     <hr class="my-4">
 
     <div class="row">
+        <div class="col">
         <a href="#" th:href="@{/review/reviewDetail/{reviewId}/edit(reviewId=${reviewDetail.id})}"
            class="btn btn-primary" role="button">수정</a>
+        </div>
     </div>
-    <div class="row">
-
+    <div>
+        <form action="reviewDetail.html" th:action th:object="${reviewComment}" method="post">
+            <div>
+                <label for="content">댓글 내용</label>
+                <input type="text" id="content" th:field="*{content}"
+                        th:errorclass="field-error" class="form-control" placeholder="댓글을 입력하세요.">
+                <div class="field-error" th:errors="*{content}"> 댓글 내용 오류
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">댓글 등록</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>댓쓴이</th>
+                <th>댓글내용</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="comment : ${reviewDetail.getReviewComments()}">
+                <td th:text="${comment.getContent()}"></td>
+                <td th:text="${comment.getContent()}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
     <div class="row">

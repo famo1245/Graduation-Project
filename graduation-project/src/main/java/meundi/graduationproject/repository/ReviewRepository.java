@@ -2,6 +2,7 @@ package meundi.graduationproject.repository;
 
 import lombok.RequiredArgsConstructor;
 import meundi.graduationproject.domain.Review;
+import meundi.graduationproject.domain.ReviewComment;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
@@ -46,29 +47,22 @@ public class ReviewRepository {
             jpql += " or r.reviewTitle like :reviewTitle";
         }
         TypedQuery<Review> query1 = em.createQuery(jpql, Review.class);
-        if (StringUtils.hasText(reviewSearch.getTotal())){
+        if (StringUtils.hasText(reviewSearch.getTotal())) {
             query1.setParameter("title", reviewSearch.getTotal());
             query1.setParameter("reviewTitle", reviewSearch.getTotal());
         }
         List<Review> resultList1 = query1.getResultList();
         //중복제거 후 내보내기
         return resultList1.stream().distinct().collect(Collectors.toList());
+    }
+    // 리뷰 댓글 로직
 
-
-
-
-//        //리뷰 제목으로 검색 결과
-//        if (StringUtils.hasText(reviewSearch.getTotal())) {
-//            jpql += " and r.reviewTitle like :reviewTitle";
-//        }
-//        TypedQuery<Review> query2 = em.createQuery(jpql, Review.class);
-//        if (StringUtils.hasText(reviewSearch.getTotal())){
-//            query2.setParameter("reviewTitle", reviewSearch.getTotal());
-//        }
-//        List<Review> resultList2 = query2.getResultList();
-//
-//        // 합치기
-//        resultList1.addAll(resultList2);
-
+    //댓글 저장
+    public void saveComment(ReviewComment reviewComment){em.persist(reviewComment);}
+    //해당 리뷰의 댓글 불러오기
+    public List<ReviewComment> findReviewComment(Review review){
+        return em.createQuery("select sc from ReviewComment sc where sc.review= :review", ReviewComment.class)
+                .setParameter("review",review)
+                .getResultList();
     }
 }

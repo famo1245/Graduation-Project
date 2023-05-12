@@ -5,6 +5,7 @@ import lombok.Setter;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Setter
@@ -15,6 +16,7 @@ public class ReviewComment {
     @Column(name = "ReviewComment_id")
     private Long id;
     // 댓글
+    @NotBlank
     private String content;
     // 댓글 작성자
     @ManyToOne
