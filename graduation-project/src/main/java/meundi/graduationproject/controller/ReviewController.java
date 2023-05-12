@@ -29,6 +29,18 @@ public class ReviewController {
 
     @GetMapping /*home*/
     public String SearchReview(@ModelAttribute("reviewSearch") ReviewSearch reviewSearch, Model model) {
+//        테스트 용 문화, 리뷰
+        Culture TestCulture = new Culture("test");
+        cultureService.insertCulture(TestCulture);
+        Review testReview = new Review();
+        testReview.setReviewTitle(String.valueOf(LocalDateTime.now()));
+        testReview.setReviewContents("리뷰 테스트 내용");
+        testReview.setReviewTitle("리뷰 테스트 제목 ");
+        testReview.setReviewGrade(3);
+        testReview.setCulture(TestCulture);
+        testReview.setCultureTitle(TestCulture.getTitle());
+        reviewService.insertReview(testReview);
+
         List<Review> reviewAll = reviewService.SearchReview(reviewSearch);
         model.addAttribute("reviewAll", reviewAll);
         return "review/reviewHome";
@@ -58,10 +70,7 @@ public class ReviewController {
      * */
     @PostMapping("/reviewWrite")/*리뷰 작성시, 내용 넘겨주고, 작성된 화면으로 넘어감*/
     public String addReview(@Validated @ModelAttribute Review review, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        /* 문화 객체 받아오기 귀찮아서 제목만 있는 테스트용 문화 DB에 넣기*/
-        Culture TestCulture = new Culture();
-        TestCulture.setTitle("test");
-        cultureService.insertCulture(TestCulture);
+
 
         /* 같은 문화 제목이 없을때, 오류*/
         if (cultureService.findOneByTitle(review.getCultureTitle()).isEmpty()) {

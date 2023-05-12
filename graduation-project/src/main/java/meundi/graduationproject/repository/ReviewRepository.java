@@ -40,7 +40,7 @@ public class ReviewRepository {
     public List<Review> SearchReview(ReviewSearch reviewSearch) {
         //language=JPAQL
         String jpql = "select r from Review r join r.culture c";
-        // 문화 이름으로 검색 결과
+        // 문화 이름, 리뷰 제목으로 검색 결과
         if (StringUtils.hasText(reviewSearch.getTotal())) {
             jpql += " where c.title like :title";
             jpql += " or r.reviewTitle like :reviewTitle";

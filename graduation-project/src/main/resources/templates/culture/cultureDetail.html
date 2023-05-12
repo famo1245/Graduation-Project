@@ -42,9 +42,10 @@
     </div>
     <div class="row">
         <div class="col">
+<!--     해당 문화리스트 페이지로 갈 수 있게 href 수정 필요       -->
             <button class="btn btn-primary float-end"
                     onclick="location.href='cultureList.html'"
-                    th:onclick="|location.href='@{/cultures}'|"
+                    th:onclick="|location.href='@{/cultures/1}'|"
                     type="button">목록으로
             </button>
         </div>

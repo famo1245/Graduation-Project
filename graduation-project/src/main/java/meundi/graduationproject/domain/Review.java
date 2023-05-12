@@ -31,9 +31,9 @@ public class Review {
     /*리뷰 제목*/
     @NotBlank
     private String reviewTitle;
-    /*평점: 1~5*/
+    /*평점: 0~5*/
     @NotNull
-    @Range(min = 1, max = 5)
+    @Range(min = 0, max = 5)
     private int reviewGrade;
     /*userId for 어떤유저가 작성했는지 알기 위해*/
     @ManyToOne
