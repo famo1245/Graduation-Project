@@ -19,33 +19,33 @@
                 </td>
             </tr>
             <tr>
-<!--                <td>제목</td>-->
+                <!--                <td>제목</td>-->
                 <td th:text="${culture.title}">제목</td>
             </tr>
             <tr>
-<!--                <td>분류</td>-->
+                <!--                <td>분류</td>-->
                 <td th:text="${culture.codeName}">분류</td>
             </tr>
             <tr>
-<!--                <td>시작/종료일</td>-->
+                <!--                <td>시작/종료일</td>-->
                 <td th:text="${culture.date}">시작/종료일</td>
             </tr>
             <tr>
-<!--                <td>지역구</td>-->
+                <!--                <td>지역구</td>-->
                 <td th:text="${culture.guname}">지역구</td>
             </tr>
             <tr>
-<!--                <td>상세 정보</td>-->
+                <!--                <td>상세 정보</td>-->
                 <td><a th:href="${culture.org_link}">상세 정보 링크</a></td>
             </tr>
         </table>
     </div>
     <div class="row">
         <div class="col">
-<!--     해당 문화리스트 페이지로 갈 수 있게 href 수정 필요       -->
+            <!--     해당 문화리스트 페이지로 갈 수 있게 href 수정 필요       -->
             <button class="btn btn-primary float-end"
                     onclick="location.href='cultureList.html'"
-                    th:onclick="|location.href='@{/cultures/1}'|"
+                    th:onclick="|location.href='@{/cultures/{page}(page=${page})}'|"
                     type="button">목록으로
             </button>
         </div>
