@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>마이페이지</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>마이페이지</h2>
+    </div>
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <tr>
+                <td>ID</td>
+                <td th:text="${myInfo.getId()}">ID</td>
+            </tr>
+            <tr>
+                <td>닉네임</td>
+                <td th:text="${myInfo.getNickName()}">닉네임</td>
+            </tr>
+            <tr>
+                <td>이메일</td>
+                <td th:text="${myInfo.getEmail()}">이메일</td>
+            </tr>
+            <tr>
+                <td>거주 지역</td>
+                <td th:text="${myInfo.getDistrict()}">거주 지역</td>
+            </tr>
+            <tr>
+                <td>선호하는 카테고리</td>
+                <td th:text="${myInfo.getFavoriteCategory()}">선호하는 카테고리</td>
+            </tr>
+            <tr>
+                <td>티어</td>
+                <td th:text="${myInfo.getTiers()}">티어</td>
+            </tr>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='index.html'"
+                    th:onclick="|location.href='@{/}'|"
+                    type="button">홈 화면으로
+            </button>
+            <button class="btn btn-primary float-end"
+                    th:onclick="|location.href='@{/members/info/update}'|"
+                    type="button">수정
+            </button>
+        </div>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>
