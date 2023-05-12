@@ -45,9 +45,16 @@
             </div>
         </div>
         <div>
-            <label for="cultureTitle">리뷰 문화</label>
-            <input type="text" id="cultureTitle" name="cultureTitle" class="form-control"
-                   value="1" th:value="*{cultureTitle}" readonly>
+            <table class="table">
+                <tr>
+                    <td><img th:src="${review.culture.main_img}" alt="대표이미지">
+                    </td>
+                </tr>
+                <tr>
+                    <td th:text="${review.culture.getTitle()}">제목</td>
+                    </td>
+                </tr>
+            </table>
         </div>
         <div>
             <label for="reviewGrade">별점</label>

@@ -25,8 +25,16 @@
         <input type="text" id="reviewTitle" name="reviewTitle" class="form-control" value="1" th:value="${reviewDetail.reviewTitle}" readonly>
     </div>
     <div>
-        <label for="cultureTitle">리뷰 문화</label>
-        <input type="text" id="cultureTitle" name="cultureTitle" class="form-control" value="1" th:value="${reviewDetail.cultureTitle}" readonly>
+        <table class="table">
+            <tr>
+                <td><img th:src="${reviewDetail.culture.main_img}" alt="대표이미지">
+                </td>
+            </tr>
+            <tr>
+                <td th:text="${reviewDetail.culture.getTitle()}">제목</td>
+                </td>
+            </tr>
+        </table>
     </div>
     <div>
         <label for="reviewGrade">리뷰 별점</label>
@@ -46,12 +54,9 @@
     <div class="row">
         <a href="#" th:href="@{/review/reviewDetail/{reviewId}/edit(reviewId=${reviewDetail.id})}"
            class="btn btn-primary" role="button">수정</a>
-     <!--   <div class="col">
-            <button class="w-100 btn btn-secondary btn-lg"
-                    onclick="location.href='editReview.html'"
-                    th:onclick="|location.href='@{/reviewDetail/{reviewId}/edit(reviewId=${reviewDetail.reviewId})}'|"
-                    type="button">목록으로</button>
-        </div>-->
+    </div>
+    <div class="row">
+
     </div>
 
     <div class="row">
