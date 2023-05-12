@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.net.MalformedURLException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -28,17 +29,20 @@ public class ReviewController {
     private final CultureService cultureService;
 
     @GetMapping /*home*/
-    public String SearchReview(@ModelAttribute("reviewSearch") ReviewSearch reviewSearch, Model model) {
-//        테스트 용 문화, 리뷰
-        Culture TestCulture = new Culture("test");
-        cultureService.insertCulture(TestCulture);
+    public String SearchReview(@ModelAttribute("reviewSearch") ReviewSearch reviewSearch, Model model) throws MalformedURLException {
+//        테스트용 문화
+        Culture testCulture = new Culture();
+        testCulture.InsertCultureFromJson("test"," ","http://www.gbcf.or.kr/load.asp?subPage=110.View&page=1&idx=114","\thttps://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=26774fbc85b14bc29865f3274b0951ab&thumb=Y",
+                "강북구","2022-05-12","2022-04-25","뮤지컬/오페라"," ","강북문화예술회관 대공연장");
+        cultureService.insertCulture(testCulture);
+        // 테스트용 리뷰
         Review testReview = new Review();
         testReview.setReviewTitle(String.valueOf(LocalDateTime.now()));
         testReview.setReviewContents("리뷰 테스트 내용");
         testReview.setReviewTitle("리뷰 테스트 제목 ");
         testReview.setReviewGrade(3);
-        testReview.setCulture(TestCulture);
-        testReview.setCultureTitle(TestCulture.getTitle());
+        testReview.setCulture(testCulture);
+        testReview.setCultureTitle(testCulture.getTitle());
         reviewService.insertReview(testReview);
 
         List<Review> reviewAll = reviewService.SearchReview(reviewSearch);
