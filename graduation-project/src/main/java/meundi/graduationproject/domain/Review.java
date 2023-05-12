@@ -46,6 +46,7 @@ public class Review {
     @NotBlank
     private String cultureTitle;
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
