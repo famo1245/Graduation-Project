@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -46,6 +47,8 @@ public class Review {
     @NotBlank
     private String cultureTitle;
 
+    @OneToMany(mappedBy = "review")
+    private List<ReviewComment>  reviewComments;
 
     @Override
     public boolean equals(Object o) {
@@ -56,7 +59,6 @@ public class Review {
                 && Objects.equals(getReviewDateTime(), review.getReviewDateTime())
                 && Objects.equals(getReviewContents(), review.getReviewContents())
                 && Objects.equals(getReviewTitle(), review.getReviewTitle())
-                && Objects.equals(getMember(), review.getMember())
                 && Objects.equals(getCulture(), review.getCulture())
                 && Objects.equals(getCultureTitle(), review.getCultureTitle());
     }
