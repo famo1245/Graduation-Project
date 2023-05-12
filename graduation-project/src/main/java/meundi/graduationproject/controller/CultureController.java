@@ -40,8 +40,8 @@ public class CultureController {
         return "culture/cultureList";
     }
 
-    @GetMapping("/cultures/cultureDetail/{culture_id}")
-    public String cultureDetail(@PathVariable Long culture_id, Model model) {
+    @GetMapping("/cultures/{page}/{culture_id}")
+    public String cultureDetail(@PathVariable int page, @PathVariable Long culture_id, Model model) {
         Culture findCulture = cultureService.findOne(culture_id);
         model.addAttribute("culture", findCulture);
         return "culture/cultureDetail";
