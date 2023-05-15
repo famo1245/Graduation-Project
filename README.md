@@ -41,8 +41,10 @@
 - 04.28 소셜 로그인 통합 완료, 사용하지 않는 import문 삭제, 리뷰 게시판 로그인 할때만 글쓰기 버튼 보이게 함
 - 05.02 사용자 정보 수정 추가, 문화생활 요청 기능 추가, refactoring
 - 05.12 문화 상세페이지에서 목록으로 링크 수정
+- 05.15 문화 상세페이지 링크 수정, 목록으로 뒤로가기로 변경, 홈 화면에서 최신 문화 생활 5개 보여줌
 - **TODO**
   - MemberForm class와 MemberDTO class가 동일하므로 통합 필요
+  - Server 실행시 문화생활 DB에 내용 있으면 문화생활 가져오지 않게 하기 필요
   - jpa를 사용하는 repository 함수명 refactor 필요
   - CultureService class의 메서드에서 중복되는 내용 refactor 필요
   - 나이대를 나이로 바꿀지 결정 필요
