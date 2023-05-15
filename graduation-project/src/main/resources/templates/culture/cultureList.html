@@ -40,7 +40,7 @@
                 <td th:text="${culture.date}">시작/종료일</td>
                 <td th:text="${culture.guname}">지역구</td>
                 <td><a href="cultureDetail.html"
-                       th:href="@{/cultures/{page}/{culture_id}(page=${page},culture_id=${culture.id})}"
+                       th:href="@{/cultures/detail/{culture_id}(culture_id=${culture.id})}"
                        th:text="${culture.title}">제목</a>
                 </td>
             </tr>
