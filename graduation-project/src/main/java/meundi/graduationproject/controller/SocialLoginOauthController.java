@@ -45,7 +45,7 @@ public class SocialLoginOauthController {
                 model.addAttribute("email", userInfo.get("email"));
                 model.addAttribute("gender", userInfo.get("gender"));
                 model.addAttribute("age_range", userInfo.get("age_range"));
-                return "/members/createMemberForm";
+                return "forward:/members/new";
             }
             session.setAttribute("userId", userInfo.get("id"));
             session.setAttribute("access_Token", accessToken);
