@@ -22,14 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/members")
 public class MemberController {
-    private final MemberService memberService;
 
-    @ModelAttribute("districts")
-    public List<String> districtName() {
-        List<String> districts = new ArrayList<>();
-        districts.add("종로구");
-        return districts;
-    }
+    private final MemberService memberService;
 
     @GetMapping("/login")
     public String login() {
@@ -76,5 +70,49 @@ public class MemberController {
         Long userId = (Long) session.getAttribute("userId");
         memberService.updateMember(userId, form);
         return "redirect:/members/info";
+    }
+
+    //지역구
+    @ModelAttribute("districts")
+    public List<String> districtName() {
+        List<String> districts = new ArrayList<>();
+        districts.add("강남구");
+        districts.add("강동구");
+        districts.add("강북구");
+        districts.add("강서구");
+        districts.add("관악구");
+        districts.add("광진구");
+        districts.add("구로구");
+        districts.add("금천구");
+        districts.add("노원구");
+        districts.add("도봉구");
+        districts.add("동대문구");
+        districts.add("동작구");
+        districts.add("마포구");
+        districts.add("서대문구");
+        districts.add("서초구");
+        districts.add("성동구");
+        districts.add("성북구");
+        districts.add("송파구");
+        districts.add("양천구");
+        districts.add("영등포구");
+        districts.add("용산구");
+        districts.add("은평구");
+        districts.add("종로구");
+        districts.add("중구");
+        districts.add("중랑구");
+        return districts;
+    }
+
+    //카테고리
+    @ModelAttribute("categories")
+    public List<String> getCategories() {
+        List<String> categories = new ArrayList<>();
+        categories.add("뮤지컬/오페라");
+        categories.add("클래식");
+        categories.add("축제");
+        categories.add("문화교양/강좌");
+        categories.add("연극");
+        return categories;
     }
 }

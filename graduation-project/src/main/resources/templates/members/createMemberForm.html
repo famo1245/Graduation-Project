@@ -9,6 +9,7 @@
         .container {
             max-width: 560px;
         }
+
         .field-error {
             border-color: #dc3545;
             color: #dc3545;
@@ -22,36 +23,43 @@
     </div>
     <hr class="my-4">
     <form th:action="@{/members/new}" th:method="post" th:object="${memberForm}">
-        <div class="form-group">
-            <div>
-            <label for="id">아이디: </label>
-            <input id="id" name="id" th:value="${id}" readonly>
-            </div>
-            <div>
-            <label for="email">이메일: </label>
-            <input id="email" name="email" th:value="${email}" readonly>
-            </div>
-            <div>
-            <label for="gender">성별: </label>
-            <input id="gender" name="gender" th:value="${gender}" readonly>
-            </div>
-            <div>
-            <label for="age_range">나이대: </label>
-            <input id="age_range" name="age_range" th:value="${age_range}" readonly>
-            </div>
-            <div>
-            <label for="nickName">닉네임: </label>
-            <input type="text" id="nickName" th:field="*{nickName}">
-            </div>
-            <div>
-            <label for="district">거주 지역: </label>
-            <input type="text" id="district" th:field="*{district}">
-            </div>
-            <div>
-            <label for="favoriteCategory">선호 카테고리: </label>
-            <input type="text" id="favoriteCategory" th:field="*{favoriteCategory}">
+        <div>
+            <label for="id">아이디</label>
+            <input id="id" name="id" th:value="${id}" class="form-control" readonly>
+        </div>
+        <div>
+            <label for="email">이메일</label>
+            <input id="email" name="email" th:value="${email}" class="form-control" readonly>
+        </div>
+        <div>
+            <label for="gender">성별</label>
+            <input id="gender" name="gender" th:value="${gender}" class="form-control" readonly>
+        </div>
+        <div>
+            <label for="age_range">연령</label>
+            <input id="age_range" name="age_range" th:value="${age_range}" class="form-control" readonly>
+        </div>
+        <div>
+            <label for="nickName">닉네임</label>
+            <input type="text" id="nickName" th:field="*{nickName}" class="form-control">
+        </div>
+        <div>
+            <label for="district">거주 지역</label>
+            <select id="district" th:field="*{district}" class="form-select">
+                <option value="">거주 지역 선택</option>
+                <option th:each="district : ${districts}" th:value="${district}"
+                        th:text="${district}">지역구
+                </option>
+            </select>
+        </div>
+        <div>
+            <div>선호 카테고리</div>
+            <div th:each="category : ${categories}" class="form-check form-check-inline">
+                <input type="checkbox" th:field="*{favoriteCategory}" th:value="${category}" class="form-check-input">
+                <label th:for="${#ids.prev('favoriteCategory')}" th:text="${category}" class="form-check-label">카테고리</label>
             </div>
         </div>
+        <hr class="my-4">
         <div class="row">
             <div class="col">
                 <button class="btn btn-primary float-end"
