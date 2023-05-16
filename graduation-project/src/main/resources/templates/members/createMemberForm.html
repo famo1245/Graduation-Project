@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>회원가입</title>
     <link th:href="@{/css/bootstrap.min.css}"
-          href="/css/bootstrap.min.css" rel="stylesheet">
+          href="../css/bootstrap.min.css" rel="stylesheet">
     <style>
         .container {
             max-width: 560px;
@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-<div class="container" style="max-width: 600px">
+<div class="container">
     <div class="py-5 text-center">
         <h2>회원가입</h2>
     </div>
@@ -44,9 +44,9 @@
             <input type="text" id="nickName" th:field="*{nickName}" class="form-control">
         </div>
         <div>
-            <label for="district">거주 지역</label>
-            <select id="district" th:field="*{district}" class="form-select">
-                <option value="">거주 지역 선택</option>
+            <div>거주 지역</div>
+            <select id="district" class="form-select" th:field="*{district}">
+                <option value="">-----거주 지역 선택-----</option>
                 <option th:each="district : ${districts}" th:value="${district}"
                         th:text="${district}">지역구
                 </option>
@@ -62,10 +62,11 @@
         <hr class="my-4">
         <div class="row">
             <div class="col">
-                <button class="btn btn-primary float-end"
+                <button class="btn btn-primary float-start"
+                        style="margin-right: 5px"
                         type="submit">확인
                 </button>
-                <button class="btn btn-primary float-end"
+                <button class="btn btn-primary float-start"
                         onclick="location.href='index.html'"
                         th:onclick="|location.href='@{/}'|"
                         type="button">취소
