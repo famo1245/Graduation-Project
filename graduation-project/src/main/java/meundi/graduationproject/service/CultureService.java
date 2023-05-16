@@ -46,6 +46,10 @@ public class CultureService {
         return cultureRepository.findAll();
     }
 
+    public Boolean isEmpty() {
+        return findCultureAll().isEmpty();
+    }
+
     public Culture findOne(Long id) {
         return cultureRepository.findOneById(id);
     }
