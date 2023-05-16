@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.DTO.MemberDTO;
 import meundi.graduationproject.domain.Member;
-import meundi.graduationproject.domain.Tiers;
 import meundi.graduationproject.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
