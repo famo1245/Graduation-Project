@@ -4,10 +4,16 @@
     <meta charset="utf-8">
     <title>마이페이지</title>
     <link th:href="@{/css/bootstrap.min.css}"
-          href="/css/bootstrap.min.css" rel="stylesheet">
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+
 </head>
 <body>
-<div class="container" style="max-width: 600px">
+<div class="container">
     <div class="py-5 text-center">
         <h2>마이페이지</h2>
     </div>
@@ -42,12 +48,13 @@
     </div>
     <div class="row">
         <div class="col">
-            <button class="btn btn-primary float-end"
+            <button class="btn btn-primary float-start"
                     onclick="location.href='index.html'"
                     th:onclick="|location.href='@{/}'|"
+                    style="margin-right: 5px"
                     type="button">홈 화면으로
             </button>
-            <button class="btn btn-primary float-end"
+            <button class="btn btn-primary float-start"
                     th:onclick="|location.href='@{/members/info/update}'|"
                     type="button">수정
             </button>
