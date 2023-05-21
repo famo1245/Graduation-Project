@@ -21,6 +21,9 @@ public class ReviewService {
        reviewRepository.save(review);
         return review;
     }
+    public void deleteReview(Review review){
+        reviewRepository.deleteReview(review);
+    }
 
     public void updateReview(Long id, String title, int grade, String content) {
         Review one = reviewRepository.findOne(id);
@@ -43,7 +46,7 @@ public class ReviewService {
     }
     public ReviewComment insertReviewComment(ReviewComment reviewComment){ reviewRepository.saveComment(reviewComment);
         return  reviewComment;}
-
-
+    public void deleteReviewComment(ReviewComment reviewComment){ reviewRepository.deleteComment(reviewComment);}
+    public ReviewComment findReviewComment(Long id){ return reviewRepository.findComment(id);}
 
 }

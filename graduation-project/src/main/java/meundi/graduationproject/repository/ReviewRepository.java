@@ -21,6 +21,7 @@ public class ReviewRepository {
     public void save(Review review) {
         em.persist(review);
     }
+    public void deleteReview(Review review){ em.remove(review);}
     /* 리뷰 이름으로 검색*/
     public Review findOne(Long id) {
         return em.find(Review.class, id);
@@ -59,6 +60,8 @@ public class ReviewRepository {
 
     //댓글 저장
     public void saveComment(ReviewComment reviewComment){em.persist(reviewComment);}
+    public void deleteComment(ReviewComment reviewComment){em.remove(reviewComment);}
+    public ReviewComment findComment(Long id){ return em.find(ReviewComment.class, id);}
     //해당 리뷰의 댓글 불러오기
     public List<ReviewComment> findReviewComment(Review review){
         return em.createQuery("select sc from ReviewComment sc where sc.review= :review", ReviewComment.class)
