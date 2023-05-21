@@ -73,7 +73,7 @@
         </div>
     </div>
     <div>
-        <form action="reviewDetail.html" th:action th:object="${reviewComment}" method="post">
+        <form th:if="${session.status}" action="reviewDetail.html" th:action th:object="${reviewComment}" method="post">
             <div>
                 <label for="content">댓글 내용</label>
                 <input type="text" id="content" th:field="*{content}"

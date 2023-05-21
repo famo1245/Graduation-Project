@@ -61,8 +61,11 @@ public class ReviewController {
     @GetMapping("/reviewDetail/{review_id}") /*리뷰 하나를 클릭 시, 리뷰 자세히 보기*/
     public String reviewDetail(@PathVariable Long review_id, Model model,HttpSession session) {
         Review reviewDetail = reviewService.findOne(review_id);
-        Member member = memberService.findById((Long)session.getAttribute("userId"));
-        model.addAttribute("sessionUser",member);
+        Member member;
+        if(session != null && session.getAttribute("userId") != null){
+            member = memberService.findById((Long)session.getAttribute("userId"));
+            model.addAttribute("sessionUser",member);
+        }
         model.addAttribute("reviewDetail", reviewDetail);
         model.addAttribute("reviewComment",new ReviewComment());
         return "review/reviewDetail";
@@ -83,7 +86,7 @@ public class ReviewController {
         reviewService.insertReviewComment(reviewComment);
         return "redirect:/review/reviewDetail/{reviewId}";
     }
-//    redirect가 왜 안되지...
+
     @GetMapping("/reviewComment/{review_id}/{reviewComment_id}/delete")
     public String reviewDeleteComment(@PathVariable Long review_id,@PathVariable Long reviewComment_id,RedirectAttributes redirectAttributes){
         ReviewComment findComment = reviewService.findReviewComment(reviewComment_id);
@@ -143,7 +146,17 @@ public class ReviewController {
 
 //  리뷰 수정
     @GetMapping("reviewDetail/{review_id}/edit")
-    public String editReviewForm(@PathVariable("review_id") Long reviewId, Model model) {
+    public String editReviewForm(@PathVariable("review_id") Long reviewId, Model model,HttpSession session) {
+        // 세션이 없거나 세션 사용자와 리뷰 작성자가 다르면 거부 (URL 로 직접 접근시, 거부)
+        if (session.getAttribute("userId") != null){
+            Member member = memberService.findById((Long)session.getAttribute("userId"));
+            if(member.getId() != reviewService.findOne(reviewId).getMember().getId()){
+                return "redirect:/reviewDetail/{review_id}";
+            }
+        }
+        else {
+            return "redirect:/reviewDetail/{review_id}";
+        }
         Review review = reviewService.findOne(reviewId);
         model.addAttribute("review", review);
         return "review/editReview";
