@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import java.net.MalformedURLException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -90,7 +91,10 @@ public class ReviewController {
     @GetMapping("/reviewComment/{review_id}/{reviewComment_id}/delete")
     public String reviewDeleteComment(@PathVariable Long review_id,@PathVariable Long reviewComment_id,RedirectAttributes redirectAttributes,HttpSession session){
         ReviewComment findComment = reviewService.findReviewComment(reviewComment_id);
-        if(findComment.getMember().getId() == (Long)session.getAttribute("userId") ){
+        log.info("댓글 작성자: {}", findComment.getMember().getId());
+        log.info("세션 {}", (Long)session.getAttribute("userId"));
+        if(Objects.equals(findComment.getMember().getId(), (Long) session.getAttribute("userId"))){
+            log.info("리뷰 댓글 삭제 성공");
             reviewService.deleteReviewComment(findComment);
         }
         redirectAttributes.addAttribute("reviewId",review_id);
@@ -100,7 +104,10 @@ public class ReviewController {
     @GetMapping("reviewDetail/{review_id}/delete")
     public String reviewDelete(@PathVariable Long review_id,HttpSession session){
         Review review = reviewService.findOne(review_id);
-        if( review.getId() ==(Long)session.getAttribute("userId") ){
+        log.info("리뷰 작성자: {}", review.getMember().getId());
+        log.info("세션 {}", (Long)session.getAttribute("userId"));
+        if(Objects.equals(review.getMember().getId(), (Long) session.getAttribute("userId"))){
+            log.info("리뷰 삭제 성공");
             reviewService.deleteReview(reviewService.findOne(review_id));
         }
         return "redirect:/review";
