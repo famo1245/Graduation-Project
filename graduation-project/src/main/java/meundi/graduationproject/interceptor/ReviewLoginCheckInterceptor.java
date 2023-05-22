@@ -6,7 +6,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+// 로그인 정보가 없으면 접근 거부
 @Slf4j
 public class ReviewLoginCheckInterceptor implements HandlerInterceptor {
     @Override

@@ -88,16 +88,21 @@ public class ReviewController {
     }
 
     @GetMapping("/reviewComment/{review_id}/{reviewComment_id}/delete")
-    public String reviewDeleteComment(@PathVariable Long review_id,@PathVariable Long reviewComment_id,RedirectAttributes redirectAttributes){
+    public String reviewDeleteComment(@PathVariable Long review_id,@PathVariable Long reviewComment_id,RedirectAttributes redirectAttributes,HttpSession session){
         ReviewComment findComment = reviewService.findReviewComment(reviewComment_id);
-        reviewService.deleteReviewComment(findComment);
+        if(findComment.getMember().getId() == (Long)session.getAttribute("userId") ){
+            reviewService.deleteReviewComment(findComment);
+        }
         redirectAttributes.addAttribute("reviewId",review_id);
         return "redirect:/review/reviewDetail/{reviewId}";
     }
     // 리뷰 삭제
     @GetMapping("reviewDetail/{review_id}/delete")
-    public String reviewDelete(@PathVariable Long review_id){
-        reviewService.deleteReview(reviewService.findOne(review_id));
+    public String reviewDelete(@PathVariable Long review_id,HttpSession session){
+        Review review = reviewService.findOne(review_id);
+        if( review.getId() ==(Long)session.getAttribute("userId") ){
+            reviewService.deleteReview(reviewService.findOne(review_id));
+        }
         return "redirect:/review";
     }
 
@@ -117,8 +122,6 @@ public class ReviewController {
      * */
     @PostMapping("/reviewWrite")/*리뷰 작성시, 내용 넘겨주고, 작성된 화면으로 넘어감*/
     public String addReview(@Validated @ModelAttribute Review review, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
-
-
         /* 같은 문화 제목이 없을때, 오류*/
         if (cultureService.findOneByTitle(review.getCultureTitle()).isEmpty()) {
             bindingResult.reject("NoCulture");
