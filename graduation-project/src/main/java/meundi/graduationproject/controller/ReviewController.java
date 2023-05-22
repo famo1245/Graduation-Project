@@ -160,7 +160,7 @@ public class ReviewController {
         // 세션이 없거나 세션 사용자와 리뷰 작성자가 다르면 거부 (URL 로 직접 접근시, 거부)
         if (session.getAttribute("userId") != null){
             Member member = memberService.findById((Long)session.getAttribute("userId"));
-            if(member.getId() != reviewService.findOne(reviewId).getMember().getId()){
+            if(!Objects.equals(member.getId(), reviewService.findOne(reviewId).getMember().getId())){
                 return "redirect:/reviewDetail/{review_id}";
             }
         }
