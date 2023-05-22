@@ -14,6 +14,9 @@
             border-color: #dc3545;
             color: #dc3545;
         }
+        .my-error{
+            border-color: #dc3545;
+        }
     </style>
 </head>
 <body>
@@ -41,16 +44,18 @@
         </div>
         <div>
             <label for="nickName">닉네임</label>
-            <input type="text" id="nickName" th:field="*{nickName}" class="form-control">
+            <input type="text" id="nickName" th:field="*{nickName}" class="form-control" th:errorclass="field-error">
+            <div th:class="field-error" th:errors="*{nickName}">닉네임 오류</div>
         </div>
         <div>
             <div>거주 지역</div>
-            <select id="district" class="form-select" th:field="*{district}">
+            <select id="district" class="form-select" th:field="*{district}" th:errorclass="my-error">
                 <option value="">-----거주 지역 선택-----</option>
                 <option th:each="district : ${districts}" th:value="${district}"
                         th:text="${district}">지역구
                 </option>
             </select>
+            <div th:class="field-error" th:errors="*{district}">지역구 오류</div>
         </div>
         <div>
             <div>선호 카테고리</div>
