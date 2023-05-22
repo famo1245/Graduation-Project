@@ -71,7 +71,7 @@ public class MemberController {
             model.addAttribute("myInfo", myInfo);
         }
 
-        return "/members/myInfo";
+        return "members/myInfo";
     }
 
     @GetMapping("/info/update")
@@ -81,12 +81,32 @@ public class MemberController {
         if(myInfo != null) {
             model.addAttribute("myInfo", myInfo);
         }
-        return "/members/update-myInfo";
+        return "members/update-myInfo";
     }
 
+    //memberForm 으로 변환 해야함
     @PostMapping("/info/update")
-    public String afterUpdate(MemberForm form, HttpSession session) {
+    public String afterUpdate(MemberForm form, BindingResult bindingResult ,HttpSession session, Model model) {
         Long userId = (Long) session.getAttribute("userId");
+        String currentNickName = memberService.findById(userId).getNickName();
+
+        //검증 로직
+        if (!StringUtils.hasText(form.getNickName())) {
+            bindingResult.rejectValue("nickName", "required");
+        }
+        if (!StringUtils.hasText(form.getDistrict())) {
+            bindingResult.rejectValue("district", "required");
+        }
+        if (!form.getNickName().equals(currentNickName)) {
+            if (memberService.validateDuplicatedNickName(form.getNickName())) {
+                MemberDTO myInfo = memberService.research(userId);
+                model.addAttribute("myInfo", myInfo);
+                bindingResult.rejectValue("nickName", "duplicated");
+            }
+        }
+        if (bindingResult.hasErrors()) {
+            return "members/update-myInfo";
+        }
         memberService.updateMember(userId, form);
         return "redirect:/members/info";
     }

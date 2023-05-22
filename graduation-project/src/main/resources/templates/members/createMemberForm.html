@@ -14,7 +14,7 @@
             border-color: #dc3545;
             color: #dc3545;
         }
-        .my-error{
+        .field-error-border{
             border-color: #dc3545;
         }
     </style>
@@ -49,7 +49,7 @@
         </div>
         <div>
             <div>거주 지역</div>
-            <select id="district" class="form-select" th:field="*{district}" th:errorclass="my-error">
+            <select id="district" class="form-select" th:field="*{district}" th:errorclass="field-error-border">
                 <option value="">-----거주 지역 선택-----</option>
                 <option th:each="district : ${districts}" th:value="${district}"
                         th:text="${district}">지역구

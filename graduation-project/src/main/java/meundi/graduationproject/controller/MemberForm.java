@@ -12,4 +12,9 @@ public class MemberForm {
     private String age_range;
     private String district;
     private String favoriteCategory;    // 일단 1개 받기
+
+    //선호 카테고리를 배열로 반환해주는 함수
+    public String[] getFavoriteCategoryList() {
+        return favoriteCategory.split(",");
+    }
 }
