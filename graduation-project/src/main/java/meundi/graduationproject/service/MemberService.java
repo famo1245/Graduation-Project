@@ -21,7 +21,6 @@ public class MemberService {
     * 회원 가입
     */
     public void join(Member member) {
-        validateDuplicated(member.getNickName());
         memberRepository.save(member);
     }
 
@@ -31,10 +30,8 @@ public class MemberService {
     * 중복 확인
     */
     @Transactional(readOnly = true)
-    public void validateDuplicated(String nickname) {
-        if (!memberRepository.findByNickName(nickname).isEmpty()) {
-            throw new IllegalArgumentException("이미 사용중인 닉네임입니다");
-        }
+    public boolean validateDuplicatedNickName(String nickname) {
+        return !memberRepository.findByNickName(nickname).isEmpty();
     }
 
     @Transactional(readOnly = true)
@@ -61,9 +58,6 @@ public class MemberService {
 
     public void updateMember(Long userId, MemberForm myInfo) {
         Member member = findById(userId);
-        if(!member.getNickName().equals(myInfo.getNickName())) {
-            validateDuplicated(myInfo.getNickName());
-        }
         member.update(myInfo);
     }
 }

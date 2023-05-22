@@ -7,6 +7,8 @@ import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,7 +38,25 @@ public class MemberController {
     }
 
     @PostMapping("/new")
-    public String create(MemberForm form) {
+    public String create(MemberForm form, BindingResult bindingResult, Model model) {
+        if (!StringUtils.hasText(form.getNickName())) {
+            bindingResult.rejectValue("nickName", "required");
+        }
+        if (!StringUtils.hasText(form.getDistrict())) {
+            bindingResult.rejectValue("district", "required");
+        }
+        if (memberService.validateDuplicatedNickName(form.getNickName())) {
+            bindingResult.rejectValue("nickName", "duplicated");
+        }
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
+            model.addAttribute("id", form.getId());
+            model.addAttribute("email", form.getEmail());
+            model.addAttribute("gender", form.getGender());
+            model.addAttribute("age_range", form.getAge_range());
+            return "members/createMemberForm";
+        }
         Member member = memberService.createMember(form);
         memberService.join(member);
 
