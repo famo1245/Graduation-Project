@@ -14,6 +14,9 @@
             border-color: #dc3545;
             color: #dc3545;
         }
+        .field-error-border {
+            border-color: #dc3545;
+        }
     </style>
 </head>
 <body>
@@ -24,23 +27,26 @@
     <hr class="my-4">
     <form th:action="@{/members/info/update}" th:method="post" th:object="${myInfo}">
         <div>
-        <label for="nickName">닉네임</label>
-        <input type="text" id="nickName" th:field="*{nickName}" class="form-control">
+            <label for="nickName">닉네임</label>
+            <input type="text" id="nickName" th:field="*{nickName}" class="form-control" th:errorclass="field-error">
+            <div th:class="field-error" th:errors="*{nickName}">닉네임 오류</div>
         </div>
         <div>
-            <label for="district">거주 지역</label>
-            <select id="district" th:field="*{district}" class="form-select">
-                <option value="">거주 지역 선택</option>
+            <div>거주 지역</div>
+            <select id="district" class="form-select" th:field="*{district}" th:errorclass="field-error-border">
+                <option value="">-----거주 지역 선택-----</option>
                 <option th:each="district : ${districts}" th:value="${district}"
                         th:text="${district}">지역구
                 </option>
             </select>
+            <div th:class="field-error" th:errors="*{district}">지역구 오류</div>
         </div>
         <div>
             <div>선호 카테고리</div>
             <div th:each="category : ${categories}" class="form-check form-check-inline">
                 <input type="checkbox" th:field="*{favoriteCategory}" th:value="${category}" class="form-check-input">
-                <label th:for="${#ids.prev('favoriteCategory')}" th:text="${category}" class="form-check-label">카테고리</label>
+                <label th:for="${#ids.prev('favoriteCategory')}" th:text="${category}" class="form-check-label">카테고리
+                </label>
             </div>
         </div>
         <hr class="my-4">
