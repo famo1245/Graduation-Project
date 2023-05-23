@@ -2,7 +2,7 @@ package meundi.graduationproject.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import meundi.graduationproject.controller.MemberForm;
+import meundi.graduationproject.domain.DTO.MemberForm;
 import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.repository.MemberRepository;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package meundi.graduationproject.controller;
+package meundi.graduationproject.domain.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,20 +10,21 @@ import java.util.List;
 
 @Getter @Setter
 public class MemberForm {
-    private Long id;  //unique
+    private Long id;
     private String email;
-    private String nickName;    //unique
+    private String nickName;
     private String gender;
     private String age_range;
     private String district;
     private String favoriteCategory;
     private Tiers tiers;
 
-    //선호 카테고리를 배열로 반환해주는 함수
+    //선호 카테고리를 리스트로 반환하는 함수
     public List<String> getFavoriteCategoryList() {
         return new ArrayList<>(List.of(favoriteCategory.split(",")));
     }
 
+    //Member 객체를 이용하여 setting
     public void setMember(Member member) {
         this.id = member.getId();
         this.email = member.getEmail();

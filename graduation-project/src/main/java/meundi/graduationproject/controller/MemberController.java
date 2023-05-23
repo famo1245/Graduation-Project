@@ -2,6 +2,7 @@ package meundi.graduationproject.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import meundi.graduationproject.domain.DTO.MemberForm;
 import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.service.MemberService;
 import org.springframework.stereotype.Controller;
