@@ -43,9 +43,13 @@
 - 05.02 사용자 정보 수정 추가, 문화생활 요청 기능 추가, refactoring
 - 05.12 문화 상세페이지에서 목록으로 링크 수정
 - 05.15 문화 상세페이지 링크 수정, 목록으로 뒤로가기로 변경, 홈 화면에서 최신 문화 생활 5개 보여줌
+- 05.16 회원가입 페이지 변경, 문화 생활 서버 시작 시 불러옴
+- 05.22 회원가입: 닉네임 중복 등 회원가입 시 validation 추가
+        서버 시작시 Culture table 비어있는지 확인
+- 05.23 내 정보 수정 페이지 validation 추가
+        memberDTO를 memberForm으로 통합
+        review 수정 시 DTO 사용
 - **TODO**
-  - MemberForm class와 MemberDTO class가 동일하므로 통합 필요
-  - Server 실행시 문화생활 DB에 내용 있으면 문화생활 가져오지 않게 하기 필요
   - jpa를 사용하는 repository 함수명 refactor 필요
   - CultureService class의 메서드에서 중복되는 내용 refactor 필요
   - 나이대를 나이로 바꿀지 결정 필요
@@ -56,6 +60,8 @@
   - ~~문화 생활 db pk 역순 저장~~
   - ~~매일 업데이트 어떻게 할 건지~~
   - ~~구글 로그인으로 사용자 정보 받아오기~~
+  - ~~MemberForm class와 MemberDTO class가 동일하므로 통합 필요~~
+  - ~~Server 실행시 문화생활 DB에 내용 있으면 문화생활 가져오지 않게 하기 필요~~
 ---
 
 ### 재준
