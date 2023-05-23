@@ -35,7 +35,16 @@
                 </a>
             </tr>
         </table>
-    </div>
+    <!--</div>
+    <div th:if="${session.status}" th:each="favorite : ${favorites}">
+        <h3 th:text="${favorite.key}">카테고리</h3>
+        <tr th:each="culture : ${favorite.value}">
+            <a th:href="@{/cultures/detail/{culture_id}(culture_id=${culture.id})}" style="text-decoration: none">
+                <img th:src="${culture.main_img}" th:alt="${culture.title}" alt="상세페이지"
+                     width="200" height="200"/>
+            </a>
+        </tr>
+    </div>-->
 </div> <!-- /container -->
 
 </body>

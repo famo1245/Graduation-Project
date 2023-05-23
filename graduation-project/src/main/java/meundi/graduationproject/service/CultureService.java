@@ -21,6 +21,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +45,15 @@ public class CultureService {
 
     public List<Culture> findCultureAll() {
         return cultureRepository.findAll();
+    }
+
+    public List<Culture> findByCategory(String category) {
+        List<Culture> cultureList = cultureRepository.findByCategory(category);
+        int lastIndex = cultureList.size();
+        log.info("lastIndx={}", lastIndex);
+        List<Culture> findList = cultureList.subList(lastIndex - 5, lastIndex);
+        Collections.reverse(findList);
+        return findList;
     }
 
     public Boolean isEmpty() {
