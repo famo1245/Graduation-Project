@@ -11,6 +11,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new ReviewLoginCheckInterceptor())
                 .order(1)
-                .addPathPatterns("/review/reviewWrite","/members/info");
+                .addPathPatterns("/review/reviewWrite", "/members/info", "/members/info/update");
     }
 }

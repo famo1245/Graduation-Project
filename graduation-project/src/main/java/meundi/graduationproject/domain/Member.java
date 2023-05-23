@@ -1,7 +1,7 @@
 package meundi.graduationproject.domain;
 
 import lombok.Getter;
-import meundi.graduationproject.controller.MemberForm;
+import meundi.graduationproject.domain.DTO.MemberForm;
 
 import javax.persistence.*;
 import java.util.ArrayList;
