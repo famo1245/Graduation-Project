@@ -14,6 +14,7 @@ import meundi.graduationproject.service.MemberService;
 import meundi.graduationproject.service.ReviewService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -62,35 +63,46 @@ public class ReviewController {
 
     @GetMapping("/reviewDetail/{review_id}") /*리뷰 하나를 클릭 시, 리뷰 자세히 보기*/
     public String reviewDetail(@PathVariable Long review_id, Model model,HttpSession session) {
+
         Review reviewDetail = reviewService.findOne(review_id);
         Member member;
+
         if(session != null && session.getAttribute("userId") != null){
             member = memberService.findById((Long)session.getAttribute("userId"));
             model.addAttribute("sessionUser",member);
         }
+
         model.addAttribute("reviewDetail", reviewDetail);
         model.addAttribute("reviewComment",new ReviewComment());
+
         return "review/reviewDetail";
     }
     @PostMapping("/reviewDetail/{review_id}")
-    public String reviewAddComment(@Validated @ModelAttribute ReviewComment reviewComment
-            ,@PathVariable Long review_id, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session){
+    public String reviewAddComment(@Validated @ModelAttribute ReviewComment reviewComment,
+                                   BindingResult bindingResult, @PathVariable Long review_id,
+                                   RedirectAttributes redirectAttributes, HttpSession session){
+
         redirectAttributes.addAttribute("reviewId",review_id);
-        /* 이를 지나치지 않고 에러를 띄움 왜지*/
+
+        /* 이를 지나치지 않고 에러를 띄움 왜지 -> BindingResult를 modelattribute 뒤에 안 붙여서? */
         if(bindingResult.hasErrors()){
             return "redirect:/review/reviewDetail/{reviewId}";
         }
+
         // 리뷰 가져오기
         reviewComment.setReview(reviewService.findOne(review_id));
+
         // 댓글에 작성자 추가
         Member member = memberService.findById((Long)session.getAttribute("userId"));
         reviewComment.setMember(member);
         reviewService.insertReviewComment(reviewComment);
+
         return "redirect:/review/reviewDetail/{reviewId}";
     }
 
     @GetMapping("/reviewComment/{review_id}/{reviewComment_id}/delete")
-    public String reviewDeleteComment(@PathVariable Long review_id,@PathVariable Long reviewComment_id,RedirectAttributes redirectAttributes,HttpSession session){
+    public String reviewDeleteComment(@PathVariable Long review_id, @PathVariable Long reviewComment_id,
+                                      RedirectAttributes redirectAttributes, HttpSession session){
         ReviewComment findComment = reviewService.findReviewComment(reviewComment_id);
         log.info("댓글 작성자: {}", findComment.getMember().getId());
         log.info("세션 {}", (Long)session.getAttribute("userId"));
@@ -105,21 +117,25 @@ public class ReviewController {
     @GetMapping("reviewDetail/{review_id}/delete")
     public String reviewDelete(@PathVariable Long review_id,HttpSession session){
         Review review = reviewService.findOne(review_id);
+
         log.info("리뷰 작성자: {}", review.getMember().getId());
-        log.info("세션 {}", (Long)session.getAttribute("userId"));
+        log.info("세션 {}", session.getAttribute("userId"));
+
         if(Objects.equals(review.getMember().getId(), (Long) session.getAttribute("userId"))){
-            log.info("리뷰 삭제 성공");
+            log.info("Comment deleted Id:{}", review_id);
             reviewService.deleteReview(reviewService.findOne(review_id));
         }
+
         return "redirect:/review";
     }
 
-    @GetMapping("/reviewWrite")/*리뷰 작성화면*/
+    /**
+     * 리뷰 작성화면
+     * service인 reviewWrite를 통해, 써진 reviewNote를 반환해야함
+     * 입력 -> 출력
+     * */
+    @GetMapping("/reviewWrite")
     public String addReviewForm(Model model) {
-        /**
-         * service인 reviewWrite를 통해, 써진 reviewNote를 반환해야함
-         * 입력 -> 출력
-         * */
         model.addAttribute("review", new Review());
         return "review/addReview";
     }
@@ -129,7 +145,8 @@ public class ReviewController {
      * 수정 후: 문화 제목으로 검색하여, 문화들을 띄워주고, 문화를 선택하는 방식
      * */
     @PostMapping("/reviewWrite")/*리뷰 작성시, 내용 넘겨주고, 작성된 화면으로 넘어감*/
-    public String addReview(@Validated @ModelAttribute Review review, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
+    public String addReview(@Validated @ModelAttribute Review review, BindingResult bindingResult,
+                            RedirectAttributes redirectAttributes, HttpSession session) {
         /* 같은 문화 제목이 없을때, 오류*/
         if (cultureService.findOneByTitle(review.getCultureTitle()).isEmpty()) {
             bindingResult.reject("NoCulture");
@@ -177,7 +194,14 @@ public class ReviewController {
     @PostMapping("reviewDetail/{review_id}/edit")
     public String editReview(@Validated @ModelAttribute ReviewDTO review, BindingResult bindingResult,
                              @PathVariable("review_id")Long reviewId) {
-        // 검증 로직 필요
+        // 검증 로직
+        if (!StringUtils.hasText(review.getReviewTitle())) {
+            bindingResult.rejectValue("reviewTitle", "required");
+        }
+        if (!StringUtils.hasText(review.getReviewContents())) {
+            bindingResult.rejectValue("reviewContents", "required");
+        }
+
         /* 검증에 문제 발생 시, 다시 add */
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
