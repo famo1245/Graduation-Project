@@ -26,10 +26,8 @@ public class ReviewService {
     }
 
     public void updateReview(Long id, String title, int grade, String content) {
-        Review one = reviewRepository.findOne(id);
-        one.setReviewTitle(title);
-        one.setReviewGrade(grade);
-        one.setReviewContents(content);
+        Review find = reviewRepository.findOne(id);
+        find.updateReview(title, grade, content);
     }
     public List<Review> findReviewAll(){
         return reviewRepository.findAll();
