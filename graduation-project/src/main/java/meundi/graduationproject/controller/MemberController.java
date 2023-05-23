@@ -2,7 +2,6 @@ package meundi.graduationproject.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import meundi.graduationproject.domain.DTO.MemberDTO;
 import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.service.MemberService;
 import org.springframework.stereotype.Controller;
@@ -66,7 +65,7 @@ public class MemberController {
     @GetMapping("/info")
     public String myInfo(Model model, HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
-        MemberDTO myInfo = memberService.research(userId);
+        MemberForm myInfo = memberService.research(userId);
         if(myInfo != null) {
             model.addAttribute("myInfo", myInfo);
         }
@@ -77,9 +76,9 @@ public class MemberController {
     @GetMapping("/info/update")
     public String updateInfo(Model model, HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
-        MemberDTO myInfo = memberService.research(userId);
+        MemberForm myInfo = memberService.research(userId);
         if(myInfo != null) {
-            model.addAttribute("myInfo", myInfo);
+            model.addAttribute("memberForm", myInfo);
         }
         return "members/update-myInfo";
     }
@@ -99,12 +98,11 @@ public class MemberController {
         }
         if (!form.getNickName().equals(currentNickName)) {
             if (memberService.validateDuplicatedNickName(form.getNickName())) {
-                MemberDTO myInfo = memberService.research(userId);
-                model.addAttribute("myInfo", myInfo);
                 bindingResult.rejectValue("nickName", "duplicated");
             }
         }
         if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
             return "members/update-myInfo";
         }
         memberService.updateMember(userId, form);

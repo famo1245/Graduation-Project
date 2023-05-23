@@ -3,9 +3,7 @@ package meundi.graduationproject.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.controller.MemberForm;
-import meundi.graduationproject.domain.DTO.MemberDTO;
 import meundi.graduationproject.domain.Member;
-import meundi.graduationproject.domain.Tiers;
 import meundi.graduationproject.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,9 +37,9 @@ public class MemberService {
         return memberRepository.findById(id);
     }
 
-    public MemberDTO research(Long id) {
+    public MemberForm research(Long id) {
         Member member = findById(id);
-        MemberDTO findMember = new MemberDTO();
+        MemberForm findMember = new MemberForm();
         findMember.setMember(member);
 
         return findMember;
