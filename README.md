@@ -44,11 +44,10 @@
 - 05.12 문화 상세페이지에서 목록으로 링크 수정
 - 05.15 문화 상세페이지 링크 수정, 목록으로 뒤로가기로 변경, 홈 화면에서 최신 문화 생활 5개 보여줌
 - 05.16 회원가입 페이지 변경, 문화 생활 서버 시작 시 불러옴
-- 05.22 회원가입: 닉네임 중복 등 회원가입 시 validation 추가
-        서버 시작시 Culture table 비어있는지 확인
-- 05.23 내 정보 수정 페이지 validation 추가
-        memberDTO를 memberForm으로 통합
-        review 수정 시 DTO 사용
+- 05.22 회원가입: 닉네임 중복 등 회원가입 시 validation 추가, 서버 시작시 Culture table 비어있는지 확인
+- 05.23 내 정보 수정 페이지 validation 추가, memberDTO를 memberForm으로 통합, review 수정 시 DTO 사용
+- 05.24 review 수정 시 validation 추가 -- 미완, interceptor에 사용자 정보 업데이트 url 추가
+        
 - **TODO**
   - jpa를 사용하는 repository 함수명 refactor 필요
   - CultureService class의 메서드에서 중복되는 내용 refactor 필요
