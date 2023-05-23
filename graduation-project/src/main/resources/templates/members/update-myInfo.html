@@ -25,10 +25,11 @@
         <h2>내 정보 수정</h2>
     </div>
     <hr class="my-4">
-    <form th:action="@{/members/info/update}" th:method="post" th:object="${myInfo}">
+    <form th:action="@{/members/info/update}" th:method="post" th:object="${memberForm}">
         <div>
             <label for="nickName">닉네임</label>
-            <input type="text" id="nickName" th:field="*{nickName}" class="form-control" th:errorclass="field-error">
+            <input type="text" id="nickName" th:field="*{nickName}" class="form-control"
+                   th:errorclass="field-error-border">
             <div th:class="field-error" th:errors="*{nickName}">닉네임 오류</div>
         </div>
         <div>
