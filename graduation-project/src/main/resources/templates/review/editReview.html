@@ -31,7 +31,8 @@
         <h2>리뷰 수정 폼</h2>
     </div>
 
-    <form action="reviewDetail.html" th:action th:object="${review}" method="post">
+    <form th:action="@{/review/reviewDetail/{review_id}/edit(review_id=${review.id})}"
+          th:object="${review}" method="post">
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"> 글로벌 오류 메시지</p>
 
@@ -47,12 +48,12 @@
         <div>
             <table class="table">
                 <tr>
-                    <td><img th:src="${review.culture.main_img}" alt="대표이미지">
+                    <td><img th:src="*{culture.main_img}" alt="대표이미지">
                     </td>
                 </tr>
                 <tr>
-                    <td th:text="${review.culture.getTitle()}">제목</td>
-                    </td>
+                    <td id="cultureTitle" th:text="*{culture.title}" th:value="*{culture.title}">제목</td>
+<!--                    </td>-->
                 </tr>
             </table>
         </div>

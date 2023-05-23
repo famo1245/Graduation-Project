@@ -23,7 +23,7 @@ public class CultureRepository {
     }
 
     public Optional<Culture> findByTitle(String title) {
-        List<Culture> cultures=em.createQuery("select c from Culture c where c.title= :title", Culture.class)
+        List<Culture> cultures= em.createQuery("select c from Culture c where c.title= :title", Culture.class)
                 .setParameter("title", title)
                 .getResultList();
         return cultures.stream().findAny();
@@ -39,6 +39,14 @@ public class CultureRepository {
         List<Culture> cultures = findAll();
         int lastIndex = cultures.size() - 1;
         return cultures.get(lastIndex);
+    }
+
+    // 대분류로 찾기
+    // 최신 5개를 반환
+    public List<Culture> findByCategory(String category) {
+        return em.createQuery("select c from Culture c where c.codeName= :category", Culture.class)
+                .setParameter("category", category)
+                .getResultList();
     }
 
     /**

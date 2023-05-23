@@ -4,6 +4,7 @@ package meundi.graduationproject.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
+import meundi.graduationproject.domain.DTO.ReviewDTO;
 import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.domain.Review;
 import meundi.graduationproject.domain.ReviewComment;
@@ -168,24 +169,24 @@ public class ReviewController {
             return "redirect:/reviewDetail/{review_id}";
         }
         Review review = reviewService.findOne(reviewId);
+        log.info("review={}", review.getCulture().getTitle());
         model.addAttribute("review", review);
         return "review/editReview";
     }
 
     @PostMapping("reviewDetail/{review_id}/edit")
-    public String editReview(@Validated @ModelAttribute Review review, BindingResult bindingResult,@PathVariable("review_id")Long reviewId) {
-        /* 같은 문화 제목이 없을때, 오류*/
-        if (cultureService.findOneByTitle(review.getCultureTitle()).isEmpty()) {
-            bindingResult.reject("NoCulture");
-        }
+    public String editReview(@Validated @ModelAttribute ReviewDTO review, BindingResult bindingResult,
+                             @PathVariable("review_id")Long reviewId) {
+        // 검증 로직 필요
         /* 검증에 문제 발생 시, 다시 add */
         if (bindingResult.hasErrors()) {
+            log.info("errors={}", bindingResult);
             return "review/editReview";
         }
-        reviewService.updateReview(reviewId, review.getCultureTitle()
+        reviewService.updateReview(reviewId, review.getReviewTitle()
                 , review.getReviewGrade(), review.getReviewContents());
 
-        return "redirect:/review";
+        return "redirect:/review/reviewDetail/{review_id}";
     }
 
 

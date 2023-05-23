@@ -68,4 +68,10 @@ public class Review {
         return Objects.hash(getId(), getReviewDateTime(), getReviewContents(),
                 getReviewTitle(), getReviewGrade(), getMember(), getCulture(), getCultureTitle());
     }
+
+    public void updateReview(String reviewTitle, int reviewGrade, String reviewContents) {
+        this.reviewTitle = reviewTitle;
+        this.reviewGrade = reviewGrade;
+        this.reviewContents = reviewContents;
+    }
 }
