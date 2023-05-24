@@ -26,7 +26,8 @@
 
     <div>
         <label for="reviewTitle">리뷰 제목</label>
-        <input type="text" id="reviewTitle" name="reviewTitle" class="form-control" value="1" th:value="${reviewDetail.reviewTitle}" readonly>
+        <input type="text" id="reviewTitle" name="reviewTitle" class="form-control"
+               value="1" th:value="${reviewDetail.reviewTitle}" readonly>
     </div>
     <div>
         <table class="table">
@@ -41,19 +42,23 @@
     </div>
     <div>
         <label for="reviewGrade">리뷰 별점</label>
-        <input type="text" id="reviewGrade" name="reviewGrade" class="form-control" value="1" th:value="${reviewDetail.reviewGrade}" readonly>
+        <input type="text" id="reviewGrade" name="reviewGrade"
+               class="form-control" value="1" th:value="${reviewDetail.reviewGrade}" readonly>
     </div>
     <div>
         <label for="reviewContents">리뷰 내용</label>
-        <input type="text" id="reviewContents" name="reviewContents" class="form-control" value="1" th:value="${reviewDetail.reviewContents}" readonly>
+        <input type="text" id="reviewContents" name="reviewContents"
+               class="form-control" value="1" th:value="${reviewDetail.reviewContents}" readonly>
     </div>
     <div>
         <label for="reviewDateTime">작성자</label>
-        <input type="text" id="member" name="member" class="form-control" value="1" th:value="${reviewDetail.member.nickName}" readonly>
+        <input type="text" id="member" name="member"
+               class="form-control" value="1" th:value="${reviewDetail.member.nickName}" readonly>
     </div>
     <div>
         <label for="reviewDateTime">리뷰 작성일자</label>
-        <input type="text" id="reviewDateTime" name="reviewDateTime" class="form-control" value="1" th:value="${reviewDetail.reviewDateTime}" readonly>
+        <input type="text" id="reviewDateTime" name="reviewDateTime"
+               class="form-control" value="1" th:value="${reviewDetail.reviewDateTime}" readonly>
     </div>
 
 
@@ -61,13 +66,15 @@
 
     <div class="row">
         <div class="col">
-        <a th:if="${reviewDetail.member?.id == sessionUser?.id}"href="#" th:href="@{/review/reviewDetail/{reviewId}/edit(reviewId=${reviewDetail.id})}"
+        <a th:if="${reviewDetail.member?.id == sessionUser?.id}"
+           href="#" th:href="@{/review/reviewDetail/{reviewId}/edit(reviewId=${reviewDetail.id})}"
            class="btn btn-primary" role="button">수정</a>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <a th:if="${reviewDetail.member?.id == sessionUser?.id}"href="#" th:href="@{/review/reviewDetail/{reviewId}/delete(reviewId=${reviewDetail.id})}"
+            <a th:if="${reviewDetail.member?.id == sessionUser?.id}"
+               href="#" th:href="@{/review/reviewDetail/{reviewId}/delete(reviewId=${reviewDetail.id})}"
                class="btn btn-primary" role="button">삭제</a>
         </div>
     </div>

@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -83,8 +84,7 @@ public class ReviewController {
                                    RedirectAttributes redirectAttributes, HttpSession session){
 
         redirectAttributes.addAttribute("reviewId",review_id);
-
-        /* 이를 지나치지 않고 에러를 띄움 왜지 -> BindingResult를 modelattribute 뒤에 안 붙여서? */
+//      이때엔, 에러 메시지를 토스트 메시지로 띄워야 함
         if(bindingResult.hasErrors()){
             return "redirect:/review/reviewDetail/{reviewId}";
         }
@@ -146,7 +146,7 @@ public class ReviewController {
      * */
     @PostMapping("/reviewWrite")/*리뷰 작성시, 내용 넘겨주고, 작성된 화면으로 넘어감*/
     public String addReview(@Validated @ModelAttribute Review review, BindingResult bindingResult,
-                            RedirectAttributes redirectAttributes, HttpSession session) {
+                            RedirectAttributes redirectAttributes, HttpSession session) throws IOException {
         /* 같은 문화 제목이 없을때, 오류*/
         if (cultureService.findOneByTitle(review.getCultureTitle()).isEmpty()) {
             bindingResult.reject("NoCulture");

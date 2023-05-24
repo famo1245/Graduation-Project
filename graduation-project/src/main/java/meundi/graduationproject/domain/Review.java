@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -46,7 +47,6 @@ public class Review {
     private Culture culture;
     @NotBlank
     private String cultureTitle;
-
     @OneToMany(mappedBy = "review")
     private List<ReviewComment>  reviewComments;
 

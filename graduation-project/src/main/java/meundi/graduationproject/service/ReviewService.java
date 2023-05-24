@@ -40,11 +40,12 @@ public class ReviewService {
     }
 
     public List<Review> SearchReview(ReviewSearch reviewSearch) {
-        return reviewRepository.SearchReview(reviewSearch);
+        return reviewRepository.SearchReviewTotal(reviewSearch);
     }
     public ReviewComment insertReviewComment(ReviewComment reviewComment){ reviewRepository.saveComment(reviewComment);
         return  reviewComment;}
     public void deleteReviewComment(ReviewComment reviewComment){ reviewRepository.deleteComment(reviewComment);}
     public ReviewComment findReviewComment(Long id){ return reviewRepository.findComment(id);}
+
 
 }

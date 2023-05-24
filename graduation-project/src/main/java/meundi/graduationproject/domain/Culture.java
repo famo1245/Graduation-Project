@@ -9,6 +9,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter @Setter
@@ -81,5 +82,28 @@ public class Culture {
         this.codeName = codeName;
         this.use_trgt = use_trgt;
         this.place = place;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Culture)) return false;
+        Culture culture = (Culture) o;
+        return Objects.equals(getId(), culture.getId()) && Objects.equals(getTitle(),
+                culture.getTitle()) && Objects.equals(getPlayer(),
+                culture.getPlayer()) && Objects.equals(getOrg_link(),
+                culture.getOrg_link()) && Objects.equals(getMain_img(),
+                culture.getMain_img()) && Objects.equals(getGuname(),
+                culture.getGuname()) && Objects.equals(getDate(),
+                culture.getDate()) && Objects.equals(getRgstDate(),
+                culture.getRgstDate()) && Objects.equals(getCodeName(),
+                culture.getCodeName()) && Objects.equals(getUse_trgt(),
+                culture.getUse_trgt()) && Objects.equals(getPlace(), culture.getPlace());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTitle(), getPlayer(), getOrg_link(), getMain_img(),
+                getGuname(), getDate(), getRgstDate(), getCodeName(), getUse_trgt(), getPlace());
     }
 }

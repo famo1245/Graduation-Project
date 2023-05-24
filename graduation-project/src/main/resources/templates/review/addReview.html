@@ -22,7 +22,7 @@
         <h2>리뷰 등록 폼</h2>
     </div>
 
-    <form action="reviewDetail.html" th:action th:object="${review}" method="post">
+    <form action="reviewDetail.html" th:action th:object="${review}" method="post" enctype="multipart/form-data">
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"> 글로벌 오류 메시지</p>
         </div>
@@ -38,7 +38,7 @@
             <label for="cultureTitle">본 문화 제목</label>
             <input type="text" id="cultureTitle" th:field="*{cultureTitle}"
                    th:errorclass="field-error" class="form-control" placeholder="어떤문화를 보았나요">
-            <div class="field-error" th:errors="*{reviewTitle}"> 문화 제목 오류
+            <div class="field-error" th:errors="*{cultureTitle}"> 문화 제목 오류
             </div>
         </div>
         <div>
@@ -55,7 +55,6 @@
             <div class="field-error" th:errors="*{reviewContents}"> 내용 오류
             </div>
         </div>
-
         <hr class="my-4">
         <div class="row">
             <div class="col">

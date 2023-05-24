@@ -6,6 +6,7 @@ import meundi.graduationproject.domain.DTO.MemberForm;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -53,5 +54,25 @@ public class Member {
         this.nickName = form.getNickName();
         this.district = form.getDistrict();
         this.favoriteCategory = form.getFavoriteCategory();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Member)) return false;
+        Member member = (Member) o;
+        return Objects.equals(getId(), member.getId()) && Objects.equals(getEmail(),
+                member.getEmail()) && Objects.equals(getNickName(),
+                member.getNickName()) && Objects.equals(getGender(),
+                member.getGender()) && Objects.equals(getAge_range(),
+                member.getAge_range()) && Objects.equals(getDistrict(),
+                member.getDistrict()) && Objects.equals(getFavoriteCategory(),
+                member.getFavoriteCategory()) && getTiers() == member.getTiers();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getEmail(), getNickName(), getGender(),
+                getAge_range(), getDistrict(), getFavoriteCategory(), getTiers());
     }
 }
