@@ -21,6 +21,7 @@ public class ReviewService {
        reviewRepository.save(review);
         return review;
     }
+
     public void deleteReview(Review review){
         reviewRepository.deleteReview(review);
     }
@@ -29,12 +30,15 @@ public class ReviewService {
         Review find = reviewRepository.findOne(id);
         find.updateReview(title, grade, content);
     }
+
     public List<Review> findReviewAll(){
         return reviewRepository.findAll();
     }
+
     public List<Review> findReviewSearch(String cultureTitle) {
         return reviewRepository.findByCultureTitle(cultureTitle);
     }
+
     public Review findOne(Long id) {
         return reviewRepository.findOne(id);
     }
@@ -42,10 +46,19 @@ public class ReviewService {
     public List<Review> SearchReview(ReviewSearch reviewSearch) {
         return reviewRepository.SearchReviewTotal(reviewSearch);
     }
-    public ReviewComment insertReviewComment(ReviewComment reviewComment){ reviewRepository.saveComment(reviewComment);
-        return  reviewComment;}
-    public void deleteReviewComment(ReviewComment reviewComment){ reviewRepository.deleteComment(reviewComment);}
-    public ReviewComment findReviewComment(Long id){ return reviewRepository.findComment(id);}
+
+    public ReviewComment insertReviewComment(ReviewComment reviewComment){
+        reviewRepository.saveComment(reviewComment);
+        return  reviewComment;
+    }
+
+    public void deleteReviewComment(ReviewComment reviewComment){
+        reviewRepository.deleteComment(reviewComment);
+    }
+
+    public ReviewComment findReviewComment(Long id){
+        return reviewRepository.findComment(id);
+    }
 
 
 }

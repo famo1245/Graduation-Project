@@ -27,20 +27,25 @@ public class Review {
     private Long id;
     /*리뷰 작성 시간 */
     private LocalDateTime reviewDateTime;
+
     /*리뷰 내용*/
     @NotBlank
     private String reviewContents;
+
     /*리뷰 제목*/
     @NotBlank
     private String reviewTitle;
+
     /*평점: 0~5*/
     @NotNull
     @Range(min = 0, max = 5)
     private int reviewGrade;
+
     /*userId for 어떤유저가 작성했는지 알기 위해*/
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
     /*cultureId for 어떤 문화에 대한 리뷰인지*/
     @ManyToOne
     @JoinColumn(name = "culture_id")
