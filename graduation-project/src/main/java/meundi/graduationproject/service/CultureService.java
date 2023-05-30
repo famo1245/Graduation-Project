@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.repository.CultureRepository;
-import org.aspectj.apache.bcel.classfile.Module;
+import meundi.graduationproject.repository.CultureRepositoryUsingJPA;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -37,6 +37,7 @@ public class CultureService {
     private String CULTURE_SERVICE;
 
     private final CultureRepository cultureRepository;
+    private final CultureRepositoryUsingJPA CRJ;
 
     public Culture insertCulture(Culture culture) {
         cultureRepository.save(culture);
@@ -48,7 +49,16 @@ public class CultureService {
     }
 
     public List<Culture> findByCategory(String category) {
-        List<Culture> cultureList = cultureRepository.findByCategory(category);
+        List<Culture> cultureList = CRJ.findByCodeNameContaining(category);
+        int lastIndex = cultureList.size();
+        log.info("lastIndx={}", lastIndex);
+        List<Culture> findList = cultureList.subList(lastIndex - 5, lastIndex);
+        Collections.reverse(findList);
+        return findList;
+    }
+
+    public List<Culture> findByDistrict(String district) {
+        List<Culture> cultureList = CRJ.findByGunameContaining(district);
         int lastIndex = cultureList.size();
         log.info("lastIndx={}", lastIndex);
         List<Culture> findList = cultureList.subList(lastIndex - 5, lastIndex);
