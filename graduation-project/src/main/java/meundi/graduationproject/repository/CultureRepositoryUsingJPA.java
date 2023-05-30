@@ -8,4 +8,8 @@ import java.util.List;
 public interface CultureRepositoryUsingJPA  extends JpaRepository<Culture,Long> {
     //select * from Culture WHERE title LIKE "%title%"
     List<Culture> findByTitleContaining(String title);
+
+    List<Culture> findByCodeNameContaining(String codeName);
+
+    List<Culture> findByGunameContaining(String guName);
 }

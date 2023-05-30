@@ -35,16 +35,25 @@
                 </a>
             </tr>
         </table>
-    <!--</div>
-    <div th:if="${session.status}" th:each="favorite : ${favorites}">
-        <h3 th:text="${favorite.key}">카테고리</h3>
-        <tr th:each="culture : ${favorite.value}">
-            <a th:href="@{/cultures/detail/{culture_id}(culture_id=${culture.id})}" style="text-decoration: none">
-                <img th:src="${culture.main_img}" th:alt="${culture.title}" alt="상세페이지"
+    </div>
+    <div th:if="${session.status}">
+        <h3 th:text="|${recommendName}의 최신 문화 생활|">카테고리</h3>
+        <tr th:each="recommend : ${recommendList}">
+            <a th:href="@{/cultures/detail/{culture_id}(culture_id=${recommend.id})}" style="text-decoration: none">
+                <img th:src="${recommend.main_img}" th:alt="${recommend.title}" alt="상세페이지"
                      width="200" height="200"/>
             </a>
         </tr>
-    </div>-->
+    </div>
+    <div th:if="${session.status}">
+        <h3 th:text="|${district}의 최신 문화 생활|">카테고리</h3>
+        <tr th:each="gu : ${guList}">
+            <a th:href="@{/cultures/detail/{culture_id}(culture_id=${gu.id})}" style="text-decoration: none">
+                <img th:src="${gu.main_img}" th:alt="${gu.title}" alt="상세페이지"
+                     width="200" height="200"/>
+            </a>
+        </tr>
+    </div>
 </div> <!-- /container -->
 
 </body>

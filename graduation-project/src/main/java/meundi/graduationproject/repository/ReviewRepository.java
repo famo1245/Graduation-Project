@@ -5,7 +5,6 @@ import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.domain.Review;
 import meundi.graduationproject.domain.ReviewComment;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
