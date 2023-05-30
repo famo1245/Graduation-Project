@@ -3,6 +3,7 @@ package meundi.graduationproject.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
+import meundi.graduationproject.domain.DTO.MemberForm;
 import meundi.graduationproject.service.CultureService;
 import meundi.graduationproject.service.MemberService;
 import org.springframework.stereotype.Controller;
@@ -32,17 +33,18 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(HttpSession session, Model model) {
-        /*if (session.getAttribute("status") != null) {
-            Map<String, List<Culture>> favorites = new LinkedHashMap<>();
+        if (session.getAttribute("status") != null) {
             MemberForm myInfo = memberService.research((Long) session.getAttribute("userId"));
-            for (String category : myInfo.getFavoriteCategoryList()) {
-                List<Culture> cultures = cultureService.findByCategory(category);
-                favorites.put(category, cultures);
-            }
-            model.addAttribute("favorites", favorites);
-            model.addAttribute("categories", myInfo.getFavoriteCategoryList());
-            model.addAttribute("districtName", myInfo.getDistrict());
-        }*/
+            List<String> favoriteCategoryList = myInfo.getFavoriteCategoryList();
+            int randomIndex = (int) (Math.random() * favoriteCategoryList.size());
+            List<Culture> recommendList = cultureService.findByCategory(favoriteCategoryList.get(randomIndex));
+            model.addAttribute("recommendList", recommendList);
+            model.addAttribute("recommendName", favoriteCategoryList.get(randomIndex));
+
+            List<Culture> guList = cultureService.findByDistrict(myInfo.getDistrict());
+            model.addAttribute("guList", guList);
+            model.addAttribute("district", myInfo.getDistrict());
+        }
         return "index";
     }
 }
