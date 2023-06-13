@@ -35,15 +35,18 @@ public class HomeController {
     public String home(HttpSession session, Model model) {
         if (session.getAttribute("status") != null) {
             MemberForm myInfo = memberService.research((Long) session.getAttribute("userId"));
-            List<String> favoriteCategoryList = myInfo.getFavoriteCategoryList();
-            int randomIndex = (int) (Math.random() * favoriteCategoryList.size());
-            List<Culture> recommendList = cultureService.findByCategory(favoriteCategoryList.get(randomIndex));
-            model.addAttribute("recommendList", recommendList);
-            model.addAttribute("recommendName", favoriteCategoryList.get(randomIndex));
-
             List<Culture> guList = cultureService.findByDistrict(myInfo.getDistrict());
             model.addAttribute("guList", guList);
             model.addAttribute("district", myInfo.getDistrict());
+            List<String> favoriteCategoryList = myInfo.getFavoriteCategoryList();
+
+            // 사용자가 선호 카테고리를 선택하지 않은 경우
+            if (favoriteCategoryList != null) {
+                int randomIndex = (int) (Math.random() * favoriteCategoryList.size());
+                List<Culture> recommendList = cultureService.findByCategory(favoriteCategoryList.get(randomIndex));
+                model.addAttribute("recommendList", recommendList);
+                model.addAttribute("recommendName", favoriteCategoryList.get(randomIndex));
+            }
         }
         return "index";
     }

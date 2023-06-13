@@ -36,7 +36,7 @@
             </tr>
         </table>
     </div>
-    <div th:if="${session.status}">
+    <div th:if="${session.status} and ${recommendList}">
         <h3 th:text="|${recommendName}의 최신 문화 생활|">카테고리</h3>
         <tr th:each="recommend : ${recommendList}">
             <a th:href="@{/cultures/detail/{culture_id}(culture_id=${recommend.id})}" style="text-decoration: none">
