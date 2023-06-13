@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.domain.Tiers;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,11 @@ public class MemberForm {
 
     //선호 카테고리를 리스트로 반환하는 함수
     public List<String> getFavoriteCategoryList() {
-        return new ArrayList<>(List.of(favoriteCategory.split(",")));
+        if (StringUtils.hasText(favoriteCategory)) {
+            return new ArrayList<>(List.of(favoriteCategory.split(",")));
+        }
+
+        return null;
     }
 
     //Member 객체를 이용하여 setting
