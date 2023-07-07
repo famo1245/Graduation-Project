@@ -1,18 +1,18 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/gradu
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:mariadb://127.0.0.1:3306/cis
+    driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
   h2:
     console:
       enabled: true
+  thymeleaf:
+    cache: false
   output:
     ansi:
       enabled: always
