@@ -28,10 +28,10 @@ public class Culture {
     @Column(length = 800)
     private String player;
     /*홈페이지 주소(url)*/
-    @Column(length = 400)
+    @Column(length = 800)
     private String org_link;
     /*포스터 (url)*/
-    @Column(length = 400)
+    @Column(length = 800)
     private String main_img;
     /*구 이름*/
     private String guname;
