@@ -23,7 +23,7 @@ public class CultureRequest {
 
     //컨텐츠는 무조건 필요해서 not blank
     @NotBlank
-    @Column(name = "request_content")
+    @Column(name = "request_content" )
     private String contents;
 
     //요청시 시간으로 우선순위 둘수도 있어서 생성
