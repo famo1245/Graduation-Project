@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2>문화생활 상세</h2>
+    </div>
+
+    <!-- 추가 -->
+    <h2 th:if="${param.status}" th:text="'저장 완료'"></h2>
+
+    <div>
+        <label for="requestTitle">문화 요청 제목</label>
+        <input type="text" id="requestTitle" name="requestTitle" class="form-control"
+               value="1" th:value="${requestDetail.title}" readonly>
+    </div>
+    <div>
+        <label for="requestContents">요청 내용</label>
+        <input type="text" id="requestContents" name="requestContents"
+               class="form-control" value="1" th:value="${requestDetail.contents}" readonly>
+    </div>
+    <div>
+        <label for="member">작성자</label>
+        <input type="text" id="member" name="member"
+               class="form-control" value="1" th:value="${requestDetail.member.nickName}" readonly>
+    </div>
+    <div>
+        <label for="requestDateTime">요청 작성일자</label>
+        <input type="text" id="requestDateTime" name="requestDateTime"
+               class="form-control" value="1" th:value="${requestDetail.requestDateTime}" readonly>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="row">
+        <div class="col">
+            <a th:if="${requestDetail.member?.id == sessionUser?.id}"
+               href="#" th:href="@{/culturerequest/requestDetail/{requestId}/edit(requestId=${requestDetail.id})}"
+               class="btn btn-primary" role="button">수정</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a th:if="${requestDetail.member?.id == sessionUser?.id}"
+               href="#" th:href="@{/culturerequest/requestDetail/{requestId}/delete(requestId=${requestDetail.id})}"
+               class="btn btn-primary" role="button">삭제</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg"
+                    onclick="location.href='requestList.html'"
+                    th:onclick="|location.href='@{/culturerequest}'|"
+                    type="button">목록으로</button>
+        </div>
+    </div>
+
+
+
+</div>
+</body>
+</html>
