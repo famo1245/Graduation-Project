@@ -20,6 +20,11 @@
                     onclick="location.href='index.html'"
                     th:onclick="|location.href='@{/}'|" type="button">홈으로
             </button>
+            <button th:if="${session.status}"
+                    class="btn btn-primary float-end"
+                    onclick="location.href='addRequest.html'"
+                    th:onclick="|location.href='@{write}'|" type="button">문화 생활 요청 등록
+            </button>
         </div>
     </div>
 
@@ -28,21 +33,19 @@
         <table class="table">
             <thead>
             <tr>
-                <th>글 번호</th>
                 <th>제목</th>
                 <th>작성자</th>
                 <th>작성일</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="culture : ${cultureList}">
-                <td th:text="${culture.codeName}">분류</td>
-                <td th:text="${culture.date}">시작/종료일</td>
-                <td th:text="${culture.guname}">지역구</td>
-                <td><a href="cultureDetail.html"
-                       th:href="@{/cultures/cultureDetail/{culture_id}(culture_id=${culture.id})}"
-                       th:text="${culture.title}">제목</a>
+            <tr th:each="request : ${requestList}">
+                <td><a href="requestDetail.html"
+                       th:href="@{/culturerequest/requestDetail/{request_id}(request_id=${request.id})}"
+                       th:text="${request.title}">제목</a>
                 </td>
+                <td th:text="${request.member?.nickName}">작성자</td>
+                <td th:text="${request.requestDateTime}">작성일자</td>
             </tr>
             </tbody>
         </table>

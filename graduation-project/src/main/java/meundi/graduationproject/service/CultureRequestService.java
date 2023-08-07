@@ -23,11 +23,12 @@ public class CultureRequestService {
         cultureRequestRepository.deleteRequest(request);
     }
 
-    /*
-    public void updateCultureRequest(Long id, String title, int grade, String content){
+
+    public void updateCultureRequest(Long id, String title, String content){
         CultureRequest find = cultureRequestRepository.findOne(id);
+        find.updateRequest(title, content);
     }
-    */
+
 
     //전체 list로 보여주기
     public List<CultureRequest> findRequestAll(){
