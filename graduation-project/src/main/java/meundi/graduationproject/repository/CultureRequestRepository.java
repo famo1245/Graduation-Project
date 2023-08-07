@@ -19,9 +19,6 @@ public class CultureRequestRepository {
     public void deleteRequest(CultureRequest cultureRequest){
         em.remove(cultureRequest);
     }
-    public CultureRequest findRequest(Long id){
-        return em.find(CultureRequest.class, id);
-    }
 
     public CultureRequest findOne(Long id) {
         return em.find(CultureRequest.class, id);
