@@ -1,0 +1,51 @@
+import { Link } from "react-router-dom";
+import React from "react";
+import axios from "axios";
+import styles from "./Login.module.css";
+import logo from "../imgs/kakao_login_medium_narrow.png";
+// import KakaoLoginButton from "../components/login/KakaoLoginButton";
+
+function Login() {
+  const REST_API_KEY = "4656318adfc6879a872c2dbe04ccc5a3";
+  const REDIRECT_URI = "http://localhost:3000";
+  // oauth 요청 url
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+  const handleLogin = () => {
+    window.location.href = KAKAO_AUTH_URL;
+  };
+
+  // const code = new URL(window.location.href).searchParams.get("code")
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.container_body}>
+        <div className={styles.container_body_inner}>
+          <div>
+            <h1>
+              로그인 <hr style={{ border: 0 }} />
+            </h1>
+          </div>
+          <div className={styles.body}>
+            <div className={styles.a}></div>
+            <div className={styles.line}></div>
+            <div className={styles.b}>
+              <div className={styles.body_text}>
+                카카오로
+                <br />
+                간편하게
+                <br />
+                로그인하기
+              </div>
+              <div className={styles.login_group}>
+                <img src={logo} onClick={handleLogin} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Login;
