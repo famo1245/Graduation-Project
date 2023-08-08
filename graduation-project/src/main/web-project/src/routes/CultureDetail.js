@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import styles from "./Home.module.css";
-import axios from "axios";
-
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import styles from './CultureDetail.module.css';
+import axios from 'axios';
 
 function CultureDetail(props) {
   const { cultureId } = useParams();
@@ -12,12 +11,13 @@ function CultureDetail(props) {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`/api/cultures/detail/${cultureId}`)
-      .then (response => {
+    axios
+      .get(`/api/cultures/detail/${cultureId}`)
+      .then((response) => {
         setData(response.data);
         setLoading(false);
       })
-      .catch (err => setError(err));
+      .catch((err) => setError(err));
   }, []);
 
   if (loading) return <div>Loading...</div>;
@@ -25,30 +25,28 @@ function CultureDetail(props) {
   if (!data) return null;
 
   return (
-    <div className={styles.home}>
+    <div className={styles.container}>
       <div>
-      <table class="table">
-            <tr>
-                <td>
-                    <img src={data.main_img} alt="대표이미지"/>
-                </td>
-            </tr>
-            <tr>
-                <td>{data.title}</td>
-            </tr>
-            <tr>
-                <td>{data.codeName}</td>
-            </tr>
-            <tr>
-                <td>{data.date}</td>
-            </tr>
-            <tr>
-                <td>{data.guname}</td>
-            </tr>
-            <tr>
-                <td><a href={data.org_link} target="_blank">상세 정보 보기</a></td>
-            </tr>
-        </table>
+        <h2>{data.codeName} 상세</h2>
+        <h1>{data.title}</h1>
+        <hr />
+      </div>
+
+      <div className={styles.first}>
+        <img src={data.main_img} alt="대표이미지" />
+        <div className={styles.second}>
+          <h1>
+            [{data.codeName}] {data.title}
+          </h1>
+          <h3>날짜: {data.date}</h3>
+          <h3>위치: {data.place}</h3>
+          <h3>연령: {data.use_trgt}</h3>
+          <h3>
+            <a href={data.org_link} target="_blank">
+              상세 정보 보기
+            </a>
+          </h3>
+        </div>
       </div>
     </div>
   );
