@@ -27,9 +27,6 @@ public class ChatController {
     private final ChatService chatService;
     private final MemberService memberService;
 
-    public String SearchChat(@ModelAttribute("chatSearch") ChatS){
-
-    }
     @GetMapping("/chatDetail/{chat_id}")
     public String chatDetail(@PathVariable Long chat_id, Model model, HttpSession session){
         Chat chatDetail = chatService.findOne(chat_id);
@@ -93,6 +90,4 @@ public class ChatController {
         return "redirect:/chat";
     }
 
-    @GetMapping("/chatWrite")
-    public String addChatForm
 }
