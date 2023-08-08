@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 public class ReviewLoginCheckInterceptor implements HandlerInterceptor {
     final String REVIEW_URL = "/review";
     final String MEMBER_URL = "/members";
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestURI = request.getRequestURI();

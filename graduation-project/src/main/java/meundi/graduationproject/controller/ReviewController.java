@@ -39,22 +39,6 @@ public class ReviewController {
 
     @GetMapping /*home*/
     public String SearchReview(@ModelAttribute("reviewSearch") ReviewSearch reviewSearch, Model model) throws MalformedURLException {
-//        테스트용 문화
-//        Culture testCulture = new Culture();
-//        testCulture.InsertCultureFromJson("test"," ","http://www.gbcf.or.kr/load.asp?subPage=110.View&page=1&idx=114",
-//                "\thttps://culture.seoul.go.kr/cmmn/file/getImage.do?atchFileId=26774fbc85b14bc29865f3274b0951ab&thumb=Y",
-//                "강북구","2022-05-12","2022-04-25","뮤지컬/오페라"," ","강북문화예술회관 대공연장");
-//        cultureService.insertCulture(testCulture);
-//        // 테스트용 리뷰
-//        Review testReview = new Review();
-//        testReview.setReviewTitle(String.valueOf(LocalDateTime.now()));
-//        testReview.setReviewContents("리뷰 테스트 내용");
-//        testReview.setReviewTitle("리뷰 테스트 제목 ");
-//        testReview.setReviewGrade(3);
-//        testReview.setCulture(testCulture);
-//        testReview.setCultureTitle(testCulture.getTitle());
-//        reviewService.insertReview(testReview);
-
         List<Review> reviewAll = reviewService.SearchReview(reviewSearch);
         model.addAttribute("reviewAll", reviewAll);
         return "review/reviewHome";
@@ -163,11 +147,7 @@ public class ReviewController {
         review.setCulture(culture); /*리뷰 객체에 문화 객체 넣기 */
         Review savedReview = reviewService.insertReview(review);
         redirectAttributes.addAttribute("reviewId", savedReview.getId());
-        // 이거 뭔지 설명좀 -> 저장 후 넘어간 리뷰 상세화면인지, 그냥 홈화면에서 들어간 리뷰 상세화면인지를 나타내기 위한 status
         redirectAttributes.addAttribute("status", true);
-        /*
-         * model에 담긴 review 내용을 ReviewNote에 넣기
-         * */
         return "redirect:/review/reviewDetail/{reviewId}";/*review_id를 통해, detail 열기*/
     }
 
