@@ -8,17 +8,13 @@ import meundi.graduationproject.service.CultureService;
 import meundi.graduationproject.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
 @RequiredArgsConstructor
 public class HomeController {
 
@@ -33,7 +29,7 @@ public class HomeController {
         return cultureList;
     }
 
-    @GetMapping("/home")
+    @GetMapping("/api/home")
     public Map<String, List> home(HttpSession session, Model model) {
         Map<String, List> data = new HashMap<>();
 
@@ -56,5 +52,11 @@ public class HomeController {
         List<Culture> recentCultures = getRecentCultures();
         data.put("recentCultures", recentCultures);
         return data;
+    }
+
+    @GetMapping("/api/auth/kakao/callback")
+    public String callBackApi(@RequestParam(name = "code") String code) {
+        log.info("call back api");
+        return code;
     }
 }
