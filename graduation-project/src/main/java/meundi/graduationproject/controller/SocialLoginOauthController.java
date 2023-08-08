@@ -36,7 +36,7 @@ public class SocialLoginOauthController {
                            HttpSession session,
                            Model model,
                            @PathVariable(name = "socialLoginType") SocialLoginType socialLoginType) {
-        String accessToken = oauthService.requestAccessToekn(socialLoginType, code);
+        String accessToken = oauthService.requestAccessToken(socialLoginType, code);
         HashMap<String, Object> userInfo = oauthService.getUserInfo(socialLoginType, accessToken);
 
         if (userInfo.get("id") != null) {
