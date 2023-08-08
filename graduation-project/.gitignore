@@ -169,4 +169,4 @@ gradle-app.setting
 *.hprof
 
 # secret keys
-application-secret.yml
+src/main/resources/application-secret.yml
