@@ -6,8 +6,8 @@ import logo from "../imgs/kakao_login_medium_narrow.png";
 // import KakaoLoginButton from "../components/login/KakaoLoginButton";
 
 function Login() {
-  const REST_API_KEY = "4656318adfc6879a872c2dbe04ccc5a3";
-  const REDIRECT_URI = "http://localhost:3000";
+  const REST_API_KEY = "92fbf81b06d378a41d55ee603e5b6bd0";
+  const REDIRECT_URI = "http://localhost:3000/auth/kakao/callback";
   // oauth 요청 url
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 

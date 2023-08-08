@@ -26,7 +26,7 @@ public class OauthService {
         return socialLoginOauth.getOauthRedirectURL();
     }
 
-    public String requestAccessToekn(SocialLoginType socialLoginType, String code) {
+    public String requestAccessToken(SocialLoginType socialLoginType, String code) {
         find(socialLoginType);
         return socialLoginOauth.requestAccessToken(code);
     }

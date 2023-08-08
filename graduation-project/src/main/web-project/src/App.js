@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import Index_home from "./pages/Index_home";
 import Layout from "./components/layout/Layout";
 import Whyso from "./routes/Whyso";
+import Culture_detail from "./pages/culture_detail";
+import KakaoAuthHandler from "./routes/KakaoAuthHandler";
 
 function App(props) {
   return (
@@ -17,6 +19,8 @@ function App(props) {
           <Route path="/Login" element={<Login />} />
           <Route path="/Sign_up" element={<Sign_up />} />
           <Route path="/Whyso" element={<Whyso />} />
+          <Route path="/cultures/detail/:cultureId" element={<Culture_detail />}/>
+          <Route path="/auth/kakao/callback" element={<KakaoAuthHandler />}/>
         </Routes>
       </Layout>
     </Router>

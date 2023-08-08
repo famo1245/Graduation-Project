@@ -29,31 +29,14 @@ function Home(props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchData = async () => {
-    try {
-      setError(null);
-      setData(null);
-      setLoading(true);
-
-      const response = await axios.get(url, {
-        params: {
-          serviceKey: process.env.REACT_APP_API_KEY,
-          numOfRows: 10,
-          pageNo: 1,
-        },
-      });
-
-      setData(response.data);
-    } catch (e) {
-      setError(e);
-    }
-    setLoading(false);
-  };
-
-  console.log(data);
-
   useEffect(() => {
-    fetchData();
+    setLoading(true);
+    axios.get('/api/home')
+      .then (response => {
+        setData(response.data);
+        setLoading(false);
+      })
+      .catch (err => setError(err));
   }, []);
 
   if (loading) return <div>Loading...</div>;
@@ -63,7 +46,7 @@ function Home(props) {
   return (
     <div className={styles.home}>
       <div>
-        <h4>신규 문화 추천</h4>
+        <h4>신규 문화 생활 추천</h4>
       </div>
       <div className={styles.home_upper}>
         <div
@@ -76,56 +59,14 @@ function Home(props) {
             RightArrow={RightArrow}
             // onWheel={onWheel}
           > */}
-          <div>
-            <Link>
-              <img src={`img/boat.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`${process.env.PUBLIC_URL}/img/cleanlake.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/cycle.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/green.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/house.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/newyork.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/purpleFlower.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/roadoflight.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/sunset.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/whiteFlower.jpg`} />
-            </Link>
-          </div>
+          {data.recentCultures.map(culture => {
+              const url = `/cultures/detail/${culture.id}`
+              return (<div key={culture.id}>
+                <Link to={url}>
+                  <img src={culture.main_img} alt="상세페이지"/>
+                </Link>
+              </div>);
+            })}
 
           <div className={styles.prev}>
             <i className={styles.prev_arrow}>◀</i>
@@ -137,7 +78,7 @@ function Home(props) {
         </div>
       </div>
       <div>
-        <h4>곧 끝나는 문화</h4>
+        <h4>곧 끝나는 문화 생활</h4>
       </div>
       <div className={styles.home_upper}>
         <div className={styles.home_upper_content}>
