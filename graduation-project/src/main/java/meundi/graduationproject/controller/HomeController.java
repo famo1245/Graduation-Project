@@ -10,29 +10,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Slf4j
-@Controller
+@RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class HomeController {
 
     private final CultureService cultureService;
     private final MemberService memberService;
 
-    @ModelAttribute("cultureList")
-    public List<Culture> getRecentCultures() {
+    private List<Culture> getRecentCultures() {
         List<Culture> cultureListAll = cultureService.findCultureAll();
         int lastIndex = cultureListAll.size();
-        List<Culture> cultureList = cultureListAll.subList(lastIndex - 5, lastIndex);
+        List<Culture> cultureList = cultureListAll.subList(lastIndex - 10, lastIndex);
         Collections.reverse(cultureList);
         return cultureList;
     }
 
-    @GetMapping("/")
-    public String home(HttpSession session, Model model) {
+    @GetMapping("/home")
+    public Map<String, List> home(HttpSession session, Model model) {
+        Map<String, List> data = new HashMap<>();
+
         if (session.getAttribute("status") != null) {
             MemberForm myInfo = memberService.research((Long) session.getAttribute("userId"));
             List<Culture> guList = cultureService.findByDistrict(myInfo.getDistrict());
@@ -48,6 +52,9 @@ public class HomeController {
                 model.addAttribute("recommendName", favoriteCategoryList.get(randomIndex));
             }
         }
-        return "index";
+
+        List<Culture> recentCultures = getRecentCultures();
+        data.put("recentCultures", recentCultures);
+        return data;
     }
 }
