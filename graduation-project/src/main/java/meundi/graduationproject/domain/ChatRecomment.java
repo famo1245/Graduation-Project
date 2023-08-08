@@ -13,7 +13,7 @@ public class ChatRecomment {
 
     @Id
     @GeneratedValue
-    @Column(name = "Chat_Recomment_id")
+    @Column(name = "chat_recomment_id")
     private Long id;
 
     //채팅내용

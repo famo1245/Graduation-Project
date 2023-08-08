@@ -40,19 +40,20 @@ public class ChatController {
         model.addAttribute("chatDetail", chatDetail);
         model.addAttribute("chatRecomment", new ChatRecomment());
 
-        return "chat/chatDetail";
+//        return "chat/chatDetail";
+        return "";
     }
     @PostMapping("/chatDetail/{chat_id}")
     public String chatAddComment(@Validated @ModelAttribute ChatRecomment chatRecomment,
-                                 BindingResult bindingResult, @PathVariable Long id,
+                                 BindingResult bindingResult, @PathVariable Long chat_id,
                                  RedirectAttributes redirectAttributes, HttpSession session){
-        redirectAttributes.addAttribute("id", id);
+        redirectAttributes.addAttribute("id", chat_id);
 
         if(bindingResult.hasErrors()){
             return "redirect:/chat/chatDetail/{chatId}";
         }
 
-        chatRecomment.setChat(chatService.findOne(id));
+        chatRecomment.setChat(chatService.findOne(chat_id));
 
         Member member = memberService.findById((Long)session.getAttribute("userId"));
         chatRecomment.setMember(member);

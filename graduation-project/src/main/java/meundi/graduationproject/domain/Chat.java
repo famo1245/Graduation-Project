@@ -31,7 +31,7 @@ public class Chat {
     private Culture culture;
     @NotBlank
     private String cultureTitle;
-    @OneToMany(mappedBy = "recomment")
+    @OneToMany(mappedBy = "chat")
     private List<ChatRecomment> chatRecoments;
 
     @ManyToOne
