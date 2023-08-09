@@ -1,28 +1,17 @@
 package meundi.graduationproject.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import meundi.graduationproject.domain.friend.DTO.FriendInsertDTO;
 import meundi.graduationproject.domain.friend.DTO.FriendSearchDTO;
-import meundi.graduationproject.domain.friend.Friend;
 import meundi.graduationproject.repository.FriendRepository;
 import meundi.graduationproject.service.FriendService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
