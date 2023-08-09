@@ -11,12 +11,19 @@ function KakaoAuthHandler(props) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = useState(null);
   const code = searchParams.get('code');
-  const params = { code: code };
+  const params = { code: code, 
+    client_id: '92fbf81b06d378a41d55ee603e5b6bd0',
+    redirect_uri: 'http://localhost:3000',
+    grant_type: 'authorization_code',
+  };
+  const headers = {
+    'Content-type': 'application/x-www-form-urlencoded'
+  }
+  const url = 'https://kauth.kakao.com/oauth/token';
 
   useEffect(() => {
     axios
-      .get(`/api/auth/kakao/callback`, { params })
-      .then((response) => setData(response.data))
+      .post(url, { params }, { headers })
       .catch((err) => setError(err));
   });
 

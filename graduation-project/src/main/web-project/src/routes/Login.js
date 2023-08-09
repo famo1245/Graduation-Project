@@ -3,6 +3,7 @@ import React from "react";
 import axios from "axios";
 import styles from "./Login.module.css";
 import logo from "../imgs/kakao_login_medium_narrow.png";
+import SocialKakao from "../components/login/KakaoLogin";
 // import KakaoLoginButton from "../components/login/KakaoLoginButton";
 
 function Login() {
