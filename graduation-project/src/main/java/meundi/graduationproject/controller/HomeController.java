@@ -30,8 +30,8 @@ public class HomeController {
     }
 
     @GetMapping("/api/home")
-    public Map<String, List> home(HttpSession session, Model model) {
-        Map<String, List> data = new HashMap<>();
+    public Map<String, Object> home(HttpSession session, Model model) {
+        Map<String, Object> data = new HashMap<>();
 
         if (session.getAttribute("status") != null) {
             MemberForm myInfo = memberService.research((Long) session.getAttribute("userId"));
@@ -52,11 +52,5 @@ public class HomeController {
         List<Culture> recentCultures = getRecentCultures();
         data.put("recentCultures", recentCultures);
         return data;
-    }
-
-    @GetMapping("/api/auth/kakao/callback")
-    public String callBackApi(@RequestParam(name = "code") String code) {
-        log.info("call back api");
-        return code;
     }
 }

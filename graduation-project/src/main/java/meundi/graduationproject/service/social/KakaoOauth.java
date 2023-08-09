@@ -99,9 +99,8 @@ public class KakaoOauth implements SocialLoginOauth {
 
                 return accessToken;
             }
-            return "구글 로그인 요청 처리 실패";
+            return "카카오 로그인 요청 처리 실패";
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             throw new IllegalArgumentException("알 수 없는 카카오 로그인Access Token 요청 URL 입니다 :: "
                     + KAKAO_SNS_TOKEN_BASE_URL);
         }

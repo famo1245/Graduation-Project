@@ -16,14 +16,13 @@ import java.util.HashMap;
 @Controller
 @CrossOrigin
 @RequiredArgsConstructor
-@RequestMapping(value = "/auth")
 @Slf4j
 public class SocialLoginOauthController {
 
     private final OauthService oauthService;
     private final MemberService memberService;
 
-    @GetMapping(value = "/{socialLoginType}")
+    @GetMapping(value = "/auth/{socialLoginType}")
     public void socialLoginType(@PathVariable(name = "socialLoginType") SocialLoginType socialLoginType,
                                 HttpServletResponse response) throws Exception {
         log.info("requested sns login typ :: {} Social Login", socialLoginType);
@@ -31,7 +30,7 @@ public class SocialLoginOauthController {
         response.sendRedirect(redirectURL);
     }
 
-    @GetMapping(value = "/{socialLoginType}/callback")
+    @GetMapping(value = "/auth/{socialLoginType}/callback")
     public String callBack(@RequestParam(name = "code") String code,
                            HttpSession session,
                            Model model,
@@ -55,11 +54,34 @@ public class SocialLoginOauthController {
         return "redirect:/";
     }
 
-    @GetMapping("/logout/{socialLoginType}")
+    @GetMapping("/auth/logout/{socialLoginType}")
     public String logout(@PathVariable(name = "socialLoginType") SocialLoginType socialLoginType,
                          HttpSession session) {
         oauthService.logout(socialLoginType, (String)session.getAttribute("access_Token"));
         session.invalidate();
         return "redirect:/";
+    }
+
+    @GetMapping("/api/auth/{socialLoginType}/callback")
+    @ResponseBody
+    public String callBackApi(@RequestParam(name = "code") String code,
+                              @PathVariable(name = "socialLoginType") SocialLoginType socialLoginType) {
+        String accessToken = oauthService.requestAccessToken(socialLoginType, code);
+//        HashMap<String, Object> userInfo = oauthService.getUserInfo(socialLoginType, accessToken);
+        /*if (userInfo.get("id") != null) {
+            if (memberService.findById((Long) userInfo.get("id")) == null) {
+                model.addAttribute("id", userInfo.get("id"));
+                model.addAttribute("email", userInfo.get("email"));
+                model.addAttribute("gender", userInfo.get("gender"));
+                model.addAttribute("age_range", userInfo.get("age_range"));
+                return "forward:/members/new";
+            }
+            session.setAttribute("userId", userInfo.get("id"));
+            session.setAttribute("access_Token", accessToken);
+            session.setAttribute("type", socialLoginType);
+            session.setAttribute("status", "true");
+        }*/
+        log.info(accessToken);
+        return accessToken;
     }
 }
