@@ -7,4 +7,9 @@ import lombok.Getter;
 public class FriendSearchDTO {
 
     private String total;
+
+    public FriendSearchDTO(String total) {
+        this.total = total;
+    }
+    public FriendSearchDTO(){}
 }
