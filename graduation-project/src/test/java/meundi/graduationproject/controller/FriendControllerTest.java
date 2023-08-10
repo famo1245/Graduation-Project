@@ -49,6 +49,7 @@ class FriendControllerTest {
             //when, then
             mockMvc.perform(get("/friend"))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data").exists())
                 .andDo(print());
         }
         @DisplayName("검색을 통해 내보낼 수 있다.")
@@ -60,6 +61,57 @@ class FriendControllerTest {
             friendService.InsertFriend(dto);
             //when then
             FriendSearchDTO friendSearchDTO = new FriendSearchDTO("testTitle");
+            String content = om.writeValueAsString(friendSearchDTO);
+            mockMvc.perform(post("/friend")
+                    .content(content)
+                    .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data").exists())
+                .andDo(print());
+        }
+        @DisplayName("검색 키워드가 빈칸이기때문에 모든 객체를 내보낸다.")
+        @Test
+        void SuccessSearchBlank()throws Exception{
+            //given
+            FriendInsertDTO dto = new FriendInsertDTO("testTitle", "testContents", 3,
+                "[M클래식 축제] 마포공연예술관광페스티벌 [타케자와 유토 피아노 리사이틀]", "20230808 12:03");
+            friendService.InsertFriend(dto);
+            //when then
+            FriendSearchDTO friendSearchDTO = new FriendSearchDTO(" ");
+            String content = om.writeValueAsString(friendSearchDTO);
+            mockMvc.perform(post("/friend")
+                    .content(content)
+                    .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data").exists())
+                .andDo(print());
+        }
+        @DisplayName("검색 키워드가 null 값이기 때문에 모든 객체를 내보낸다.")
+        @Test
+        void SuccessSearchNull()throws Exception{
+            //given
+            FriendInsertDTO dto = new FriendInsertDTO("testTitle", "testContents", 3,
+                "[M클래식 축제] 마포공연예술관광페스티벌 [타케자와 유토 피아노 리사이틀]", "20230808 12:03");
+            friendService.InsertFriend(dto);
+            //when then
+            FriendSearchDTO friendSearchDTO = new FriendSearchDTO(" ");
+            String content = om.writeValueAsString(friendSearchDTO);
+            mockMvc.perform(post("/friend")
+                    .content(content)
+                    .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data").exists())
+                .andDo(print());
+        }
+        @DisplayName("검색 키워드에 맞는 객체가 없어 내보낼 수 없다.")
+        @Test
+        void FailSearchBlank()throws Exception{
+            //given
+            FriendInsertDTO dto = new FriendInsertDTO("testTitle", "testContents", 3,
+                "[M클래식 축제] 마포공연예술관광페스티벌 [타케자와 유토 피아노 리사이틀]", "20230808 12:03");
+            friendService.InsertFriend(dto);
+            //when then
+            FriendSearchDTO friendSearchDTO = new FriendSearchDTO("by");
             String content = om.writeValueAsString(friendSearchDTO);
             mockMvc.perform(post("/friend")
                     .content(content)
