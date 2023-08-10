@@ -1,6 +1,8 @@
 package meundi.graduationproject.controller;
 
 
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +15,11 @@ public class FriendControllerAdvice {
 
     @ExceptionHandler
     public ResponseEntity<?> bindException(BindException e) {
+        Map<String, Object> message = new HashMap<>();
+        message.put("error", e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .contentType(MediaType.APPLICATION_JSON)
-            .body(e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+            .body(message);
     }
 
 

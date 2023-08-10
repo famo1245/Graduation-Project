@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import meundi.graduationproject.domain.friend.DTO.FriendInsertDTO;
 import meundi.graduationproject.domain.friend.DTO.FriendSearchDTO;
 import meundi.graduationproject.service.FriendService;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -119,7 +120,41 @@ class FriendControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
         }
+    }
+    @DisplayName("Friend 객체를")
+    @Nested
+    class test2{
+        @DisplayName("생성할 수 있다.")
+        @Test
+        void Success() throws Exception {
+            //given
+            FriendInsertDTO dto = new FriendInsertDTO("testTitle", "testContents", 3,
+                "[M클래식 축제] 마포공연예술관광페스티벌 [타케자와 유토 피아노 리사이틀]", "20230808 12:03");
+            //when then
+            String content = om.writeValueAsString(dto);
+            mockMvc.perform(post("/friend/creat")
+                    .content(content)
+                    .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.data").exists())
+                .andExpect(status().isOk())
+                .andDo(print());
+        }
+        @DisplayName("양식에 맞지 않아 생성할 수 없다.")
+        @Test
+        void Fail() throws Exception {
+            //given
+            FriendInsertDTO dto = new  FriendInsertDTO("testTitle", " ", 3,
+                "[M클래식 축제] 마포공연예술관광페스티벌 [타케자와 유토 피아노 리사이틀]", "20230808 12:03");
+            //when then
+            String content = om.writeValueAsString(dto);
+            mockMvc.perform(post("/friend/creat")
+                    .content(content)
+                    .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("must not be blank"))
+                .andDo(print());
 
+        }
     }
 
 }
