@@ -25,7 +25,7 @@ public class KakaoOauth implements SocialLoginOauth {
     private String KAKAO_SNS_BASE_URL;
     @Value("${api.kakao.client.id}")
     private String KAKAO_SNS_CLIENT_ID;
-    @Value("${api.kakao.callback.url}")
+    @Value("${api.kakao.callback.front}")
     private String KAKAO_SNS_CALLBACK_URL;
     @Value("${api.kakao.token.url}")
     private String KAKAO_SNS_TOKEN_BASE_URL;
@@ -55,7 +55,7 @@ public class KakaoOauth implements SocialLoginOauth {
             URL url = new URL(KAKAO_SNS_TOKEN_BASE_URL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-            //    POST 요청을 위해 기본값이 false인 setDoOutput을 true로
+            // POST 요청을 위해 기본값이 false인 setDoOutput을 true로
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setDoOutput(true);

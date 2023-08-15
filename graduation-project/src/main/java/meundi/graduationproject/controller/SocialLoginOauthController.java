@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @CrossOrigin
@@ -64,24 +65,21 @@ public class SocialLoginOauthController {
 
     @GetMapping("/api/auth/{socialLoginType}/callback")
     @ResponseBody
-    public String callBackApi(@RequestParam(name = "code") String code,
-                              @PathVariable(name = "socialLoginType") SocialLoginType socialLoginType) {
+    public Map<String, Object> callBackApi(@RequestParam(name = "code") String code,
+                                           @PathVariable(name = "socialLoginType") SocialLoginType socialLoginType) {
         String accessToken = oauthService.requestAccessToken(socialLoginType, code);
-//        HashMap<String, Object> userInfo = oauthService.getUserInfo(socialLoginType, accessToken);
-        /*if (userInfo.get("id") != null) {
+        HashMap<String, Object> userInfo = oauthService.getUserInfo(socialLoginType, accessToken);
+        if (userInfo.get("id") != null) {
             if (memberService.findById((Long) userInfo.get("id")) == null) {
-                model.addAttribute("id", userInfo.get("id"));
-                model.addAttribute("email", userInfo.get("email"));
-                model.addAttribute("gender", userInfo.get("gender"));
-                model.addAttribute("age_range", userInfo.get("age_range"));
-                return "forward:/members/new";
+                userInfo.put("isMember", false);
+                return userInfo;
             }
-            session.setAttribute("userId", userInfo.get("id"));
-            session.setAttribute("access_Token", accessToken);
-            session.setAttribute("type", socialLoginType);
-            session.setAttribute("status", "true");
-        }*/
-        log.info(accessToken);
-        return accessToken;
+
+            userInfo.put("isMember", true);
+            return userInfo;
+        }
+
+        userInfo.put("isMember", null);
+        return userInfo;
     }
 }
