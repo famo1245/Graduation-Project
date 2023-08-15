@@ -20,7 +20,7 @@ public class Messages {
 
     public void setCreated_at(Date date) {
         this.created_at = date;
-        SimpleDateFormat format = new SimpleDateFormat("yyyy년MM월dd일 HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("yy/MM/dd HH:mm");
         this.timeStamp = format.format(this.created_at);
     }
 }

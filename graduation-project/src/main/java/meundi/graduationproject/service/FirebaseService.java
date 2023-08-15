@@ -18,7 +18,7 @@ public class FirebaseService {
         return firebaseDao.getMessages();
     }
 
-    public void insertMessage(String text) throws Exception {
+    public void sendMessage(Long userId, String roomId, String text) {
         firebaseDao.insertMessage(text);
     }
 }

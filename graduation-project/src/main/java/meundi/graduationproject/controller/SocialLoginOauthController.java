@@ -72,14 +72,18 @@ public class SocialLoginOauthController {
         if (userInfo.get("id") != null) {
             if (memberService.findById((Long) userInfo.get("id")) == null) {
                 userInfo.put("isMember", false);
+                log.info(userInfo.toString());
                 return userInfo;
             }
 
+
             userInfo.put("isMember", true);
+            log.info(userInfo.toString());
             return userInfo;
         }
 
         userInfo.put("isMember", null);
+        log.info(userInfo.toString());
         return userInfo;
     }
 }

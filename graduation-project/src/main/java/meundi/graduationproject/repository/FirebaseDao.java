@@ -34,7 +34,7 @@ public class FirebaseDao {
         return list;
     }
 
-    public void insertMessage(String text) throws Exception {
+    public void insertMessage(String text) {
         Messages m = new Messages();
         m.setText(text);
         m.setCreated_at(new Date());

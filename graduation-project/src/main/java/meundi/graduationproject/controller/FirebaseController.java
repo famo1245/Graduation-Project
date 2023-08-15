@@ -28,9 +28,9 @@ public class FirebaseController {
     }
 
     @GetMapping("/add")
-    public String sendMessage(@RequestParam(name = "text") String text) throws Exception {
+    public String sendMessage(@RequestParam(name = "text") String text) {
         log.info("text={}", text);
-        firebaseService.insertMessage(text);
+        firebaseService.sendMessage(123L, "123", text);
         return "OK";
     }
 }
