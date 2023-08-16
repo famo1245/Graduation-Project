@@ -34,9 +34,6 @@ public class FriendService {
             friendInsertDTO.getCultureTitle(), friendInsertDTO.getMeatTime());
         return friendRepository.save(friend);
     }
-    public List<Friend> findAll(){
-        return friendRepository.findAll();
-    }
 
 
     public List<Friend> SearchFriend(FriendSearchDTO friendSearchDTO) {
