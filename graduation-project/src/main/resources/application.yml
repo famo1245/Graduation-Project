@@ -4,7 +4,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
@@ -23,3 +23,9 @@ spring:
 
 logging.level:
   org.hibernate.SQL: info
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true

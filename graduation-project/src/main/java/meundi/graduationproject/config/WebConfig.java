@@ -1,4 +1,4 @@
-package meundi.graduationproject;
+package meundi.graduationproject.config;
 
 import meundi.graduationproject.interceptor.ReviewLoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
