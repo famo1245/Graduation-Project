@@ -188,27 +188,27 @@ public class GoogleOauth implements SocialLoginOauth {
 
         switch (ageRange) {
             case "TWENTY_ONE_OR_OLDER":
-                convertedAge = "20-29";
+                convertedAge = "20~29";
                 break;
 
             case "THIRTY_ONE_OR_OLDER":
-                convertedAge = "30-39";
+                convertedAge = "30~39";
                 break;
 
             case "FORTY_ONE_OR_OLDER":
-                convertedAge = "40-49";
+                convertedAge = "40~49";
                 break;
 
             case "FIFTY_ONE_OR_OLDER":
-                convertedAge = "50-59";
+                convertedAge = "50~59";
                 break;
 
             case "SIXTY_ONE_OR_OLDER":
-                convertedAge = "60-69";
+                convertedAge = "60~69";
                 break;
 
             case "SEVENTY_ONE_OR_OLDER":
-                convertedAge = "70-79";
+                convertedAge = "70~79";
                 break;
         }
 

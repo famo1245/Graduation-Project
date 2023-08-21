@@ -8,4 +8,5 @@ import java.util.List;
 public interface MemberRepositoryUsingJPA extends JpaRepository<Member,Long> {
     //select * from Member WHERE nickName LIKE "%nickName%"
     List<Member> findByNickNameContaining(String nickname);
+    Member findByIdEquals(Long id);
 }

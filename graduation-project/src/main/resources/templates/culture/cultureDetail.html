@@ -38,6 +38,9 @@
                 <!--                <td>상세 정보</td>-->
                 <td><a th:href="${culture.org_link}">상세 정보 링크</a></td>
             </tr>
+            <tr>
+                <td><a th:href="@{/chats/create/{culture_id}(culture_id = ${culture.id})}">같이 볼래요</a> </td>
+            </tr>
         </table>
     </div>
     <div class="row">

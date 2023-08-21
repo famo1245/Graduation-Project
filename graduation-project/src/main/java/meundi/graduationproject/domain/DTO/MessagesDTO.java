@@ -1,4 +1,4 @@
-package meundi.graduationproject.domain;
+package meundi.graduationproject.domain.DTO;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,12 +12,13 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class Messages {
+public class MessagesDTO {
 
     private String text;
     private Date created_at;
+    private Long author;
     private String timeStamp;
-    private int room_id;
+    private String roomId;
 
     public void setCreated_at(Date date) {
         this.created_at = date;

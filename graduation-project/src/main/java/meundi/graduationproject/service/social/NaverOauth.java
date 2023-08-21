@@ -144,7 +144,7 @@ public class NaverOauth implements SocialLoginOauth {
             userInfo.put("id", id);
             userInfo.put("gender", gender);
             userInfo.put("email", email);
-            userInfo.put("age_range", ageRange);
+            userInfo.put("age_range", ageConverter(ageRange));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -166,5 +166,10 @@ public class NaverOauth implements SocialLoginOauth {
         }
 
         return convertedGender;
+    }
+
+    private String ageConverter(String ageRange) {
+        String[] splitAge = ageRange.split("-");
+        return splitAge[0] + "~" + splitAge[1];
     }
 }
