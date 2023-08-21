@@ -8,6 +8,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    database-platform: org.hibernate.dialect.MariaDBDialect
   h2:
     console:
       enabled: true
