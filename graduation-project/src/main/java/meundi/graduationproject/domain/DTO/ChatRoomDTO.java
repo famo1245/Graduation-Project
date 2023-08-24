@@ -3,9 +3,7 @@ package meundi.graduationproject.domain.DTO;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -25,6 +23,6 @@ public class ChatRoomDTO {
 
     // business logic
     public void addParticipants(Long id) {
-        this.participants.put(id.toString(), true);
+        this.participants.put(id.toString(), false);
     }
 }

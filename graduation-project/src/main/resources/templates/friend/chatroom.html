@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>문화 친구 채팅방</title>
+    <style>
+        .chat-info {
+            margin-left: 50px;
+            float: left;
+        }
+        .chat-picture {
+            margin-left: 50px;
+            float: left;
+        }
+        .picture {
+            height: 200px;
+            width: 150px;
+        }
+        .myChat {
+            margin-top: 10px;
+            text-align: center;
+            float: right;
+            /*align-content: flex-end;*/
+        }
+        .otherChat {
+            margin-top: 10px;
+            text-align: center;
+            float: left;
+            /*align-self: start;*/
+        }
+        .chatBox {
+            display: inline-block;
+            position: relative;
+            background-color: #ea5936;
+            border-radius: 20px;
+            color: #fff;
+            padding: 7px 12px;
+            margin-bottom: 10px;
+            max-width: 700px;
+        }
+        .myChatTime{
+            float: right;
+            position: relative;
+            margin-left: 10px;
+            margin-right: 10px;
+            color: #171717;
+        }
+        .chatTime {
+            position: relative;
+            margin-left: 10px;
+            margin-right: 10px;
+            align-self: baseline;
+            color: #171717;
+        }
+        .form-control {
+            height: 100px;
+            width: 500px;
+        }
+    </style>
+</head>
+<body>
+<div style="margin: 10px">
+    <div style="height: 200px">
+        <div class="chat-picture">
+            <a th:href="@{/cultures/detail/{culture_id}(culture_id = ${chatRoom.cultureId})}"
+               target="_blank" style="text-decoration: none">
+                <img th:src="${chatRoom.cultureImg}" alt="문화 이미지" class="picture" />
+            </a>
+        </div>
+        <div class="chat-info">
+            <h4 th:text="${chatRoom.title}">방 제목</h4>
+            <h4 th:text="${chatRoom.cultureTitle}">문화 제목</h4>
+            <h4 th:text="|방장: ${chatRoom.authorId}|">방장</h4>
+        </div>
+    </div>
+    <hr/>
+    <div style="margin: 30px">
+        <div th:each="message : ${messages}">
+            <h5 th:if="${session.userId} != ${message.author}"
+                   th:text="${message.author}">아이디</h5>
+            <p th:text="|${message.text}|" class="myChat chatBox"
+               th:if="${session.userId} == ${message.author}">채팅</p>
+            <p th:text="${message.text}" class="otherChat chatBox"
+               th:unless="${session.userId} == ${message.author}">채팅</p>
+            <br/>
+            <small th:if="${session.userId} == ${message.author}"
+                   th:text="${message.timeStamp}" class="text-muted myChatTime">날짜</small>
+            <small th:unless="${session.userId} == ${message.author}"
+                   th:text="${message.timeStamp}" class="text-muted chatTime">날짜</small>
+            <br/>
+        </div>
+    </div>
+    <hr/>
+    <div style="margin-top: 20px;">
+        <form th:action="@{/chats/new-message/{room_id}(room_id = ${chatRoom.roomId})}"
+              th:method="post">
+            <div style="float: left;">
+                <input id="text" name="text" class="form-control">
+            </div>
+            <div>
+                <button type="submit"
+                        style="float:left; margin-left: 5px; height: 105px">
+                    전송
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

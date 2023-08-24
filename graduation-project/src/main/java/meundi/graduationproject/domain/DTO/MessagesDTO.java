@@ -17,6 +17,7 @@ public class MessagesDTO {
     private String text;
     private Date created_at;
     private Long author;
+    private String nickName;
     private String timeStamp;
     private String roomId;
 

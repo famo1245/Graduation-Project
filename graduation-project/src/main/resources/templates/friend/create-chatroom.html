@@ -2,14 +2,14 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>채팅방 생성</title>
+    <title>문화 친구 채팅방 생성</title>
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
     <div class="py-5 text-center">
-        <h2>채팅방 생성</h2>
+        <h2>문화 친구 채팅방 생성</h2>
     </div>
     <hr class="my-4">
     <form th:action="@{/chats/create/{culture_id}(culture_id = ${culture_id})}" th:method="post" th:object="${create_form}">
