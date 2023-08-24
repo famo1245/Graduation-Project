@@ -84,19 +84,19 @@ public class CultureService {
     /*최종 문화데이터 전체출력하는 메소드 */
     public String getCultureTotal() throws Exception {
         int count = Integer.parseInt(CultureTotalCount(getCultureHeader()));
-        log.info("count= {}",count);
+        log.info("count= {}", count);
         while (true) {
             if (count < 1001) { /*1~1000이면 마지막 999개*/
                 JsonToCulture(getCulture1000(String.valueOf(count)));
                 break;
-            }
-            else {
+            } else {
                 JsonToCulture(getCulture1000(String.valueOf(count)));
                 count -= 1000;
             }
         }
         return String.valueOf(count);
     }
+
     /* 문화 전체 갯수 출력 */
     private String CultureTotalCount(String result) {
         JsonParser parser = new JsonParser();
@@ -118,7 +118,7 @@ public class CultureService {
         JsonObject jsonObject2 = jsonObject1.getAsJsonObject(CULTURE_SERVICE);
         JsonArray jsonArray = jsonObject2.getAsJsonArray("row");
         /* 문화 데이터 하나씩 받기 */
-        for (int i=jsonArray.size()-1; i>=0;i--) {
+        for (int i = jsonArray.size() - 1; i >= 0; i--) {
             JsonObject childObj = (JsonObject) jsonArray.get(i);
 
             String title = null;
@@ -195,8 +195,8 @@ public class CultureService {
         } else {
             start = String.valueOf(Integer.parseInt(count) - 999);
         }
-        log.info("start = {}",start);
-        log.info("count = {}",count);
+        log.info("start = {}", start);
+        log.info("count = {}", count);
         StringBuilder urlBuilder = new StringBuilder(CULTURE_URL); /*URL*/
         urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
         urlBuilder.append("/" + URLEncoder.encode("json", "UTF-8")); /*요청파일타입*/
@@ -346,7 +346,7 @@ public class CultureService {
         Culture lastOne = cultureRepository.findLastOne();
 
         /* 문화 데이터 하나씩 받기 */
-        for (int i=jsonArray.size()-1; i>=0; i--) {
+        for (int i = jsonArray.size() - 1; i >= 0; i--) {
             JsonObject childObj = (JsonObject) jsonArray.get(i);
 
             String title = null;
@@ -409,11 +409,15 @@ public class CultureService {
             culture.InsertCultureFromJson(title, player, orgLink, mainImg,
                     guname, date, rgstdate,
                     codename, userTrgt, place);
-            if(lastOne.getTitle().equals(culture.getTitle())) {
-                insertCulture(culture);
-            } else {
-                return;
+            if (lastOne.getTitle().equals(culture.getTitle())) {
+                if (lastOne.equals(culture)) {
+                    return;
+                }
+                //업데이트 구문 추가
+                continue;
             }
+
+            insertCulture(culture);
         }
     }
 }
