@@ -9,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -21,7 +18,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/members")
+@RequestMapping("/api/members")
 public class MemberController {
 
     private final MemberService memberService;
@@ -38,29 +35,31 @@ public class MemberController {
     }
 
     @PostMapping("/new")
-    public String create(MemberForm form, BindingResult bindingResult, Model model) {
-        if (!StringUtils.hasText(form.getNickName())) {
-            bindingResult.rejectValue("nickName", "required");
-        }
-        if (!StringUtils.hasText(form.getDistrict())) {
-            bindingResult.rejectValue("district", "required");
-        }
-        if (memberService.validateDuplicatedNickName(form.getNickName())) {
-            bindingResult.rejectValue("nickName", "duplicated");
-        }
-
-        if (bindingResult.hasErrors()) {
-            log.info("errors={}", bindingResult);
-            model.addAttribute("id", form.getId());
-            model.addAttribute("email", form.getEmail());
-            model.addAttribute("gender", form.getGender());
-            model.addAttribute("age_range", form.getAge_range());
-            return "members/createMemberForm";
-        }
+    @ResponseBody
+    public String create(@RequestBody MemberForm form, BindingResult bindingResult, Model model) {
+        log.info("form={}", form);
+//        if (!StringUtils.hasText(form.getNickName())) {
+//            bindingResult.rejectValue("nickName", "required");
+//        }
+//        if (!StringUtils.hasText(form.getDistrict())) {
+//            bindingResult.rejectValue("district", "required");
+//        }
+//        if (memberService.validateDuplicatedNickName(form.getNickName())) {
+//            bindingResult.rejectValue("nickName", "duplicated");
+//        }
+//
+//        if (bindingResult.hasErrors()) {
+//            log.info("errors={}", bindingResult);
+//            model.addAttribute("id", form.getId());
+//            model.addAttribute("email", form.getEmail());
+//            model.addAttribute("gender", form.getGender());
+//            model.addAttribute("age_range", form.getAge_range());
+//            return "members/createMemberForm";
+//        }
         Member member = memberService.createMember(form);
         memberService.join(member);
 
-        return "redirect:/";
+        return "ok";
     }
 
     @GetMapping("/info")
