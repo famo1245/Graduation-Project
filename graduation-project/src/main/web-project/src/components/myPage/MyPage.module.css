@@ -1,0 +1,174 @@
+.container {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container_body {
+  width: 100%;
+  height: 100%;
+  /* background-color: aquamarine; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.container_body_inner {
+  width: 100%;
+  height: 100%;
+  max-width: 1600px;
+  max-height: 600px;
+  display: flex;
+  /* background-color: aqua; */
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 30px;
+}
+
+/* .container_body_inner div {
+  border-bottom: 1px solid #707070;
+  background-color: aqua;
+} */
+
+.container_body_inner div h1 {
+  color: dodgerblue;
+  font-size: 24pt;
+  /* background-color: azure; */
+}
+
+.body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  /* background-color: blueviolet; */
+  box-shadow: 0px 0px 7px lightgray;
+  border-top: 2.5px solid #707070;
+}
+
+.a {
+  /* background-color: red; */
+  height: 100%;
+  width: 800px;
+  padding: 20px 0;
+}
+
+.a .text {
+  margin: 35px;
+  font-size: 16pt;
+  color: #2c2c2c;
+}
+
+.rank {
+  display: flex;
+  flex-direction: row;
+  margin: 10px 35px;
+}
+
+.a .rank img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.rank_text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  font-size: 16pt;
+}
+
+.rank_text_field {
+  margin-left: 35px;
+}
+
+#rank_text_field {
+  color: dodgerblue;
+}
+
+.line {
+  height: 530px;
+  border-right: 5px solid lightgray;
+}
+
+.b {
+  /* background-color: blue; */
+  height: 100%;
+  width: 800px;
+  padding: 20px 0;
+}
+
+.body_text {
+  font-size: 16pt;
+  color: #707070;
+  margin: 35px;
+  cursor: pointer;
+}
+
+.body_text .classicButton {
+  text-decoration: none;
+  /* outline: none; */
+  color: #707070;
+  background-color: transparent;
+  /* background: inherit; */
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  cursor: pointer;
+}
+
+.body_text .activeButton {
+  text-decoration: none;
+  /* outline: none; */
+  color: dodgerblue;
+  background-color: transparent;
+  /* background: inherit; */
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  cursor: pointer;
+}
+
+.body_text .classicButton:hover {
+  color: dodgerblue;
+}
+
+.body_text .classicButton:active {
+  color: dodgerblue;
+}
+
+.activeButton:active {
+  color: #707070;
+}
+
+#body_text {
+  margin-top: 210px;
+  margin-left: 35px;
+  text-decoration: underline;
+  font-size: 16pt;
+  color: #707070;
+  cursor: pointer;
+}
+
+.body_text_link {
+  text-decoration: none;
+  color: #707070;
+}
+
+.body_text_link:hover {
+  color: dodgerblue;
+}
+
+.body_inner_bottom {
+  width: 100%;
+  height: 100%;
+  /* background-color: blue; */
+  margin-top: 50px;
+}

@@ -1,0 +1,13 @@
+.content {
+  margin: 20px;
+  margin-bottom: 70px;
+  /* background-color: #2051c2; */
+  width: 226.5px;
+  height: 350px;
+}
+
+.content_box img {
+  width: 225px;
+  height: 250px;
+  cursor: pointer;
+}

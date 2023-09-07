@@ -1,0 +1,212 @@
+.container {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container_body {
+  width: 100%;
+  height: 100%;
+  /* background-color: aquamarine; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container_body_inner {
+  width: 100%;
+  height: 100%;
+  max-width: 1600px;
+  max-height: 600px;
+  display: flex;
+  /* background-color: aqua; */
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 30px;
+}
+
+/* .container_body_inner div {
+      border-bottom: 1px solid #707070;
+      background-color: aqua;
+    } */
+
+.container_body_inner div h1 {
+  color: dodgerblue;
+  font-size: 24pt;
+  /* background-color: azure; */
+}
+
+.body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  /* background-color: blueviolet; */
+  box-shadow: 0px 0px 7px lightgray;
+  border-top: 2.5px solid #707070;
+}
+
+.a {
+  /* background-color: red; */
+  height: 100%;
+  width: 18%;
+  padding: 20px 0;
+}
+
+.a .text {
+  margin: 35px;
+  font-size: 16pt;
+  color: #2c2c2c;
+}
+
+#text_age {
+  display: none;
+}
+
+#text {
+  margin-top: 210px;
+  margin-left: 35px;
+  text-decoration: underline;
+  font-size: 16pt;
+  color: #707070;
+  cursor: pointer;
+}
+
+.text_link {
+  text-decoration: none;
+  color: #707070;
+}
+
+/* .text_link:hover {
+    color: dodgerblue;
+  } */
+
+.text_link button {
+  text-decoration: underline;
+  /* outline: none; */
+  color: #2051c2;
+  background-color: transparent;
+  /* background: inherit; */
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  cursor: pointer;
+}
+
+.text_link button:hover {
+  color: dodgerblue;
+}
+
+.b {
+  width: 65%;
+  height: 100%;
+  padding: 32px 0;
+}
+
+.b form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.b .text {
+  margin: 19px 20px;
+  /* font-size: 16pt; */
+  color: #2c2c2c;
+}
+
+#nickname {
+  width: 15%;
+  height: 30px;
+  padding: 0 15px;
+  box-shadow: 5px 5px 10px 3px #ddd;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#nickname input {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  font-weight: 300;
+  color: #707070;
+  width: 100%;
+}
+
+#age {
+  width: 15%;
+  height: 30px;
+  padding: 0 15px;
+  box-shadow: 5px 5px 10px 3px #ddd;
+  display: none;
+  flex-direction: row;
+  align-items: center;
+}
+
+#age select {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  color: #707070;
+  font-weight: 300;
+  width: 100%;
+  margin-left: 25px;
+  cursor: pointer;
+}
+
+#interest_region {
+  width: 15%;
+  height: 30px;
+  padding: 0 15px;
+  box-shadow: 5px 5px 10px 3px #ddd;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#interest_region select {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  color: #707070;
+  font-weight: 300;
+  width: 100%;
+  margin-left: 25px;
+  cursor: pointer;
+}
+
+#interest_culture {
+  width: 100%;
+  height: 30px;
+  /* padding: 0 15px; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+#interest_culture div {
+  box-shadow: 5px 5px 10px 3px #ddd;
+  background-color: transparent;
+  color: #707070;
+  border: none;
+  height: 100%;
+  font-weight: 300;
+  width: 15%;
+  margin-right: 25px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+#interest_culture div input {
+  vertical-align: middle;
+}

@@ -1,0 +1,105 @@
+.container {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  max-width: 1600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputWrapper {
+  background-color: white;
+  width: 27%;
+  border-radius: 10px;
+  height: 2.5rem;
+  padding: 0 15px;
+  box-shadow: 0 0 10px #ddd;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.searchLogo {
+  color: #2c2c2c;
+  width: 50px;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.inputWrapper input {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  font-size: 12px;
+  font-weight: 600;
+  width: 100%;
+  margin-left: 7px;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  color: white;
+  outline: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+#searchIcon {
+  color: #2051c2;
+  width: 20px;
+  height: 20px;
+}
+
+.line {
+  border: 2px solid #707070;
+  margin-bottom: 40px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: flex-start; */
+  flex-wrap: wrap;
+}
+
+.paginationBttns {
+  width: 100%;
+  height: 200px;
+  list-style: none;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  /* background-color: #2051c2; */
+}
+
+.paginationBttns a {
+  padding: 3px;
+  border-radius: 5px;
+  outline: none;
+  /* border: 1px solid #2051c2; */
+  color: #2c2c2c;
+  cursor: pointer;
+}
+
+.paginationBttns a:hover {
+  color: white;
+  background-color: #2051c2;
+}
+
+.paginationActive a {
+  color: #2051c2;
+  /* background-color: #2051c2; */
+}
