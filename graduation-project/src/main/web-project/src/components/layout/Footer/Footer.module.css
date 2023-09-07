@@ -1,4 +1,5 @@
 .footer {
+  box-sizing: border-box;
   height: auto;
   margin-top: auto;
   display: flex;
@@ -26,11 +27,29 @@
   padding-left: 150px;
 }
 
+.left_click {
+  color: white;
+}
+
+.left_click:hover {
+  color: #2c2c2c;
+  text-decoration: none;
+}
+
 .right {
   cursor: pointer;
   color: white;
   font-size: 30px;
   padding-right: 150px;
+}
+
+.right_click {
+  color: white;
+}
+
+.right_click:hover {
+  color: #2c2c2c;
+  text-decoration: none;
 }
 
 .contents_nav .content {

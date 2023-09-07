@@ -29,14 +29,37 @@ function Home(props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // const fetchData = async () => {
+  //   try {
+  //     setError(null);
+  //     setData(null);
+  //     setLoading(true);
+
+  //     const response = await axios.get(url, {
+  //       params: {
+  //         serviceKey: process.env.REACT_APP_API_KEY,
+  //         numOfRows: 10,
+  //         pageNo: 1,
+  //       },
+  //     });
+
+  //     setData(response.data);
+  //   } catch (e) {
+  //     setError(e);
+  //   }
+  //   setLoading(false);
+  // };
+
   useEffect(() => {
     setLoading(true);
-    axios.get('/api/home')
-      .then (response => {
+    axios
+      .get("/api/home")
+      .then((response) => {
         setData(response.data);
         setLoading(false);
+        console.log(response.data);
       })
-      .catch (err => setError(err));
+      .catch((err) => setError(err));
   }, []);
 
   if (loading) return <div>Loading...</div>;
@@ -46,27 +69,20 @@ function Home(props) {
   return (
     <div className={styles.home}>
       <div>
-        <h4>신규 문화 생활 추천</h4>
+        <h4>신규 문화 추천</h4>
       </div>
       <div className={styles.home_upper}>
-        <div
-          className={styles.home_upper_content}
-          // onMouseEnter={disableScroll}
-          // onMouseLeave={enableScroll}
-        >
-          {/* <ScrollMenu
-            LeftArrow={LeftArrow}
-            RightArrow={RightArrow}
-            // onWheel={onWheel}
-          > */}
-          {data.recentCultures.map(culture => {
-              const url = `/cultures/detail/${culture.id}`
-              return (<div key={culture.id}>
+        <div className={styles.home_upper_content}>
+          {data.recentCultures.map((culture) => {
+            const url = `/munhwaRow/${culture.id}`;
+            return (
+              <div key={culture.id}>
                 <Link to={url}>
-                  <img src={culture.main_img} alt="상세페이지"/>
+                  <img src={culture.main_img} alt="상세페이지" />
                 </Link>
-              </div>);
-            })}
+              </div>
+            );
+          })}
 
           <div className={styles.prev}>
             <i className={styles.prev_arrow}>◀</i>
@@ -78,60 +94,21 @@ function Home(props) {
         </div>
       </div>
       <div>
-        <h4>곧 끝나는 문화 생활</h4>
+        <h4>곧 끝나는 문화</h4>
       </div>
       <div className={styles.home_upper}>
         <div className={styles.home_upper_content}>
-          <div>
-            <Link>
-              <img src={`img/beautifulroad.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/a_house_under_a_cliff.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/aSailBoat.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/lakeinthehouse.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/moonsight.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/sakura.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/snowmountain.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/TheFall.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/treenearthchair.jpg`} />
-            </Link>
-          </div>
-          <div>
-            <Link>
-              <img src={`img/windmill.jpg`} />
-            </Link>
-          </div>
+          {data.recentCultures.map((culture) => {
+            const url = `/munhwaRow/${culture.id}`;
+            return (
+              <div key={culture.id}>
+                <Link to={url}>
+                  <img src={culture.main_img} alt="상세페이지" />
+                </Link>
+              </div>
+            );
+          })}
+
           <div className={styles.prev}>
             <i className={styles.prev_arrow}>◀</i>
           </div>

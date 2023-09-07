@@ -1,39 +1,28 @@
-import { Link } from 'react-router-dom';
-import styles from './Header.module.css';
-import { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
+import styles from "./Header.module.css";
 
 const urlLeft = {
-  true: '/Logout',
-  false: '/Login',
+  true: "/Logout",
+  false: "/Login",
 };
 
 const urlRight = {
-  true: '/mypage',
-  false: '/Sign_up',
+  true: "/Mypage",
+  false: "/Sign_up",
 };
 
 const nameLeft = {
-  true: '로그아웃',
-  false: '로그인',
+  true: "로그아웃",
+  false: "로그인",
 };
 
 const nameRight = {
-  true: '마이페이지',
-  false: '회원가입',
+  true: "마이페이지",
+  false: "회원가입",
 };
 
 function Header(props) {
-  // const [isLogin, setIsLogin] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
-  const isLogin = sessionStorage.getItem('userId') === null ? false : true;
-
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   if (sessionStorage.getItem('userId')) {
-  //     setIsLogin(true);
-  //   }
-  //   setIsLoading(false);
-  // }, []);
+  const isLogin = sessionStorage.getItem("userId") === null ? false : true;
 
   return (
     <div className={styles.header}>
@@ -43,10 +32,18 @@ function Header(props) {
             문화 인 서울
           </Link>
           <div className={styles.login_route}>
-            <Link to={urlLeft[isLogin]} className={styles.link} id={styles.login}>
+            <Link
+              to={urlLeft[isLogin]}
+              className={styles.link}
+              id={styles.login}
+            >
               {nameLeft[isLogin]}
             </Link>
-            <Link to={urlRight[isLogin]} className={styles.link} id={styles.signup}>
+            <Link
+              to={urlRight[isLogin]}
+              className={styles.link}
+              id={styles.signup}
+            >
               {nameRight[isLogin]}
             </Link>
           </div>
@@ -60,97 +57,163 @@ function Header(props) {
               <ul>
                 <div>
                   <li>
-                    <Link to={`/Whyso`} className={styles.depth2_link}>
+                    <Link to={`/Musical`} className={styles.depth2_link}>
                       뮤지컬/오페라
                     </Link>
                   </li>
                   <li>
-                    <Link className={styles.depth2_link}>콘서트</Link>
+                    <Link to={`/Concert`} className={styles.depth2_link}>
+                      콘서트
+                    </Link>
                   </li>
                   <li>
-                    <Link className={styles.depth2_link}>독주/독창회</Link>
-                  </li>
-                </div>
-                <div>
-                  <li>
-                    <Link className={styles.depth2_link}>문화교양/강좌</Link>
-                  </li>
-                  <li>
-                    <Link className={styles.depth2_link}>교육/체험</Link>
-                  </li>
-                  <li>
-                    <Link className={styles.depth2_link}>전시/미술</Link>
+                    <Link
+                      to={`/Solo_SingingParty`}
+                      className={styles.depth2_link}
+                    >
+                      독주/독창회
+                    </Link>
                   </li>
                 </div>
                 <div>
                   <li>
-                    <Link className={styles.depth2_link}>클래식</Link>
+                    <Link
+                      to={`/cultureAndCulture`}
+                      className={styles.depth2_link}
+                    >
+                      문화교양/강좌
+                    </Link>
                   </li>
                   <li>
-                    <Link className={styles.depth2_link}>국악</Link>
+                    <Link to={`/Education`} className={styles.depth2_link}>
+                      교육/체험
+                    </Link>
                   </li>
                   <li>
-                    <Link className={styles.depth2_link}>무용</Link>
-                  </li>
-                </div>
-                <div>
-                  <li>
-                    <Link className={styles.depth2_link}>연극</Link>
-                  </li>
-                  <li>
-                    <Link className={styles.depth2_link}>영화</Link>
-                  </li>
-                </div>
-                <div>
-                  <li>
-                    <Link className={styles.depth2_link}>축제-문화/예술</Link>
-                  </li>
-                  <li>
-                    <Link className={styles.depth2_link}>축제-전통/역사</Link>
-                  </li>
-                  <li>
-                    <Link className={styles.depth2_link}>축제-시민화합</Link>
-                  </li>
-                  <li>
-                    <Link className={styles.depth2_link}>축제-기타</Link>
+                    <Link to={`/Exhibition`} className={styles.depth2_link}>
+                      전시/미술
+                    </Link>
                   </li>
                 </div>
                 <div>
                   <li>
-                    <Link className={styles.depth2_link}>기타</Link>
+                    <Link to={`/Classic`} className={styles.depth2_link}>
+                      클래식
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={`/KoreanTraditionalMusic`}
+                      className={styles.depth2_link}
+                    >
+                      국악
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={`/Dance`} className={styles.depth2_link}>
+                      무용
+                    </Link>
+                  </li>
+                </div>
+                <div>
+                  <li>
+                    <Link to={`/Play`} className={styles.depth2_link}>
+                      연극
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={`/Movies`} className={styles.depth2_link}>
+                      영화
+                    </Link>
+                  </li>
+                </div>
+                <div>
+                  <li>
+                    <Link
+                      to={`/Festival_culture`}
+                      className={styles.depth2_link}
+                    >
+                      축제-문화/예술
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={`/Festival_traditional`}
+                      className={styles.depth2_link}
+                    >
+                      축제-전통/역사
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={`/Festival_citizen`}
+                      className={styles.depth2_link}
+                    >
+                      축제-시민화합
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={`/Festival_Other`} className={styles.depth2_link}>
+                      축제-기타
+                    </Link>
+                  </li>
+                </div>
+                <div>
+                  <li>
+                    <Link to={`/Others`} className={styles.depth2_link}>
+                      기타
+                    </Link>
                   </li>
                 </div>
               </ul>
             </div>
           </li>
           <li className={styles.navigation_tab}>
-            <Link className={styles.a}>뮤지컬/오페라</Link>
+            <Link to={`/Musical`} className={styles.a}>
+              뮤지컬/오페라
+            </Link>
           </li>
           <li className={styles.navigation_tab}>
-            <Link className={styles.a}>문화교양/강좌</Link>
+            <Link to={`/cultureAndCulture`} className={styles.a}>
+              문화교양/강좌
+            </Link>
           </li>
           <li className={styles.navigation_tab}>
-            <Link className={styles.a}>클래식</Link>
+            <Link to={`/Classic`} className={styles.a}>
+              클래식
+            </Link>
           </li>
           <li className={styles.navigation_tab}>
-            <Link className={styles.a}>연극</Link>
+            <Link to={`/Play`} className={styles.a}>
+              연극
+            </Link>
           </li>
           <li className={styles.navigation_tab}>
-            <Link className={styles.a}>축제</Link>
+            <Link to={`/Festival`} className={styles.a}>
+              축제
+            </Link>
           </li>
         </ul>
         <ul className={styles.header_nav2}>
           <li>
-            <Link className={styles.a}>관심문화</Link>
+            <Link to={`/Concert`} className={styles.a}>
+              관심문화
+            </Link>
           </li>
           <li>
-            <Link className={styles.a}>문화요청</Link>
+            <Link to={`/Concert`} className={styles.a}>
+              문화요청
+            </Link>
           </li>
           <li>
-            <Link className={styles.a}>리뷰게시판</Link>
+            <Link to={`/Concert`} className={styles.a}>
+              리뷰게시판
+            </Link>
           </li>
           <li>
-            <Link className={styles.a}>문화친구</Link>
+            <Link to={`/Concert`} className={styles.a}>
+              문화친구
+            </Link>
           </li>
         </ul>
       </div>

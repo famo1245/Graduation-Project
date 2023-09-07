@@ -1,10 +1,15 @@
 import styles from "./Footer.module.css";
+import { Link } from "react-router-dom";
 
 function Footer(props) {
   return (
     <div className={styles.footer}>
       <div className={styles.contents_nav}>
-        <div className={styles.left}>◀</div>
+        <div className={styles.left}>
+          <Link className={styles.left_click} to={`/Input_signup`}>
+            ◀
+          </Link>
+        </div>
         <h2 className={styles.content}>
           <div>
             <span className={styles.content_a}>
@@ -13,7 +18,7 @@ function Footer(props) {
           </div>
           <div>
             <span className={styles.content_b}>
-              문화비 소득공제 바로가기 ⇒ 
+              문화비 소득공제 바로가기 ⇒ ⟨⟩▶◀◄►◅▻⨠⪻⪼→⇒Ξ≣≡
             </span>
           </div>
         </h2>
@@ -29,7 +34,11 @@ function Footer(props) {
             </div>
           </a>
         </div>
-        <div className={styles.right}>▶</div>
+        <div className={styles.right}>
+          <Link className={styles.right_click} to={`/MyPage`}>
+            ▶
+          </Link>
+        </div>
       </div>
       <div className={styles.contents_count}>
         <span>현재 즐길 수 있는 문화들</span>
