@@ -35,7 +35,7 @@ export default function KakaoAuthHandler() {
 
   if (isMember) {
     sessionStorage.setItem("userId", data.id);
-    return <Navigate to="/" />;
+    return <Navigate to="/" replace={true} />;
   }
 
   return <Navigate to="/Input_signup" />;

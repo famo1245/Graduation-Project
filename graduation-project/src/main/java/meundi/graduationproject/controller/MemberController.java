@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.DTO.MemberForm;
 import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.service.MemberService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -60,6 +63,15 @@ public class MemberController {
         memberService.join(member);
 
         return "ok";
+    }
+
+    @GetMapping("/check-nickname")
+    @ResponseBody
+    public ResponseEntity<?> checkNickName(@RequestParam String nickName) {
+        Boolean isDuplicated = memberService.validateDuplicatedNickName(nickName);
+        Map<String, Object> data = new HashMap<>();
+        data.put("isDuplicated", isDuplicated);
+        return ResponseEntity.ok().body(data);
     }
 
     @GetMapping("/info")
