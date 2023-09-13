@@ -9,7 +9,7 @@ function Concert() {
   const [inputD, setInputD] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/music.json").then((res) => {
+    axios.get("/api/cultures/codename/콘서트").then((res) => {
       setInputD(res.data);
       console.log(res.data);
     });
