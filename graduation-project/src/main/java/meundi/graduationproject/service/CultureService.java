@@ -21,6 +21,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +48,8 @@ public class CultureService {
     public List<Culture> findCultureAll() {
         return cultureRepository.findAll();
     }
+
+    public List<Culture> findByCodename(String codename) {return CRJ.findByCodeName(codename);}
 
     public List<Culture> findByCategory(String category) {
         List<Culture> cultureList = CRJ.findByCodeNameContaining(category);
@@ -83,19 +86,19 @@ public class CultureService {
     /*최종 문화데이터 전체출력하는 메소드 */
     public String getCultureTotal() throws Exception {
         int count = Integer.parseInt(CultureTotalCount(getCultureHeader()));
-        log.info("count= {}",count);
+        log.info("count= {}", count);
         while (true) {
             if (count < 1001) { /*1~1000이면 마지막 999개*/
                 JsonToCulture(getCulture1000(String.valueOf(count)));
                 break;
-            }
-            else {
+            } else {
                 JsonToCulture(getCulture1000(String.valueOf(count)));
                 count -= 1000;
             }
         }
         return String.valueOf(count);
     }
+
     /* 문화 전체 갯수 출력 */
     private String CultureTotalCount(String result) {
         JsonParser parser = new JsonParser();
@@ -117,7 +120,7 @@ public class CultureService {
         JsonObject jsonObject2 = jsonObject1.getAsJsonObject(CULTURE_SERVICE);
         JsonArray jsonArray = jsonObject2.getAsJsonArray("row");
         /* 문화 데이터 하나씩 받기 */
-        for (int i=jsonArray.size()-1; i>=0;i--) {
+        for (int i = jsonArray.size() - 1; i >= 0; i--) {
             JsonObject childObj = (JsonObject) jsonArray.get(i);
 
             String title = null;
@@ -178,8 +181,8 @@ public class CultureService {
             /* 문화 객체 생성하여, 넣기 */
             Culture culture = new Culture();
             culture.InsertCultureFromJson(title, player, orgLink, mainImg,
-                    guname, date, rgstdate,
-                    codename, userTrgt, place);
+                guname, date, rgstdate,
+                codename, userTrgt, place);
             insertCulture(culture);
         }
         return "OK";
@@ -194,10 +197,11 @@ public class CultureService {
         } else {
             start = String.valueOf(Integer.parseInt(count) - 999);
         }
-        log.info("start = {}",start);
-        log.info("count = {}",count);
+        log.info("start = {}", start);
+        log.info("count = {}", count);
         StringBuilder urlBuilder = new StringBuilder(CULTURE_URL); /*URL*/
-        urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
+        urlBuilder.append(
+            "/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
         urlBuilder.append("/" + URLEncoder.encode("json", "UTF-8")); /*요청파일타입*/
         urlBuilder.append("/" + URLEncoder.encode(CULTURE_SERVICE, "UTF-8")); /*서비스명*/
 
@@ -215,9 +219,11 @@ public class CultureService {
 
         // 서비스코드가 정상이면 200~300사이의 숫자가 나옵니다.
         if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            rd = new BufferedReader(
+                new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
         } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            rd = new BufferedReader(
+                new InputStreamReader(conn.getErrorStream(), StandardCharsets.UTF_8));
         }
         StringBuilder sb = new StringBuilder();
         String line;
@@ -234,7 +240,8 @@ public class CultureService {
      * */
     public String getCultureHeader() throws Exception {
         StringBuilder urlBuilder = new StringBuilder(CULTURE_URL); /*URL*/
-        urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
+        urlBuilder.append(
+            "/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
         urlBuilder.append("/" + URLEncoder.encode("json", "UTF-8")); /*요청파일타입*/
         urlBuilder.append("/" + URLEncoder.encode(CULTURE_SERVICE, "UTF-8")); /*서비스명*/
 
@@ -252,9 +259,11 @@ public class CultureService {
 
         // 서비스코드가 정상이면 200~300사이의 숫자가 나옵니다.
         if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            rd = new BufferedReader(
+                new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
         } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            rd = new BufferedReader(
+                new InputStreamReader(conn.getErrorStream(), StandardCharsets.UTF_8));
         }
         StringBuilder sb = new StringBuilder();
         String line;
@@ -268,7 +277,8 @@ public class CultureService {
 
     public String getCultureEx() throws Exception {
         StringBuilder urlBuilder = new StringBuilder(CULTURE_URL); /*URL*/
-        urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
+        urlBuilder.append(
+            "/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
         urlBuilder.append("/" + URLEncoder.encode("json", "UTF-8")); /*요청파일타입*/
         urlBuilder.append("/" + URLEncoder.encode(CULTURE_SERVICE, "UTF-8")); /*서비스명*/
 
@@ -286,9 +296,11 @@ public class CultureService {
 
         // 서비스코드가 정상이면 200~300사이의 숫자가 나옵니다.
         if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            rd = new BufferedReader(
+                new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
         } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            rd = new BufferedReader(
+                new InputStreamReader(conn.getErrorStream(), StandardCharsets.UTF_8));
         }
         StringBuilder sb = new StringBuilder();
         String line;
@@ -306,7 +318,8 @@ public class CultureService {
     public void update() throws Exception {
         log.info("update run");
         StringBuilder urlBuilder = new StringBuilder(CULTURE_URL); /*URL*/
-        urlBuilder.append("/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
+        urlBuilder.append(
+            "/" + URLEncoder.encode("66457a68576b616e38356a61706843", "UTF-8")); /*인증키*/
         urlBuilder.append("/" + URLEncoder.encode("json", "UTF-8")); /*요청파일타입*/
         urlBuilder.append("/" + URLEncoder.encode(CULTURE_SERVICE, "UTF-8")); /*서비스명*/
 
@@ -324,9 +337,11 @@ public class CultureService {
 
         // 서비스코드가 정상이면 200~300사이의 숫자가 나옵니다.
         if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            rd = new BufferedReader(
+                new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
         } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            rd = new BufferedReader(
+                new InputStreamReader(conn.getErrorStream(), StandardCharsets.UTF_8));
         }
         StringBuilder sb = new StringBuilder();
         String line;
@@ -345,7 +360,7 @@ public class CultureService {
         Culture lastOne = cultureRepository.findLastOne();
 
         /* 문화 데이터 하나씩 받기 */
-        for (int i=jsonArray.size()-1; i>=0; i--) {
+        for (int i = jsonArray.size() - 1; i >= 0; i--) {
             JsonObject childObj = (JsonObject) jsonArray.get(i);
 
             String title = null;
@@ -406,9 +421,9 @@ public class CultureService {
             /* 문화 객체 생성하여, 넣기 */
             Culture culture = new Culture();
             culture.InsertCultureFromJson(title, player, orgLink, mainImg,
-                    guname, date, rgstdate,
-                    codename, userTrgt, place);
-            if(lastOne.getTitle().equals(culture.getTitle())) {
+                guname, date, rgstdate,
+                codename, userTrgt, place);
+            if (lastOne.getTitle().equals(culture.getTitle())) {
                 insertCulture(culture);
             } else {
                 return;

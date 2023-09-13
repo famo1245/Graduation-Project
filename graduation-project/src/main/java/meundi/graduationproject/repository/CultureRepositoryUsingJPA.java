@@ -12,4 +12,6 @@ public interface CultureRepositoryUsingJPA  extends JpaRepository<Culture,Long> 
     List<Culture> findByCodeNameContaining(String codeName);
 
     List<Culture> findByGunameContaining(String guName);
+
+    List<Culture> findByCodeName(String codename);
 }
