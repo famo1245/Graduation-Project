@@ -29,7 +29,7 @@ public class CultureRestController {
     /*우선 api 읽어와서 화면에 찍음*/
     @PostConstruct
     public void getCulture() throws Exception {
-        if(cultureService.isEmpty()) {
+        if (cultureService.isEmpty()) {
             cultureService.getCultureTotal();
             return;
         }
@@ -42,7 +42,8 @@ public class CultureRestController {
     public ResponseEntity<Map<String, Object>> cultureList(@PathVariable int page) {
         List<Culture> cultureListAll = cultureService.findCultureAll();
         int lastIndex = cultureListAll.size();
-        List<Culture> cultureList = cultureListAll.subList(lastIndex - (page * 10) + 1, lastIndex - ((page - 1) * 10));
+        List<Culture> cultureList = cultureListAll.subList(lastIndex - (page * 10) + 1,
+            lastIndex - ((page - 1) * 10));
         Collections.reverse(cultureList);
         Map<String, Object> message = new HashMap<>();
 
@@ -55,6 +56,15 @@ public class CultureRestController {
         Culture findCulture = cultureService.findOne(culture_id);
         Map<String, Object> message = new HashMap<>();
         message.put("data", findCulture);
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+
+    @GetMapping("/cultures/codename/{code_name}")
+    public ResponseEntity<Map<String, Object>> cultureListByCodeName(
+        @PathVariable String code_name) {
+
+        Map<String, Object> message = new HashMap<>();
+        message.put("data", cultureService.findByCodename(code_name));
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
