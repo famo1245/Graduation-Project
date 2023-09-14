@@ -1,0 +1,71 @@
+.container {
+  width: 100%;
+  height: 100%;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #707070;
+}
+
+.content {
+  /* margin: 20px; */
+  /* margin-bottom: 70px; */
+  /* background-color: #2051c2; */
+  width: 100%;
+  height: 300px;
+  display: flex;
+  flex-direction: row;
+}
+
+.content_img img {
+  width: 230px;
+  height: 280px;
+  cursor: pointer;
+}
+
+.content_box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+}
+
+.content_box_inner {
+  margin-top: 13px;
+  font-size: 16px;
+}
+
+#culture_title {
+  margin-bottom: 10px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+#user_content {
+  width: 85%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* white-space: nowrap; */
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+#like {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1200px;
+  /* background-color: #707070; */
+}
+
+#like img {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  /* background-color: #707070; */
+}
+
+#like span {
+  display: block;
+}

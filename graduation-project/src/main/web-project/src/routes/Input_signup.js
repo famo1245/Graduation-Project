@@ -1,34 +1,33 @@
-import React from 'react';
-import styles from './Input_signup.module.css';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import axios from 'axios';
+import React from "react";
+import styles from "./Input_signup.module.css";
+import { Link, NavLink, useHistory, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function Input_signup(props) {
-  const initialData = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')) : [];
+  const initialData = localStorage.getItem("userData")
+    ? JSON.parse(localStorage.getItem("userData"))
+    : [];
   const [userData, setUserData] = useState(initialData);
-  const navigate = useNavigate();
-  //   const [isMember, setIsMember] = useState(false);
 
   const onClick = () => {
-    const form = document.querySelector('#profileForm');
+    const form = document.querySelector("#profileForm");
     console.log(form);
     const formData = new FormData(form);
     const contents = {};
     const favoriteCategory = [];
     formData.forEach((value, key) => {
-      if (key === 'favoriteCategory') {
+      if (key === "favoriteCategory") {
         favoriteCategory.push(value);
         return;
       }
       contents[key] = value;
     });
-    contents['favoriteCategory'] = favoriteCategory.join();
-    axios.post('/api/members/new', contents);
-    localStorage.removeItem('userData');
-    sessionStorage.setItem('userId', initialData.id);
-    navigate('/');
+    contents["favoriteCategory"] = favoriteCategory.join();
+    axios.post("/api/members/new", contents);
+    localStorage.removeItem("userData");
+    sessionStorage.setItem("userId", userData.id);
+    window.location.href = "http://localhost:3000";
   };
 
   return (
@@ -43,11 +42,15 @@ function Input_signup(props) {
           <div className={styles.body}>
             <div className={styles.a}>
               <div className={styles.text}>닉네임 |</div>
-              {/* <div id={styles.text_age}>나이 |</div> */}
               <div className={styles.text}>관심지역 |</div>
               <div className={styles.text}>관심문화 |</div>
               <div id={styles.text}>
-                <button type="button" onClick={onClick}>
+                <button
+                  className={styles.text_link}
+                  type="button"
+                  form="profileForm"
+                  onClick={onClick}
+                >
                   회원가입 완료하기
                 </button>
               </div>
@@ -56,9 +59,14 @@ function Input_signup(props) {
               <form name="profile" target="" encType="" id="profileForm">
                 <div className={styles.text} id={styles.nickname}>
                   <input type="text" name="nickName" />
+                  <div className={styles.Duplicate_check}>중복확인</div>
                 </div>
                 <div className={styles.text} id={styles.age}>
-                  <input type="hidden" name="age_range" value={userData.age_range} />
+                  <input
+                    type="hidden"
+                    name="age_range"
+                    value={userData.age_range}
+                  />
                   <input type="hidden" name="email" value={userData.email} />
                   <input type="hidden" name="gender" value={userData.gender} />
                   <input type="hidden" name="id" value={userData.id} />
@@ -93,57 +101,193 @@ function Input_signup(props) {
                   </select>
                 </div>
                 <div className={styles.text} id={styles.interest_culture}>
-                  <div>
-                    <input type="checkbox" name="favoriteCategory" value="뮤지컬/오페라" />
-                    뮤지컬/오페라
+                  <div className={styles.checkbox_container}>
+                    <label className={styles.checkbox_wrapper}>
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="뮤지컬/오페라"
+                        className={styles.checkbox_input}
+                      />
+                      <span className={styles.checkbox_tile}>
+                        <span className={styles.checkbox_icon}></span>
+                        <span className={styles.checkbox_label}>
+                          뮤지컬/오페라
+                        </span>
+                      </span>
+                    </label>
                   </div>
-                  <div>
-                    <input type="checkbox" name="favoriteCategory" value="콘서트" />
-                    콘서트
+                  <div className={styles.checkbox_container}>
+                    <label className={styles.checkbox_wrapper}>
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="콘서트"
+                        className={styles.checkbox_input}
+                      />
+                      <span className={styles.checkbox_tile}>
+                        <span className={styles.checkbox_icon}></span>
+                        <span className={styles.checkbox_label}>콘서트</span>
+                      </span>
+                    </label>
                   </div>
-                  <div>
-                    <input type="checkbox" name="favoriteCategory" value="독주/독창회" />
-                    독주/독창회
+                  <div className={styles.checkbox_container}>
+                    <label className={styles.checkbox_wrapper}>
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="독주/독창회"
+                        className={styles.checkbox_input}
+                      />
+                      <span className={styles.checkbox_tile}>
+                        <span className={styles.checkbox_icon}></span>
+                        <span className={styles.checkbox_label}>
+                          독주/독창회
+                        </span>
+                      </span>
+                    </label>
                   </div>
-                  <div>
-                    <input type="checkbox" name="favoriteCategory" value="문화교양/강좌" />
-                    문화교양/강좌
+                  <div className={styles.checkbox_container}>
+                    <label className={styles.checkbox_wrapper}>
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="문화교양/강좌"
+                        className={styles.checkbox_input}
+                      />
+                      <span className={styles.checkbox_tile}>
+                        <span className={styles.checkbox_icon}></span>
+                        <span className={styles.checkbox_label}>
+                          문화교양/강좌
+                        </span>
+                      </span>
+                    </label>
                   </div>
-                  <div>
-                    <input type="checkbox" name="favoriteCategory" value="교육/체험" />
-                    교육/체험
+                  <div className={styles.checkbox_container}>
+                    <label className={styles.checkbox_wrapper}>
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="교육/체험"
+                        className={styles.checkbox_input}
+                      />
+                      <span className={styles.checkbox_tile}>
+                        <span className={styles.checkbox_icon}></span>
+                        <span className={styles.checkbox_label}>교육/체험</span>
+                      </span>
+                    </label>
                   </div>
-                  <div>
-                    <input type="checkbox" name="favoriteCategory" value="전시/미술" />
-                    전시/미술
+                  <div className={styles.checkbox_container}>
+                    <label className={styles.checkbox_wrapper}>
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="전시/미술"
+                        className={styles.checkbox_input}
+                      />
+                      <span className={styles.checkbox_tile}>
+                        <span className={styles.checkbox_icon}></span>
+                        <span className={styles.checkbox_label}>전시/미술</span>
+                      </span>
+                    </label>
                   </div>
-                  <div>
-                    <input type="checkbox" name="favoriteCategory" value="클래식" />
-                    클래식
+                  <div className={styles.checkbox_container}>
+                    <label className={styles.checkbox_wrapper}>
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="클래식"
+                        className={styles.checkbox_input}
+                      />
+                      <span className={styles.checkbox_tile}>
+                        <span className={styles.checkbox_icon}></span>
+                        <span className={styles.checkbox_label}>클래식</span>
+                      </span>
+                    </label>
                   </div>
-                  <div>
-                    <input type="checkbox" name="favoriteCategory" value="국악" />
-                    국악
+                  <div className={styles.checkbox_container}>
+                    <label className={styles.checkbox_wrapper}>
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="국악"
+                        className={styles.checkbox_input}
+                      />
+                      <span className={styles.checkbox_tile}>
+                        <span className={styles.checkbox_icon}></span>
+                        <span className={styles.checkbox_label}>국악</span>
+                      </span>
+                    </label>
                   </div>
-                  <div>
-                    <input type="checkbox" name="favoriteCategory" value="무용" />
-                    무용
+                  <div className={styles.checkbox_container}>
+                    <label className={styles.checkbox_wrapper}>
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="무용"
+                        className={styles.checkbox_input}
+                      />
+                      <span className={styles.checkbox_tile}>
+                        <span className={styles.checkbox_icon}></span>
+                        <span className={styles.checkbox_label}>무용</span>
+                      </span>
+                    </label>
                   </div>
-                  <div>
-                    <input type="checkbox" name="favoriteCategory" value="연극" />
-                    연극
+                  <div className={styles.checkbox_container}>
+                    <label className={styles.checkbox_wrapper}>
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="연극"
+                        className={styles.checkbox_input}
+                      />
+                      <span className={styles.checkbox_tile}>
+                        <span className={styles.checkbox_icon}></span>
+                        <span className={styles.checkbox_label}>연극</span>
+                      </span>
+                    </label>
                   </div>
-                  <div>
-                    <input type="checkbox" name="favoriteCategory" value="영화" />
-                    영화
+                  <div className={styles.checkbox_container}>
+                    <label className={styles.checkbox_wrapper}>
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="영화"
+                        className={styles.checkbox_input}
+                      />
+                      <span className={styles.checkbox_tile}>
+                        <span className={styles.checkbox_icon}></span>
+                        <span className={styles.checkbox_label}>영화</span>
+                      </span>
+                    </label>
                   </div>
-                  <div>
-                    <input type="checkbox" name="favoriteCategory" value="축제" />
-                    축제
+                  <div className={styles.checkbox_container}>
+                    <label className={styles.checkbox_wrapper}>
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="축제"
+                        className={styles.checkbox_input}
+                      />
+                      <span className={styles.checkbox_tile}>
+                        <span className={styles.checkbox_icon}></span>
+                        <span className={styles.checkbox_label}>축제</span>
+                      </span>
+                    </label>
                   </div>
-                  <div>
-                    <input type="checkbox" name="favoriteCategory" value="기타" />
-                    기타
+                  <div className={styles.checkbox_container}>
+                    <label className={styles.checkbox_wrapper}>
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="기타"
+                        className={styles.checkbox_input}
+                      />
+                      <span className={styles.checkbox_tile}>
+                        <span className={styles.checkbox_icon}></span>
+                        <span className={styles.checkbox_label}>기타</span>
+                      </span>
+                    </label>
                   </div>
                 </div>
               </form>

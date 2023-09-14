@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Navigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 // import { useDispatch } from "react-redux";
 // import { actionCreators as userAction } from "../redux/modules/user";
 // import Spinner from "../elements/Spinner";
@@ -15,6 +15,8 @@ export default function KakaoAuthHandler() {
   const params = {
     code: code,
   };
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -35,10 +37,13 @@ export default function KakaoAuthHandler() {
 
   if (isMember) {
     sessionStorage.setItem("userId", data.id);
-    return <Navigate to="/" replace={true} />;
+    localStorage.removeItem("userData");
+    window.location.href = "http://localhost:3000";
+  } else {
+    navigate("/Input_signup");
   }
 
-  return <Navigate to="/Input_signup" />;
+  return <></>;
 }
 
 // return (

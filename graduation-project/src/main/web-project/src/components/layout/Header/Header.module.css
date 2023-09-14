@@ -126,8 +126,11 @@ li {
 }
 
 .menu_icon {
-  display: inline-block;
+  display: block;
   cursor: pointer;
+  width: 25px;
+  height: 25px;
+  /* margin-top: 10px; */
 }
 
 .depth2 {
@@ -168,6 +171,10 @@ li {
 
 .navigation_menu:hover .navigation_menu span {
   background-color: #f1f1f1;
+}
+
+.navigation_tab {
+  margin-top: 5.5px;
 }
 
 .navigation_tab:hover .a {

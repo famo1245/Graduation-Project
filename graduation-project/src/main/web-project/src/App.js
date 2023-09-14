@@ -29,8 +29,11 @@ import Solo_SingingParty from "./components/munhwa/Solo_SingingParty";
 import MyPage from "./components/myPage/MyPage";
 import ModifyMyPage from "./components/myPage/ModifyMyPage";
 import Input_signup from "./routes/Input_signup";
-import Logout from "./routes/Logout";
 import KakaoAuthHandler from "./routes/KakaoAuthHandler";
+import Logout from "./routes/Logout";
+import ReviewBoard from "./components/review/ReviewBoard";
+import CreatePost from "./components/review/CreatePost";
+import ReviewDetail from "./components/review/ReviewDetail";
 
 function App(props) {
   return (
@@ -72,8 +75,10 @@ function App(props) {
           <Route path="/ModifyMyPage" element={<ModifyMyPage />} />
           <Route path="/Input_signup" element={<Input_signup />} />
           <Route path="/auth/kakao/callback" element={<KakaoAuthHandler />} />
-          <Route path="/Logout" element={<Logout />} />
-          {/* <Route path="/Layout" element={<Layout />} /> */}
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/ReviewBoard" element={<ReviewBoard />} />
+          <Route path="/CreatePost" element={<CreatePost />} />
+          <Route path="/ReviewDetail" element={<ReviewDetail />} />
         </Routes>
       </Layout>
     </Router>

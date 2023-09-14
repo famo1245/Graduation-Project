@@ -117,22 +117,59 @@
 }
 
 #nickname {
-  width: 15%;
+  width: 30%;
   height: 30px;
-  padding: 0 15px;
-  box-shadow: 5px 5px 10px 3px #ddd;
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.Duplicate_check {
+  margin-left: 30px;
+  color: #2051c2;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: 0.25s;
+  position: relative;
+  border-radius: 15px;
+  padding: 2px 10px;
+}
+
+.Duplicate_check:hover {
+  background-color: #2051c2;
+  color: aliceblue;
 }
 
 #nickname input {
   background-color: transparent;
   border: none;
   height: 100%;
-  font-weight: 300;
+  font-weight: 700;
   color: #707070;
+  width: 50%;
+  box-shadow: 5px 5px 10px 3px #ddd;
+  padding-left: 15px;
+}
+
+#age {
+  width: 15%;
+  height: 30px;
+  padding: 0 15px;
+  box-shadow: 5px 5px 10px 3px #ddd;
+  display: none;
+  flex-direction: row;
+  align-items: center;
+}
+
+#age select {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  color: #707070;
+  font-weight: 300;
   width: 100%;
+  margin-left: 25px;
+  cursor: pointer;
 }
 
 #interest_region {
@@ -150,10 +187,13 @@
   border: none;
   height: 100%;
   color: #707070;
-  font-weight: 300;
   width: 100%;
   margin-left: 25px;
   cursor: pointer;
+}
+
+#interest_region select option {
+  font-weight: 700;
 }
 
 #interest_culture {
@@ -166,13 +206,11 @@
   align-items: center;
 }
 
-#interest_culture div {
+.checkbox_container {
   box-shadow: 5px 5px 10px 3px #ddd;
   background-color: transparent;
   color: #707070;
-  border: none;
   height: 100%;
-  font-weight: 300;
   width: 15%;
   margin-right: 25px;
   margin-bottom: 20px;
@@ -182,6 +220,99 @@
   justify-content: center;
 }
 
-#interest_culture div input {
-  vertical-align: middle;
+.checkbox_wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.checkbox_container .checkbox_input {
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(100%);
+  clip-path: inset(100%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+.checkbox_container .checkbox_input:checked + .checkbox_tile {
+  border-color: #2260ff;
+  /* box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); */
+  color: #2260ff;
+}
+.checkbox_container .checkbox_input:checked + .checkbox_tile:before {
+  transform: scale(1);
+  opacity: 1;
+  background-color: #2260ff;
+  border-color: #2260ff;
+}
+.checkbox_container .checkbox_input:checked + .checkbox_tile .checkbox_icon,
+.checkbox_container .checkbox_input:checked + .checkbox_tile .checkbox_label {
+  color: #2260ff;
+}
+.checkbox_container .checkbox_input:focus + .checkbox_tile {
+  border-color: #2260ff;
+  /* box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc; */
+}
+.checkbox_container .checkbox_input:focus + .checkbox_tile:before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.checkbox_container .checkbox_tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* border-radius: 0.5rem; */
+  /* border: 2px solid #b5bfd9; */
+  background-color: #fff;
+  /* box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); */
+  /* box-shadow: 5px 5px 10px 3px #ddd; */
+  transition: 0.15s ease;
+  cursor: pointer;
+  position: relative;
+  padding-top: 7px;
+}
+.checkbox_container .checkbox_tile:before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid #b5bfd9;
+  background-color: #fff;
+  border-radius: 50%;
+  top: 0.25rem;
+  left: 0.25rem;
+  opacity: 0;
+  transform: scale(0);
+  transition: 0.25s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' fill='%23FFFFFF' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='none'%3E%3C/rect%3E%3Cpolyline points='216 72.005 104 184 48 128.005' fill='none' stroke='%23FFFFFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='32'%3E%3C/polyline%3E%3C/svg%3E");
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+.checkbox_container .checkbox_tile:hover {
+  border-color: #2260ff;
+}
+.checkbox_container .checkbox_tile:hover:before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.checkbox_container .checkbox_icon {
+  transition: 0.375s ease;
+  color: #494949;
+}
+.checkbox_container .checkbox_icon svg {
+  width: 3rem;
+  height: 3rem;
+}
+
+.checkbox_container .checkbox_label {
+  color: #707070;
+  transition: 0.375s ease;
+  text-align: center;
 }

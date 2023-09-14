@@ -18,7 +18,7 @@ function Footer(props) {
           </div>
           <div>
             <span className={styles.content_b}>
-              문화비 소득공제 바로가기 ⇒ ⟨⟩▶◀◄►◅▻⨠⪻⪼→⇒Ξ≣≡
+              문화비 소득공제 바로가기 ⇒⇒⇒
             </span>
           </div>
         </h2>
