@@ -74,15 +74,16 @@ public class MemberController {
         return ResponseEntity.ok().body(data);
     }
 
-    @GetMapping("/info")
-    public String myInfo(Model model, HttpSession session) {
-        Long userId = (Long) session.getAttribute("userId");
-        MemberForm myInfo = memberService.research(userId);
+    @PostMapping("/info")
+    @ResponseBody
+    public ResponseEntity<?> myInfo(@RequestBody Map<String, Long> body) {
+        MemberForm myInfo = memberService.research(body.get("userId"));
+        Map<String, Object> data = new HashMap<>();
         if(myInfo != null) {
-            model.addAttribute("myInfo", myInfo);
+            data.put("myInfo", myInfo);
         }
 
-        return "members/myInfo";
+        return ResponseEntity.ok().body(data);
     }
 
     @GetMapping("/info/update")

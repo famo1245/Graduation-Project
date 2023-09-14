@@ -1,9 +1,9 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useLocation, useParams, Link, useNavigate } from "react-router-dom";
-import styles from "./ReviewBoard.module.css";
-import ReviewSearch from "./ReviewSearch";
+import React from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useLocation, useParams, Link, useNavigate } from 'react-router-dom';
+import styles from './ReviewBoard.module.css';
+import ReviewSearch from './ReviewSearch';
 
 function ReviewBoard(props) {
   const { id } = useParams();
@@ -15,11 +15,12 @@ function ReviewBoard(props) {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("/api/home")
+      .get('/api/home')
       .then((res) => {
         setInputD(res.data);
         setLoading(false);
         console.log(res.data);
+        console.log(inputD);
       })
       .catch((err) => setError(err));
   }, []);

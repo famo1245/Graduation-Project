@@ -1,16 +1,16 @@
-import React, { Component, useEffect, useState } from "react";
-import ReactDOM from "react-dom";
-import { Link } from "react-router-dom";
-import styles from "./Home.module.css";
-import PropTypes from "prop-types";
-import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
-import { LeftArrow, RightArrow } from "../components/horizonScroll/Arrow";
-import usePreventBodyScroll from "../components/horizonScroll/UsePreventBodyScroll";
-import { type } from "@testing-library/user-event/dist/type";
-import axios from "axios";
+import React, { Component, useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
+import styles from './Home.module.css';
+import PropTypes from 'prop-types';
+import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
+import { LeftArrow, RightArrow } from '../components/horizonScroll/Arrow';
+import usePreventBodyScroll from '../components/horizonScroll/UsePreventBodyScroll';
+import { type } from '@testing-library/user-event/dist/type';
+import axios from 'axios';
 
 // const scrollVisibilityApiType = React.ContextType(VisibilityContext);
-const url = "/dataList/OA-15486/S/1/datasetView.do";
+const url = '/dataList/OA-15486/S/1/datasetView.do';
 
 function Home(props) {
   // const { disableScroll, enableScroll } = usePreventBodyScroll();
@@ -53,11 +53,10 @@ function Home(props) {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("/api/home")
+      .get('/api/home')
       .then((response) => {
         setData(response.data);
         setLoading(false);
-        console.log(response.data);
       })
       .catch((err) => setError(err));
   }, []);
@@ -160,9 +159,7 @@ function Home(props) {
                 <br />
                 <span>작성일자: 2023/06/06</span>
                 <br />
-                <span className={styles.user_short_text}>
-                  정말 멋있어요 강추!!!!합니다.
-                </span>
+                <span className={styles.user_short_text}>정말 멋있어요 강추!!!!합니다.</span>
               </div>
             </div>
             <div className={styles.content_both_inner}>
@@ -200,9 +197,8 @@ function Home(props) {
                 <span>작성일자: 2023/06/06</span>
                 <br />
                 <div className={styles.user_short_text}>
-                  정말 멋있어요 강추!!!!합니다. 너무좋아요 사랑해요 레미제라블
-                  너는 나의 하나뿐인 뮤지컬이야. 제발 후속작 이만개 내줘요
-                  제작자님!!
+                  정말 멋있어요 강추!!!!합니다. 너무좋아요 사랑해요 레미제라블 너는 나의 하나뿐인 뮤지컬이야. 제발
+                  후속작 이만개 내줘요 제작자님!!
                 </div>
               </div>
             </div>
@@ -240,9 +236,7 @@ function Home(props) {
                 <br />
                 <span>작성일자: 2023/06/06</span>
                 <br />
-                <span className={styles.user_short_text}>
-                  정말 멋있어요 강추!!!!합니다.
-                </span>
+                <span className={styles.user_short_text}>정말 멋있어요 강추!!!!합니다.</span>
               </div>
             </div>
             <div className={styles.content_both_inner}>
@@ -279,9 +273,7 @@ function Home(props) {
                 <br />
                 <span>작성일자: 2023/06/06</span>
                 <br />
-                <span className={styles.user_short_text}>
-                  정말 멋있어요 강추!!!!합니다.
-                </span>
+                <span className={styles.user_short_text}>정말 멋있어요 강추!!!!합니다.</span>
               </div>
             </div>
           </div>

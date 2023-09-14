@@ -50,7 +50,7 @@ public class CultureController {
         return "culture/cultureDetail";
     }
 
-//    @GetMapping("/api/cultures/detail/{culture_id}")
+    @GetMapping("/api/cultures/detail/{culture_id}")
     @ResponseBody
     public Culture apiCultureDetail(@PathVariable Long culture_id) {
         return cultureService.findOne(culture_id);
