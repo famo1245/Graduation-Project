@@ -138,7 +138,7 @@ function MyPage() {
                 </button>
               </div>
               <div id={styles.body_text}>
-                <Link className={styles.body_text_link} to={`/ModifyMyPage`}>
+                <Link className={styles.body_text_link} to={`/ModifyMyPage`} state={{ myInfo: data }}>
                   내 정보 수정하기
                 </Link>
               </div>
