@@ -1,17 +1,24 @@
-import React, { useState, useEffect } from "react";
-import { FaSearch } from "react-icons/fa";
-import styles from "./ReviewSearch.module.css";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import ReviewContent from "./ReviewContent";
-import ReactPaginate from "react-paginate";
+import React, { useState, useEffect } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import styles from './ReviewSearch.module.css';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import ReviewContent from './ReviewContent';
+import ReactPaginate from 'react-paginate';
 
 function ReviewSearch({ inputD }) {
-  const [data, setData] = useState("");
+  const [data, setData] = useState('');
   const [pageNumber, setPageNumber] = useState(0);
+  const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
   // const [searchData, setSearchData] = useState([]);
   // const [pageCount, setPageCount] = useState();
+
+  useEffect(() => {
+    if (sessionStorage.getItem('userId')) {
+      setIsLogin(true);
+    }
+  }, []);
 
   const culturePerPage = 5;
   let pagesVisited = pageNumber * culturePerPage;
@@ -26,14 +33,14 @@ function ReviewSearch({ inputD }) {
   };
 
   const handleOnKeyPress = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       pageCount = 1;
     }
   };
 
   const displayCultures = inputD
     .filter((val) => {
-      if (data == "") {
+      if (data == '') {
         return val;
       } else if (val.title.toLowerCase().includes(data.toLowerCase())) {
         return val;
@@ -70,24 +77,23 @@ function ReviewSearch({ inputD }) {
         <div className={styles.for_the_review_button}>
           <div className={styles.inputWrapper}>
             <div className={styles.searchLogo}>검색 |</div>
-            <input
-              type="text"
-              value={data}
-              onChange={handleChange}
-              onKeyDown={handleOnKeyPress}
-            />
+            <input type="text" value={data} onChange={handleChange} onKeyDown={handleOnKeyPress} />
             <FaSearch id={styles.searchIcon} />
           </div>
-          <div className={styles.review_input_button} onClick={onClick}>
-            <span>+</span>리뷰 작성하기
-          </div>
+          {isLogin ? (
+            <div className={styles.review_input_button} onClick={onClick}>
+              <span>+</span>리뷰 작성하기
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
         <div className={styles.line}></div>
         <div className={styles.row}>
           {displayCultures}
           <ReactPaginate
-            previousLabel={"Previous"}
-            nextLabel={"Next"}
+            previousLabel={'Previous'}
+            nextLabel={'Next'}
             pageCount={pageCount}
             onPageChange={changePage}
             containerClassName={styles.paginationBttns}
