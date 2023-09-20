@@ -39,8 +39,7 @@ public class MemberController {
 
     @PostMapping("/new")
     @ResponseBody
-    public String create(@RequestBody MemberForm form, BindingResult bindingResult, Model model) {
-        log.info("form={}", form);
+    public String create(@RequestBody MemberForm form) {
 //        if (!StringUtils.hasText(form.getNickName())) {
 //            bindingResult.rejectValue("nickName", "required");
 //        }
@@ -79,7 +78,7 @@ public class MemberController {
     public ResponseEntity<?> myInfo(@RequestBody Map<String, Long> body) {
         MemberForm myInfo = memberService.research(body.get("userId"));
         Map<String, Object> data = new HashMap<>();
-        if(myInfo != null) {
+        if (myInfo != null) {
             data.put("myInfo", myInfo);
         }
 
@@ -90,7 +89,7 @@ public class MemberController {
     public String updateInfo(Model model, HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
         MemberForm myInfo = memberService.research(userId);
-        if(myInfo != null) {
+        if (myInfo != null) {
             model.addAttribute("memberForm", myInfo);
         }
         return "members/update-myInfo";
@@ -98,28 +97,32 @@ public class MemberController {
 
     //memberForm 으로 변환 해야함
     @PostMapping("/info/update")
-    public String afterUpdate(MemberForm form, BindingResult bindingResult ,HttpSession session, Model model) {
-        Long userId = (Long) session.getAttribute("userId");
-        String currentNickName = memberService.findById(userId).getNickName();
+    @ResponseBody
+    public String afterUpdate(@RequestBody Map<String, Object> data) {
+        MemberForm myInfo = new MemberForm();
+        myInfo.setNickName((String) data.get("nickName"));
+        myInfo.setDistrict((String) data.get("district"));
+        myInfo.setFavoriteCategory((String) data.get("favoriteCategory"));
+        Long userId = (Long) data.get("userId");
 
-        //검증 로직
-        if (!StringUtils.hasText(form.getNickName())) {
-            bindingResult.rejectValue("nickName", "required");
-        }
-        if (!StringUtils.hasText(form.getDistrict())) {
-            bindingResult.rejectValue("district", "required");
-        }
-        if (!form.getNickName().equals(currentNickName)) {
-            if (memberService.validateDuplicatedNickName(form.getNickName())) {
-                bindingResult.rejectValue("nickName", "duplicated");
-            }
-        }
-        if (bindingResult.hasErrors()) {
-            log.info("errors={}", bindingResult);
-            return "members/update-myInfo";
-        }
-        memberService.updateMember(userId, form);
-        return "redirect:/members/info";
+//        //검증 로직
+//        if (!StringUtils.hasText(form.getNickName())) {
+//            bindingResult.rejectValue("nickName", "required");
+//        }
+//        if (!StringUtils.hasText(form.getDistrict())) {
+//            bindingResult.rejectValue("district", "required");
+//        }
+//        if (!form.getNickName().equals(currentNickName)) {
+//            if (memberService.validateDuplicatedNickName(form.getNickName())) {
+//                bindingResult.rejectValue("nickName", "duplicated");
+//            }
+//        }
+//        if (bindingResult.hasErrors()) {
+//            log.info("errors={}", bindingResult);
+//            return "members/update-myInfo";
+//        }
+        memberService.updateMember(userId, myInfo);
+        return "ok";
     }
 
     //지역구
