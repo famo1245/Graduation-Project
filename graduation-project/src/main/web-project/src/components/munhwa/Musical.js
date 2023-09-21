@@ -1,30 +1,33 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import styles from "./Musical.module.css";
-import Searchbar from "../searchbar/Searchbar";
-import SearchResultsList from "../searchbar/SearchResultsList";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import styles from './Musical.module.css';
+import Searchbar from '../searchbar/Searchbar';
+import SearchResultsList from '../searchbar/SearchResultsList';
+import axios from 'axios';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 function Musical() {
+  let location = useLocation();
   const [inputD, setInputD] = useState(null);
+  const [category, setCategory] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { categoryName } = useParams();
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get("/api/home")
+      .get(`/api/cultures/codename/${categoryName}`)
       .then((res) => {
-        setInputD(res.data);
+        setInputD(res.data.category);
+        setCategory(res.data.categoryName);
         setLoading(false);
-        console.log(res.data);
       })
       .catch((err) => setError(err));
-  }, []);
+  }, [location]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error...</div>;
-  if (!inputD) return null;
+  if (!inputD || !category) return null;
 
   return (
     <div className={styles.container}>
@@ -32,11 +35,11 @@ function Musical() {
         <div className={styles.container_body_inner}>
           <div>
             <h1>
-              뮤지컬/오페라 <hr style={{ border: 0 }} />
+              {category} <hr style={{ border: 0 }} />
             </h1>
           </div>
           <div className={styles.searchbarcontainer}>
-            <Searchbar inputD={inputD.recentCultures} />
+            <Searchbar inputD={inputD} />
           </div>
         </div>
       </div>
