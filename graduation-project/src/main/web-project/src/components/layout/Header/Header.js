@@ -22,7 +22,7 @@ const nameRight = {
 };
 
 function Header(props) {
-  const isLogin = sessionStorage.getItem('userId') === null ? false : true;
+  const isLogin = sessionStorage.getItem('userId') !== null;
 
   return (
     <div className={styles.header}>
