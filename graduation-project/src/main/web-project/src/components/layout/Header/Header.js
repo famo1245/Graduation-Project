@@ -170,7 +170,7 @@ function Header(props) {
         </ul>
         <ul className={styles.header_nav2}>
           <li>
-            <Link to={`/Concert`} className={styles.a}>
+            <Link to={`/culture`} className={styles.a}>
               관심문화
             </Link>
           </li>
