@@ -49,7 +49,11 @@ public class CultureService {
         return cultureRepository.findAll();
     }
 
-    public List<Culture> findByCodename(String codename) {return CRJ.findByCodeName(codename);}
+    public List<Culture> findByCodename(String codename) {
+        List<Culture> findCultures = CRJ.findByCodeName(codename);
+        Collections.reverse(findCultures);
+        return findCultures;
+    }
 
     public List<Culture> findByCategory(String category) {
         List<Culture> cultureList = CRJ.findByCodeNameContaining(category);
