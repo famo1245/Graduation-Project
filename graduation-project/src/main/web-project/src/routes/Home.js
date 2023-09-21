@@ -14,46 +14,20 @@ const url = '/dataList/OA-15486/S/1/datasetView.do';
 
 function Home(props) {
   // const { disableScroll, enableScroll } = usePreventBodyScroll();
-
-  // const [cultures, setCultures] = useState([]);
-  // const getCultures = async () => {
-  //   const json = await (await fetch(`66457a68576b616e38356a61706843`)).json();
-  //   setCultures(json);
-  // };
-  // console.log(cultures);
-  // useEffect(() => {
-  //   getCultures();
-  // }, []);
-
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // const fetchData = async () => {
-  //   try {
-  //     setError(null);
-  //     setData(null);
-  //     setLoading(true);
-
-  //     const response = await axios.get(url, {
-  //       params: {
-  //         serviceKey: process.env.REACT_APP_API_KEY,
-  //         numOfRows: 10,
-  //         pageNo: 1,
-  //       },
-  //     });
-
-  //     setData(response.data);
-  //   } catch (e) {
-  //     setError(e);
-  //   }
-  //   setLoading(false);
-  // };
+  const [userId, setUserId] = useState(-1);
 
   useEffect(() => {
     setLoading(true);
+    if (sessionStorage.getItem('userId') != null) {
+      setUserId(parseInt(sessionStorage.getItem('userId')));
+    }
     axios
-      .get('/api/home')
+      .get(
+        `/api/home?userId=${sessionStorage.getItem('userId') != null ? parseInt(sessionStorage.getItem('userId')) : -1}`
+      )
       .then((response) => {
         setData(response.data);
         setLoading(false);
@@ -68,7 +42,7 @@ function Home(props) {
   return (
     <div className={styles.home}>
       <div>
-        <h4>신규 문화 추천</h4>
+        <h4>신규 문화 생활 추천</h4>
       </div>
       <div className={styles.home_upper}>
         <div className={styles.home_upper_content}>
@@ -93,7 +67,7 @@ function Home(props) {
         </div>
       </div>
       <div>
-        <h4>곧 끝나는 문화</h4>
+        <h4>곧 끝나는 문화 생활</h4>
       </div>
       <div className={styles.home_upper}>
         <div className={styles.home_upper_content}>
