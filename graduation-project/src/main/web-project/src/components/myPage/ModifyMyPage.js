@@ -35,6 +35,13 @@ function ModifyMyPage() {
     axios.post('/api/members/info/update', contents).then((window.location.href = '/MyPage'));
   };
 
+  const checkDuplicated = () => {
+    const form = document.querySelector('#profileForm');
+    const formData = new FormData(form);
+    const nickName = formData.get('nickName');
+    axios.get(`/api/members/check-nickname?nickName=${nickName}`).then((res) => console.log(res.data.isDuplicated));
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.container_body}>
@@ -61,7 +68,9 @@ function ModifyMyPage() {
               <form name="profile" target="" encType="" id="profileForm">
                 <div className={styles.text} id={styles.nickname}>
                   <input type="text" name="nickName" defaultValue={myInfo.nickName} />
-                  <div className={styles.Duplicate_check}>중복확인</div>
+                  <div className={styles.Duplicate_check} onClick={checkDuplicated}>
+                    중복확인
+                  </div>
                 </div>
 
                 <div className={styles.text} id={styles.interest_region}>

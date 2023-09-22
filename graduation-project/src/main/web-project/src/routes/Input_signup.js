@@ -27,6 +27,13 @@ function Input_signup(props) {
     window.location.href = 'http://localhost:3000';
   };
 
+  const checkDuplicated = () => {
+    const form = document.querySelector('#profileForm');
+    const formData = new FormData(form);
+    const nickName = formData.get('nickName');
+    axios.get(`/api/members/check-nickname?nickName=${nickName}`).then((res) => console.log(res.data.isDuplicated));
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.container_body}>
@@ -51,7 +58,9 @@ function Input_signup(props) {
               <form name="profile" target="" encType="" id="profileForm">
                 <div className={styles.text} id={styles.nickname}>
                   <input type="text" name="nickName" />
-                  <div className={styles.Duplicate_check}>중복확인</div>
+                  <div className={styles.Duplicate_check} onClick={checkDuplicated}>
+                    중복확인
+                  </div>
                 </div>
                 <div className={styles.text} id={styles.age}>
                   <input type="hidden" name="age_range" value={userData.age_range} />
