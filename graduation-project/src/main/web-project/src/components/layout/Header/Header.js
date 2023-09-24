@@ -1,28 +1,28 @@
-import { Link } from 'react-router-dom';
-import styles from './Header.module.css';
+import { Link } from "react-router-dom";
+import styles from "./Header.module.css";
 
 const urlLeft = {
-  true: '/Logout',
-  false: '/Login',
+  true: "/Logout",
+  false: "/Login",
 };
 
 const urlRight = {
-  true: '/Mypage',
-  false: '/Sign_up',
+  true: "/Mypage",
+  false: "/Sign_up",
 };
 
 const nameLeft = {
-  true: '로그아웃',
-  false: '로그인',
+  true: "로그아웃",
+  false: "로그인",
 };
 
 const nameRight = {
-  true: '마이페이지',
-  false: '회원가입',
+  true: "마이페이지",
+  false: "회원가입",
 };
 
 function Header(props) {
-  const isLogin = sessionStorage.getItem('userId') !== null;
+  const isLogin = sessionStorage.getItem("userId") === null ? false : true;
 
   return (
     <div className={styles.header}>
@@ -32,10 +32,18 @@ function Header(props) {
             문화 인 서울
           </Link>
           <div className={styles.login_route}>
-            <Link to={urlLeft[isLogin]} className={styles.link} id={styles.login}>
+            <Link
+              to={urlLeft[isLogin]}
+              className={styles.link}
+              id={styles.login}
+            >
               {nameLeft[isLogin]}
             </Link>
-            <Link to={urlRight[isLogin]} className={styles.link} id={styles.signup}>
+            <Link
+              to={urlRight[isLogin]}
+              className={styles.link}
+              id={styles.signup}
+            >
               {nameRight[isLogin]}
             </Link>
           </div>
@@ -66,7 +74,10 @@ function Header(props) {
                 </div>
                 <div>
                   <li>
-                    <Link to={`/culture/문화교양`} className={styles.depth2_link}>
+                    <Link
+                      to={`/culture/문화교양`}
+                      className={styles.depth2_link}
+                    >
                       문화교양/강좌
                     </Link>
                   </li>
@@ -112,22 +123,34 @@ function Header(props) {
                 </div>
                 <div>
                   <li>
-                    <Link to={`/culture/축제-문화`} className={styles.depth2_link}>
+                    <Link
+                      to={`/culture/축제-문화`}
+                      className={styles.depth2_link}
+                    >
                       축제-문화/예술
                     </Link>
                   </li>
                   <li>
-                    <Link to={`/culture/축제-전통`} className={styles.depth2_link}>
+                    <Link
+                      to={`/culture/축제-전통`}
+                      className={styles.depth2_link}
+                    >
                       축제-전통/역사
                     </Link>
                   </li>
                   <li>
-                    <Link to={`/culture/축제-시민화합`} className={styles.depth2_link}>
+                    <Link
+                      to={`/culture/축제-시민화합`}
+                      className={styles.depth2_link}
+                    >
                       축제-시민화합
                     </Link>
                   </li>
                   <li>
-                    <Link to={`/culture/축제-기타`} className={styles.depth2_link}>
+                    <Link
+                      to={`/culture/축제-기타`}
+                      className={styles.depth2_link}
+                    >
                       축제-기타
                     </Link>
                   </li>
@@ -170,7 +193,7 @@ function Header(props) {
         </ul>
         <ul className={styles.header_nav2}>
           <li>
-            <Link to={`/culture`} className={styles.a}>
+            <Link to={`/ReviewDetail`} className={styles.a}>
               관심문화
             </Link>
           </li>

@@ -145,7 +145,6 @@ Button {
 }
 
 .lower_content_left .review_notice_board div {
-  font-size: 20px;
   font-weight: 600;
   color: gray;
   /* background-color: aqua; */
@@ -153,12 +152,14 @@ Button {
 
 .lower_content_left .review_notice_board .a {
   padding-right: 550px;
+  font-size: 23px;
 }
 
 .lower_content_left .review_notice_board .b .see_more {
   cursor: pointer;
-  text-decoration: none;
+  /* text-decoration: none; */
   color: gray;
+  font-size: 30px;
 }
 
 .content_both_inner {
@@ -173,7 +174,7 @@ Button {
   /* background-color: #2b2a29; */
 }
 
-.content_both_inner div img {
+.review_img {
   width: 170px;
   height: 200px;
   /* background-color: blue; */
@@ -184,15 +185,20 @@ Button {
 
 .inner_content {
   width: 400px;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-evenly; */
   /* background-color: #fff58c; */
 }
 
 .inner_content_title {
   font-size: 17px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .container_star_ratings {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
 }
@@ -202,37 +208,54 @@ Button {
 }
 
 .star_ratings {
-  color: #aaa9a9;
-  position: relative;
-  unicode-bidi: bidi-override;
+  /* position: relative; */
+
   width: max-content;
-  -webkit-text-fill-color: transparent; /* will override color (regardless of order */
-  -webkit-text-stroke-width: 1.3px;
-  -webkit-text-stroke-color: #2b2a29;
+  /* -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: #2b2a29; */
 }
 
 .star_ratings_fill {
-  color: #fff58c;
+  /* color: #fff58c; */
   padding: 0;
   position: absolute;
   z-index: 1;
   display: flex;
-  top: 0;
-  left: 0;
   overflow: hidden;
-  -webkit-text-fill-color: black;
+  /* -webkit-text-fill-color: black; */
 }
 
 .star_ratings_base {
+  position: relative;
+  display: flex;
+  flex-direction: row;
   z-index: 0;
   padding: 0;
 }
 
+.star_fill {
+  display: flex;
+  width: 15px;
+  height: 15px;
+}
+
+.star_empty {
+  display: flex;
+  width: 15px;
+  height: 15px;
+}
+
 .user_short_text {
   width: 350px;
-  height: 46px;
+  height: 100%;
   overflow: hidden;
-  /* background-color: #fff58c; */
+  text-overflow: ellipsis;
+  /* white-space: nowrap; */
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .lower_content_right {
@@ -256,18 +279,20 @@ Button {
 }
 
 .lower_content_right .culture_friend div {
-  font-size: 20px;
   font-weight: 600;
   color: gray;
   /* background-color: aqua; */
 }
 
 .lower_content_right .culture_friend .a {
-  padding-right: 550px;
+  padding-right: 540px;
+  font-size: 23px;
 }
 
 .lower_content_right .culture_friend .b .see_more {
   cursor: pointer;
-  text-decoration: none;
+  /* text-decoration: none; */
   color: gray;
+  margin-left: 20px;
+  font-size: 30px;
 }

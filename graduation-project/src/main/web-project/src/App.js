@@ -1,39 +1,40 @@
-import { func } from 'prop-types';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './routes/Home';
-import Login from './routes/Login';
-import Sign_up from './routes/Sign_up';
-import { Link } from 'react-router-dom';
-import Index_home from './pages/Index_home';
-import Layout from './components/layout/Layout';
-import Whyso from './routes/genres/Whyso';
-import Musical from './components/munhwa/Musical';
-import MunhwaDetail from './components/munhwa/MunhwaDetail';
-import ScrollToTop from './components/scrollToTop/ScrollToTop';
-import CultureAndCulture from './components/munhwa/CultureAndCulture';
-import Classic from './components/munhwa/Classic';
-import Concert from './components/munhwa/Concert';
-import Dance from './components/munhwa/Dance';
-import EducationExperience from './components/munhwa/EducationExperience';
-import ExhibitionArt from './components/munhwa/ExhibitionArt';
-import Festival_citizenHarmony from './components/munhwa/Festival_citizenHarmony';
-import Festival_cultureArt from './components/munhwa/Festival_cultureArt';
-import Festival_Other from './components/munhwa/Festival_Other';
-import Festival_traditionsHistory from './components/munhwa/Festival_traditionsHistory';
-import KoreanTraditionalMusic from './components/munhwa/KoreanTraditionalMusic';
-import Movies from './components/munhwa/Movies';
-import Others from './components/munhwa/Others';
-import Play from './components/munhwa/Play';
-import Festival from './components/munhwa/Festival';
-import Solo_SingingParty from './components/munhwa/Solo_SingingParty';
-import MyPage from './components/myPage/MyPage';
-import ModifyMyPage from './components/myPage/ModifyMyPage';
-import Input_signup from './routes/Input_signup';
-import KakaoAuthHandler from './routes/KakaoAuthHandler';
-import Logout from './routes/Logout';
-import ReviewBoard from './components/review/ReviewBoard';
-import CreatePost from './components/review/CreatePost';
-import ReviewDetail from './components/review/ReviewDetail';
+import { func } from "prop-types";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./routes/Home";
+import Login from "./routes/Login";
+import Sign_up from "./routes/Sign_up";
+import { Link } from "react-router-dom";
+import Index_home from "./pages/Index_home";
+import Layout from "./components/layout/Layout";
+import Whyso from "./routes/genres/Whyso";
+import Musical from "./components/munhwa/Musical";
+import MunhwaDetail from "./components/munhwa/MunhwaDetail";
+import ScrollToTop from "./components/scrollToTop/ScrollToTop";
+import CultureAndCulture from "./components/munhwa/CultureAndCulture";
+import Classic from "./components/munhwa/Classic";
+import Concert from "./components/munhwa/Concert";
+import Dance from "./components/munhwa/Dance";
+import EducationExperience from "./components/munhwa/EducationExperience";
+import ExhibitionArt from "./components/munhwa/ExhibitionArt";
+import Festival_citizenHarmony from "./components/munhwa/Festival_citizenHarmony";
+import Festival_cultureArt from "./components/munhwa/Festival_cultureArt";
+import Festival_Other from "./components/munhwa/Festival_Other";
+import Festival_traditionsHistory from "./components/munhwa/Festival_traditionsHistory";
+import KoreanTraditionalMusic from "./components/munhwa/KoreanTraditionalMusic";
+import Movies from "./components/munhwa/Movies";
+import Others from "./components/munhwa/Others";
+import Play from "./components/munhwa/Play";
+import Festival from "./components/munhwa/Festival";
+import Solo_SingingParty from "./components/munhwa/Solo_SingingParty";
+import MyPage from "./components/myPage/MyPage";
+import ModifyMyPage from "./components/myPage/ModifyMyPage";
+import Input_signup from "./routes/Input_signup";
+import KakaoAuthHandler from "./routes/KakaoAuthHandler";
+import Logout from "./routes/Logout";
+import ReviewBoard from "./components/review/ReviewBoard";
+import CreatePost from "./components/review/CreatePost";
+import ReviewDetail from "./components/review/ReviewDetail";
+import CreatePostSelf from "./components/review/CreatePostSelf";
 
 function App(props) {
   return (
@@ -70,7 +71,8 @@ function App(props) {
           <Route path="/logout" element={<Logout />} />
           <Route path="/ReviewBoard" element={<ReviewBoard />} />
           <Route path="/CreatePost" element={<CreatePost />} />
-          <Route path="/ReviewDetail" element={<ReviewDetail />} />
+          <Route path="/CreatePostSelf" element={<CreatePostSelf />} />
+          <Route path="/ReviewDetail/:id" element={<ReviewDetail />} />
         </Routes>
       </Layout>
     </Router>

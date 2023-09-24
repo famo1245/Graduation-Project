@@ -105,10 +105,10 @@
   margin: 100px;
 }
 
-.contents_count span {
-  font-size: 32px;
-  font-weight: 400;
-  padding-left: 140px;
+.now_culture_title {
+  font-size: 37px;
+  font-weight: 600;
+  color: #707070;
 }
 
 .contents_count table {

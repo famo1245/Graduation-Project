@@ -65,9 +65,8 @@ function ReviewSearch({ inputD }) {
     });
 
   const onClick = () => {
-    navigate(`/CreatePost`, {
+    navigate(`/CreatePostSelf`, {
       replace: false,
-      state: inputD,
     });
   };
 

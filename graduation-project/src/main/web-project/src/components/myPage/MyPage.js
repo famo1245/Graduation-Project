@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import styles from './MyPage.module.css';
-import { Link, NavLink } from 'react-router-dom';
-import MyPickCulture from './MyPickCulture';
-import MyReview from './MyReview';
-import MyCultureFriend from './MyCultureFriend';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import styles from "./MyPage.module.css";
+import { Link, NavLink } from "react-router-dom";
+import MyPickCulture from "./MyPickCulture";
+import MyReview from "./MyReview";
+import MyCultureFriend from "./MyCultureFriend";
+import axios from "axios";
 
 function MyPage() {
   const activeStyle = {
-    color: 'dodgerblue',
+    color: "dodgerblue",
   };
 
   const [viewPoint, setViewPoint] = useState(0);
@@ -21,15 +21,17 @@ function MyPage() {
 
   useEffect(() => {
     setLoading(true);
-    const userId = sessionStorage.getItem('userId');
+    const userId = sessionStorage.getItem("userId");
     axios
-      .post('/api/members/info', { userId: userId })
+      .post("/api/members/info", { userId: userId })
       .then((response) => {
         setData(response.data.myInfo);
         setLoading(false);
       })
       .catch((err) => setError(err));
   }, []);
+
+  console.log(data);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error...</div>;
@@ -61,15 +63,23 @@ function MyPage() {
             <div className={styles.a}>
               <div className={styles.text}>닉네임 : {data.nickName}</div>
               <div className={styles.text}>
-                나이/성별 : {data.age_range}/{data.gender === 'male' ? '남' : '여'}
+                나이/성별 : {data.age_range}/
+                {data.gender === "male" ? "남" : "여"}
               </div>
               <div className={styles.text}>관심지역 : {data.district}</div>
-              <div className={styles.text}>문화친구 티어 : {data.tiers}(현재티어)</div>
+              <div className={styles.text}>
+                문화친구 티어 : {data.tiers}(현재티어)
+              </div>
               <div className={styles.rank}>
                 <img src={`img/star.png`} />
                 <div className={styles.rank_text}>
-                  <div className={styles.rank_text_field}>상위 99% 문화친구에요!</div>
-                  <div className={styles.rank_text_field} id={styles.rank_text_field}>
+                  <div className={styles.rank_text_field}>
+                    상위 99% 문화친구에요!
+                  </div>
+                  <div
+                    className={styles.rank_text_field}
+                    id={styles.rank_text_field}
+                  >
                     다음 티어까지 100MC 필요
                   </div>
                 </div>
@@ -79,7 +89,9 @@ function MyPage() {
             <div className={styles.b}>
               <div className={styles.body_text}>
                 <button
-                  className={buttonColor1 ? styles.classicButton : styles.activeButton}
+                  className={
+                    buttonColor1 ? styles.classicButton : styles.activeButton
+                  }
                   onClick={() => {
                     if (viewPoint === 1) {
                       setViewPoint(0);
@@ -99,7 +111,9 @@ function MyPage() {
               </div>
               <div className={styles.body_text}>
                 <button
-                  className={buttonColor2 ? styles.classicButton : styles.activeButton}
+                  className={
+                    buttonColor2 ? styles.classicButton : styles.activeButton
+                  }
                   onClick={() => {
                     if (viewPoint === 2) {
                       setViewPoint(0);
@@ -119,7 +133,9 @@ function MyPage() {
               </div>
               <div className={styles.body_text}>
                 <button
-                  className={buttonColor3 ? styles.classicButton : styles.activeButton}
+                  className={
+                    buttonColor3 ? styles.classicButton : styles.activeButton
+                  }
                   onClick={() => {
                     if (viewPoint === 3) {
                       setViewPoint(0);
@@ -138,7 +154,11 @@ function MyPage() {
                 </button>
               </div>
               <div id={styles.body_text}>
-                <Link className={styles.body_text_link} to={`/ModifyMyPage`} state={{ myInfo: data }}>
+                <Link
+                  className={styles.body_text_link}
+                  to={`/ModifyMyPage`}
+                  state={{ myinfo: data }}
+                >
                   내 정보 수정하기
                 </Link>
               </div>

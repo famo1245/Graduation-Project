@@ -1,8 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, Link, useNavigate } from "react-router-dom";
 import styles from "./MunhwaDetail.module.css";
+import { HiPlus } from "react-icons/hi";
+import dummy from "../db/data.json";
 
 function MunhwaDetail(props) {
   const { id } = useParams();
@@ -10,6 +12,59 @@ function MunhwaDetail(props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { state } = useLocation();
+  const [like, setLike] = useState(false);
+  const [clickCultureFriend, setClickCultureFriend] = useState(false);
+  const [visible, setVisible] = useState(styles.join_none);
+  const [isLogin, setIsLogin] = useState(false);
+  console.log(state);
+
+  const navigate = useNavigate();
+
+  const onClickPlusButton = () => {
+    navigate(`/CreatePost`, {
+      replace: false,
+      state: data,
+    });
+  };
+
+  const onClickReviewBoard = () => {
+    navigate(`/ReviewBoard`, {
+      replace: false,
+      state: props,
+    });
+  };
+
+  const onClickReviewDetail = () => {
+    navigate(`/ReviewDetail/${props.id}`, {
+      replace: false,
+      state: props,
+    });
+  };
+
+  const toggleLike = async () => {
+    // const res = await axios.post(
+    //   ""
+    // ); /* [POST] 사용자가 좋아요를 누름 -> DB 갱신 */
+    setLike(!like);
+  };
+
+  const toggleCultureFriend = async () => {
+    // const res = await axios.post(
+    //   ""
+    // ); /* [POST] 사용자가 좋아요를 누름 -> DB 갱신 */
+    setClickCultureFriend(!clickCultureFriend);
+    if (clickCultureFriend === true) {
+      setVisible(styles.join_none);
+    } else {
+      setVisible(styles.join);
+    }
+  };
+
+  useEffect(() => {
+    if (sessionStorage.getItem("userId")) {
+      setIsLogin(true);
+    }
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -32,7 +87,7 @@ function MunhwaDetail(props) {
         <div className={styles.container_body_inner}>
           <div>
             <h1 className={styles.title1}>
-              뮤지컬/오페라 상세
+              {data.codeName} 상세
               <hr style={{ border: 0 }} />
             </h1>
             <h1 className={styles.title2}>
@@ -67,38 +122,93 @@ function MunhwaDetail(props) {
                     보러가기
                   </a>
                 </div>
-                <div className={styles.zzim}>찜하기</div>
-                <div className={styles.culture_friend}>문화친구</div>
-                <div className={styles.join}>참여하기</div>
-                <div className={styles.lets_together}>구하기</div>
+                {isLogin ? (
+                  <div
+                    className={styles.createPost}
+                    onClick={onClickPlusButton}
+                  >
+                    <img
+                      className={styles.zzim}
+                      src={`/img/copy-writing.png`}
+                      alt="리뷰작성"
+                    />
+                    <span>리뷰작성하기</span>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+                {isLogin ? (
+                  <div className={styles.zzim1}>
+                    <img
+                      className={styles.zzim}
+                      src={like ? `/img/heart (2).png` : `/img/heart.png`}
+                      alt="찜하기"
+                      onClick={toggleLike}
+                    />
+                    <span>찜하기</span>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+                {isLogin ? (
+                  <div className={styles.culture_friend}>
+                    {" "}
+                    <img
+                      className={styles.zzim}
+                      src={
+                        clickCultureFriend ? `/img/check.png` : `/img/add.png`
+                      }
+                      alt="문화친구"
+                      onClick={toggleCultureFriend}
+                    />
+                    <span>문화친구</span>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+                <div className={visible}>
+                  {" "}
+                  <img
+                    className={styles.zzim}
+                    src={`/img/login.png`}
+                    alt="참여하기"
+                  />
+                  <span>참여하기</span>
+                </div>
+                <div className={visible}>
+                  {" "}
+                  <img
+                    className={styles.zzim}
+                    src={`/img/hand-cursor.png`}
+                    alt="구하기"
+                  />
+                  <span>구하기</span>
+                </div>
               </div>
             </div>
           </div>
           <div className={styles.lower_content}>
             <div className={styles.review_preview}>
-              <div>리뷰게시판</div>
-              <div>+</div>
+              <div onClick={onClickReviewBoard}>리뷰게시판</div>
+              <div onClick={onClickReviewBoard}>
+                <HiPlus />
+              </div>
             </div>
-            <div className={styles.review_preview_content}>
-              <div>[뮤지컬/오페라]리뷰게시판제목</div>
-              <div>리뷰게시글 내용내용내용~~~~~~~~~~~~~~~~~~~</div>
-            </div>
-            <div className={styles.review_preview_content}>
-              <div>[뮤지컬/오페라]리뷰게시판제목</div>
-              <div>리뷰게시글 내용내용내용~~~~~~~~~~~~~~~~~~~</div>
-            </div>
-            <div className={styles.review_preview_content}>
-              <div>[뮤지컬/오페라]리뷰게시판제목</div>
-              <div>리뷰게시글 내용내용내용~~~~~~~~~~~~~~~~~~~</div>
-            </div>
-            <div className={styles.review_preview_content}>
-              <div>[뮤지컬/오페라]리뷰게시판제목</div>
-              <div>리뷰게시글 내용내용내용~~~~~~~~~~~~~~~~~~~</div>
-            </div>
-            <div className={styles.review_preview_content}>
-              <div>[뮤지컬/오페라]리뷰게시판제목</div>
-              <div>리뷰게시글 내용내용내용~~~~~~~~~~~~~~~~~~~</div>
-            </div>
+            {dummy.reviewBoard.map((review) => {
+              return (
+                <div className={styles.box_review_preview_content}>
+                  <div
+                    className={styles.review_preview_title}
+                    onClick={onClickReviewDetail}
+                  >
+                    [{review.category}]{review.reviewTitle}
+                  </div>
+                  <div className={styles.review_preview_content}>
+                    {review.reviewContent}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

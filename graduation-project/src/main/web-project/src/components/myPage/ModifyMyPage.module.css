@@ -117,7 +117,8 @@
 }
 
 #nickname {
-  width: 30%;
+  position: relative;
+  width: 50%;
   height: 30px;
   display: flex;
   flex-direction: row;
@@ -140,15 +141,37 @@
   color: aliceblue;
 }
 
-#nickname input {
+#nickname .notDuplicateName {
   background-color: transparent;
   border: none;
   height: 100%;
   font-weight: 700;
   color: #707070;
-  width: 50%;
+  width: 30%;
   box-shadow: 5px 5px 10px 3px #ddd;
   padding-left: 15px;
+}
+
+#nickname .duplicateName {
+  background-color: transparent;
+  border: 1px solid red;
+  height: 100%;
+  font-weight: 700;
+  color: #707070;
+  width: 30%;
+  box-shadow: 5px 5px 10px 3px #ddd;
+  padding-left: 15px;
+}
+
+.Duplicate_alert {
+  position: absolute;
+  top: 370px;
+  left: auto;
+  color: red;
+}
+
+.none_alert {
+  display: none;
 }
 
 #age {

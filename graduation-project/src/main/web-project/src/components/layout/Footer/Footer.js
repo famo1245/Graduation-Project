@@ -41,7 +41,7 @@ function Footer(props) {
         </div>
       </div>
       <div className={styles.contents_count}>
-        <span>현재 즐길 수 있는 문화들</span>
+        <div className={styles.now_culture_title}>현재 즐길 수 있는 문화들</div>
         <table>
           <tr className={styles.table_name}>
             <th>뮤지컬/오페라</th>

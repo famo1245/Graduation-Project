@@ -24,6 +24,7 @@ function CreatePost() {
   const navigate = useNavigate();
   const [imageURL1, setImageURL1] = useState(null);
   const [imageURL2, setImageURL2] = useState(null);
+  console.log(state);
 
   const onClick1 = async () => {
     setLike1(!like1);
@@ -133,11 +134,9 @@ function CreatePost() {
             <form name="" id="" action="" method="post">
               <div>
                 문화제목 :{" "}
-                <input
-                  type="text"
-                  name=""
-                  value={"[뮤지컬/오페라] 제목제목제목"}
-                />
+                <input type="hidden" name="" value={state.codeName} />
+                <input type="hidden" name="" value={state.title} />[
+                {state.codeName}]{state.title}
               </div>
               <div>
                 제목 : <input type="text" name="" id="" />
@@ -175,9 +174,13 @@ function CreatePost() {
           </div>
           <div className={styles.body_content}>
             <form name="" id="" action="" method="post">
-              <textarea name="" id="" cols="30" rows="10">
-                value
-              </textarea>
+              <textarea
+                name=""
+                id=""
+                cols="30"
+                rows="10"
+                placeholder="내용을 입력하세요."
+              ></textarea>
             </form>
           </div>
           <div className={styles.lower_content}>

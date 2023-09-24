@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import styles from './Musical.module.css';
-import Searchbar from '../searchbar/Searchbar';
-import SearchResultsList from '../searchbar/SearchResultsList';
-import axios from 'axios';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import React, { useState, useEffect, useCallback, useMemo } from "react";
+import styles from "./Musical.module.css";
+import Searchbar from "../searchbar/Searchbar";
+import SearchResultsList from "../searchbar/SearchResultsList";
+import axios from "axios";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 function Musical() {
   let location = useLocation();
   const [inputD, setInputD] = useState(null);
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { categoryName } = useParams();
@@ -21,6 +21,8 @@ function Musical() {
         setInputD(res.data.category);
         setCategory(res.data.categoryName);
         setLoading(false);
+        console.log(res.data.category);
+        console.log(res.data.categoryName);
       })
       .catch((err) => setError(err));
   }, [location]);

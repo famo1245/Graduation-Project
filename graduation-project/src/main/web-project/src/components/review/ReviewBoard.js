@@ -1,26 +1,43 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useLocation, useParams, Link, useNavigate } from 'react-router-dom';
-import styles from './ReviewBoard.module.css';
-import ReviewSearch from './ReviewSearch';
+import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useLocation, useParams, Link, useNavigate } from "react-router-dom";
+import styles from "./ReviewBoard.module.css";
+import ReviewSearch from "./ReviewSearch";
 
 function ReviewBoard(props) {
   const { id } = useParams();
   const { state } = useLocation();
-  const [inputD, setInputD] = useState(null);
+  const [inputD, setInputD] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //   setLoading(true);
+  //   axios
+  //     .get(`/api/home`)
+  //     .then((res) => {
+  //       setInputD(res.data);
+  //       setLoading(false);
+  //       console.log(res.data);
+  //       console.log(inputD);
+  //     })
+  //     .catch((err) => setError(err));
+  // }, []);
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get('/api/home')
-      .then((res) => {
-        setInputD(res.data);
+      .get(
+        `/api/home?userId=${
+          sessionStorage.getItem("userId") != null
+            ? parseInt(sessionStorage.getItem("userId"))
+            : -1
+        }`
+      )
+      .then((response) => {
+        setInputD(response.data);
         setLoading(false);
-        console.log(res.data);
-        console.log(inputD);
       })
       .catch((err) => setError(err));
   }, []);

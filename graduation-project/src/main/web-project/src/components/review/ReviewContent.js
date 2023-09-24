@@ -8,6 +8,7 @@ function ReviewContent(props) {
   const navigate = useNavigate();
   const [like, setLike] = useState(true);
   const [likeCount, setLikeCount] = useState(0);
+  const [isLogin, setIsLogin] = useState(false);
 
   //   useEffect(async () => {
   //     const fetchData = async () => {
@@ -36,6 +37,12 @@ function ReviewContent(props) {
     });
   };
 
+  useEffect(() => {
+    if (sessionStorage.getItem("userId")) {
+      setIsLogin(true);
+    }
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -57,7 +64,10 @@ function ReviewContent(props) {
             내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용
             내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용
           </div>
-          <div className={styles.content_box_inner} id={styles.like}>
+          <div
+            className={isLogin ? styles.content_box_inner : styles.none_content}
+            id={isLogin ? styles.like : styles.none_content}
+          >
             <img
               src={like ? "img/heart.png" : "img/heart (2).png"}
               onClick={toggleLike}
