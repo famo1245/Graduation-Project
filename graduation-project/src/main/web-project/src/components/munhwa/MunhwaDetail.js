@@ -35,9 +35,23 @@ function MunhwaDetail(props) {
   };
 
   const onClickReviewDetail = () => {
-    navigate(`/ReviewDetail/${props.id}`, {
+    navigate(`/ReviewDetail/${state.id}`, {
       replace: false,
       state: props,
+    });
+  };
+
+  const onClickCultureFriendPost = () => {
+    navigate(`/CultureFriendPost`, {
+      replace: false,
+      state: data,
+    });
+  };
+
+  const onClickCultureFriend = () => {
+    navigate(`/CultureFriend/`, {
+      replace: false,
+      state: data,
     });
   };
 
@@ -172,6 +186,7 @@ function MunhwaDetail(props) {
                     className={styles.zzim}
                     src={`/img/login.png`}
                     alt="참여하기"
+                    onClick={onClickCultureFriend}
                   />
                   <span>참여하기</span>
                 </div>
@@ -181,6 +196,7 @@ function MunhwaDetail(props) {
                     className={styles.zzim}
                     src={`/img/hand-cursor.png`}
                     alt="구하기"
+                    onClick={onClickCultureFriendPost}
                   />
                   <span>구하기</span>
                 </div>

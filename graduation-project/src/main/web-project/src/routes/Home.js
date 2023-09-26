@@ -33,6 +33,7 @@ function Home(props) {
       .then((response) => {
         setData(response.data);
         setLoading(false);
+        console.log(response.data);
       })
       .catch((err) => setError(err));
   }, []);

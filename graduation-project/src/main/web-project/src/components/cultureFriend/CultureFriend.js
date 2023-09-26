@@ -1,16 +1,25 @@
-import React from "react";
 import { useState, useEffect } from "react";
+import styles from "./CultureFriend.module.css";
 import axios from "axios";
-import { useLocation, useParams, Link, useNavigate } from "react-router-dom";
-import styles from "./ReviewBoard.module.css";
-import ReviewSearch from "./ReviewSearch";
+import { Link, useLocation, useParams } from "react-router-dom";
+import Searchbar from "./CultureFriendSearchbar";
 
-function ReviewBoard(props) {
-  const { id } = useParams();
-  const { state } = useLocation();
-  const [inputD, setInputD] = useState();
+function CultureFriend() {
+  let location = useLocation();
+  const [inputD, setInputD] = useState(null);
+  //   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { id } = useParams();
+  const [checkId, setCheckId] = useState(false);
+  console.log(location.state);
+  console.log(id);
+
+  useEffect(() => {
+    if (id > 0) {
+      setCheckId(true);
+    }
+  });
 
   useEffect(() => {
     setLoading(true);
@@ -39,11 +48,15 @@ function ReviewBoard(props) {
         <div className={styles.container_body_inner}>
           <div>
             <h1>
-              리뷰게시판 <hr style={{ border: 0 }} />
+              문화친구 <hr style={{ border: 0 }} />
             </h1>
           </div>
           <div className={styles.searchbarcontainer}>
-            <ReviewSearch inputD={inputD.recentCultures} />
+            <Searchbar
+              inputD={inputD.recentCultures}
+              checkId={checkId}
+              state={location.state}
+            />
           </div>
         </div>
       </div>
@@ -51,4 +64,4 @@ function ReviewBoard(props) {
   );
 }
 
-export default ReviewBoard;
+export default CultureFriend;

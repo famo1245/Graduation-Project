@@ -6,7 +6,6 @@ import Sign_up from "./routes/Sign_up";
 import { Link } from "react-router-dom";
 import Index_home from "./pages/Index_home";
 import Layout from "./components/layout/Layout";
-import Whyso from "./routes/genres/Whyso";
 import Musical from "./components/munhwa/Musical";
 import MunhwaDetail from "./components/munhwa/MunhwaDetail";
 import ScrollToTop from "./components/scrollToTop/ScrollToTop";
@@ -35,6 +34,9 @@ import ReviewBoard from "./components/review/ReviewBoard";
 import CreatePost from "./components/review/CreatePost";
 import ReviewDetail from "./components/review/ReviewDetail";
 import CreatePostSelf from "./components/review/CreatePostSelf";
+import CultureFriend from "./components/cultureFriend/CultureFriend";
+import CultureFriendDetail from "./components/cultureFriend/CultureFriendDetail";
+import CultureFriendPost from "./components/cultureFriend/CultureFriendPost";
 
 function App(props) {
   return (
@@ -46,7 +48,33 @@ function App(props) {
           <Route path="/login" element={<Login />} />
           <Route path="/sign_up" element={<Sign_up />} />
           <Route path="/munhwaRow/:id" element={<MunhwaDetail />} />
-          {/* <Route path="/musical" element={<Musical />} />
+          <Route path="/culture/:categoryName" element={<Musical />} />
+          <Route path="/MyPage" element={<MyPage />} />
+          <Route path="/ModifyMyPage" element={<ModifyMyPage />} />
+          <Route path="/Input_signup" element={<Input_signup />} />
+          <Route path="/auth/kakao/callback" element={<KakaoAuthHandler />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/ReviewBoard" element={<ReviewBoard />} />
+          <Route path="/CreatePost" element={<CreatePost />} />
+          <Route path="/CreatePostSelf" element={<CreatePostSelf />} />
+          <Route path="/ReviewDetail/:id" element={<ReviewDetail />} />
+          <Route path="/CultureFriend" element={<CultureFriend />} />
+          <Route
+            path="/CultureFriendDetail/:id"
+            element={<CultureFriendDetail />}
+          />
+          <Route path="/CultureFriendPost" element={<CultureFriendPost />} />
+          <Route path="/CultureFriend/:id" element={<CultureFriend />} />
+        </Routes>
+      </Layout>
+    </Router>
+  );
+}
+
+export default App;
+
+{
+  /* <Route path="/musical" element={<Musical />} />
           <Route path="/cultureAndCulture" element={<CultureAndCulture />} />
           <Route path="/Classic" element={<Classic />} />
           <Route path="/Concert" element={<Concert />} />
@@ -62,21 +90,5 @@ function App(props) {
           <Route path="/Others" element={<Others />} />
           <Route path="/Play" element={<Play />} />
           <Route path="/Festival" element={<Festival />} />
-          <Route path="/Solo_SingingParty" element={<Solo_SingingParty />} /> */}
-          <Route path="/culture/:categoryName" element={<Musical />} />
-          <Route path="/MyPage" element={<MyPage />} />
-          <Route path="/ModifyMyPage" element={<ModifyMyPage />} />
-          <Route path="/Input_signup" element={<Input_signup />} />
-          <Route path="/auth/kakao/callback" element={<KakaoAuthHandler />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/ReviewBoard" element={<ReviewBoard />} />
-          <Route path="/CreatePost" element={<CreatePost />} />
-          <Route path="/CreatePostSelf" element={<CreatePostSelf />} />
-          <Route path="/ReviewDetail/:id" element={<ReviewDetail />} />
-        </Routes>
-      </Layout>
-    </Router>
-  );
+          <Route path="/Solo_SingingParty" element={<Solo_SingingParty />} /> */
 }
-
-export default App;

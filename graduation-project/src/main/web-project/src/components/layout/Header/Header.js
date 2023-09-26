@@ -208,7 +208,7 @@ function Header(props) {
             </Link>
           </li>
           <li>
-            <Link to={`/Concert`} className={styles.a}>
+            <Link to={`/CultureFriend`} className={styles.a}>
               문화친구
             </Link>
           </li>

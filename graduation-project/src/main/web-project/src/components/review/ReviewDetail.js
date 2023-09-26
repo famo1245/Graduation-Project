@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, useParams, Link, useNavigate } from "react-router-dom";
 import styles from "./ReviewDetail.module.css";
+import ReviewDetailComment from "./ReviewDetailComment";
 
 function ReviewDetail() {
   const { id } = useParams();
@@ -17,12 +18,109 @@ function ReviewDetail() {
   const navigate = useNavigate();
   console.log(reviewInfo);
   const [star, setStar] = useState(3);
+  const [state, setState] = useState({
+    value: "",
+    update: null,
+    list: [
+      {
+        userId: "뚱이",
+        content: "게시글 리스트 테스트 1",
+        date: "2023-09-29 16:40:40",
+      },
+      {
+        userId: "뚱이",
+        content: "게시글 리스트 테스트 2",
+        date: "2023-09-29 16:41:24",
+      },
+      {
+        userId: "뚱이",
+        content: "게시글 리스트 테스트 3",
+        date: "2023-09-29 16:41:55",
+      },
+    ],
+  });
 
-  let post = (e) => {
-    const copyFeedComments = [...feedComments];
-    copyFeedComments.push(comment);
-    setFeedComments(copyFeedComments);
-    setComment("");
+  const handleClick = (i) => (e) => {
+    setState({
+      ...state,
+      value: e.target.innerHTML,
+      update: i,
+    });
+  };
+
+  const handleChange = (e) => {
+    const { value } = { ...e.target };
+    setState({
+      ...state,
+      value,
+    });
+  };
+
+  const updateList = (list) => {
+    setState({
+      ...state,
+      list,
+    });
+  };
+
+  const updateKeyDown = (k) => (e) => {
+    if (e.key !== "Enter") return;
+
+    const newList = [...state.list];
+    newList[k].content = state.value;
+
+    setState({
+      ...state,
+      update: null,
+    });
+
+    updateList(newList);
+  };
+
+  const deleteList = (k) => {
+    const newList = [...state.list].filter((v, i) => i !== k);
+
+    updateList(newList);
+  };
+
+  let renderList = state.list.map((v, k) => {
+    return (
+      <ul className={styles.comment_row} key={k}>
+        <li className={styles.comment_id}>{v.userId}</li>
+        <li className={styles.comment_content}>
+          <span>
+            {state.update === k ? (
+              <input
+                type="text"
+                value={state.value}
+                onChange={handleChange}
+                className={styles.comment_update_input}
+                onKeyDown={updateKeyDown(k)}
+              />
+            ) : (
+              <div>
+                <span onClick={handleClick(k)}>{v.content}</span>
+                <button
+                  className={styles.comment_delete_btn}
+                  onClick={() => {
+                    deleteList(k);
+                  }}
+                >
+                  댓글삭제
+                </button>
+              </div>
+            )}
+          </span>
+        </li>
+        <li className={styles.comment_date}>{v.date}</li>
+      </ul>
+    );
+  });
+
+  const addList = (content) => {
+    setState({
+      list: [...state.list, { userId: "뚱이", content, date: "2023-09-29" }],
+    });
   };
 
   const starCount = () => {
@@ -112,7 +210,7 @@ function ReviewDetail() {
             </div>
           </div>
           <div className={styles.lower_content}>
-            <div>
+            <div className={styles.lower_content_text}>
               Speaking slowly, carefully, the prime minister stuck closely to
               his talking points. "We're not looking to provoke or cause
               problems," he said. "We're standing up for the rules-based order."
@@ -166,38 +264,15 @@ function ReviewDetail() {
               statements were tepid, more nods to "deep concern", coupled with
               affirmations of India's growing importance to the Western world.
             </div>
-            <div>
+            <div className={styles.lower_content_img}>
               <img src="/img/눈의꽃 사진.png" alt="" />
               <img src="/img/사랑했나봐.png" alt="" />
             </div>
           </div>
           <div className={styles.comment_container}>
-            <div>댓글</div>
-            <input
-              type="text"
-              placeholder="댓글 달기..."
-              onChange={(e) => {
-                setComment(e.target.value);
-              }}
-              onKeyUp={(e) => {
-                e.target.value.length > 0
-                  ? setIsValid(true)
-                  : setIsValid(false);
-              }}
-              value={comment}
-            />
-            <button
-              type="button"
-              className={
-                comment.length > 0
-                  ? "submitCommentActive"
-                  : "submitCommentInactive"
-              }
-              onClick={post}
-              disabled={isValid ? false : true}
-            >
-              게시
-            </button>
+            <div className={styles.comment_title}>댓글</div>
+            <ReviewDetailComment addList={addList} />
+            <li>{renderList}</li>
           </div>
         </div>
       </div>

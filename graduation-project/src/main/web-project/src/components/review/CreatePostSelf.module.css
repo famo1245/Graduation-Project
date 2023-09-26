@@ -1,0 +1,227 @@
+.container {
+  /* background-color: blue; */
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+}
+
+.container_body {
+  width: 100%;
+  height: 100%;
+  /* background-color: aquamarine; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* max-height: 1600px; */
+}
+
+.container_body_inner {
+  width: 100%;
+  height: 100%;
+  max-width: 1600px;
+  /* max-height: 600px; */
+  display: flex;
+  /* background-color: red; */
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 30px;
+  margin-bottom: 140px;
+}
+
+/* .container_body_inner div h1 {
+        color: dodgerblue;
+      } */
+
+.title1 {
+  font-size: 20pt;
+  color: dodgerblue;
+}
+
+.title2 {
+  color: #2260ff;
+  font-size: 24pt;
+}
+
+.body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  /* background-color: blueviolet; */
+  border-top: 2.5px solid #707070;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.body form {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.body form div {
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.input_reviewTitle {
+  width: 95%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+.input_codeName {
+  width: 8%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+.input_title {
+  width: 85%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+.body div input:focus {
+  box-shadow: 0 0 10px aliceblue;
+}
+
+.body img {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 7px;
+  cursor: pointer;
+}
+
+.likeCount {
+  display: none;
+}
+
+.body_content {
+  width: 100%;
+  height: 1000px;
+  border-top: 2px solid #707070;
+  padding: 25px 0;
+}
+
+.body_content form {
+  width: 100%;
+  display: flex;
+}
+
+.body_content textarea {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  white-space: normal;
+  word-break: break-all;
+  word-wrap: break-word;
+  resize: none;
+  font-size: 17px;
+}
+
+.body_content textarea:focus {
+  box-shadow: 0 0 10px aliceblue;
+}
+
+.lower_content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  border-top: 2px solid #707070;
+  border-bottom: 2px solid #707070;
+  padding: 22px 0;
+}
+
+.lower_content form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.lower_content_image {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: 15px;
+}
+
+/* .lower_content_image input {
+      display: none;
+    } */
+.lower_content_image div {
+  width: 45%;
+}
+
+.image1 {
+  margin-left: 96px;
+}
+
+.lower_content_inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+  justify-content: space-between;
+}
+
+.lower_content_inner div {
+  width: 49%;
+  height: 100%;
+}
+
+.lower_content_inner img {
+  width: 100%;
+  height: 700px;
+  object-fit: cover;
+}
+
+.post_button {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px 50px;
+}
+
+.text_link {
+  position: relative;
+  padding: 10px 10px;
+  border-radius: 15px;
+  font-family: "paybooc-Light", sans-serif;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+  margin-left: 30px;
+  border: 3px solid dodgerblue;
+  color: #707070;
+  background-color: whitesmoke;
+}
+
+.text_link:hover {
+  color: #d4dfe6;
+  background-color: dodgerblue;
+  letter-spacing: 2px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.text_link:active {
+  transform: scale(1.5);
+}

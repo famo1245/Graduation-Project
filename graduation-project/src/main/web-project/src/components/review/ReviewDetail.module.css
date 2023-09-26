@@ -152,6 +152,31 @@
 }
 
 .lower_content {
+  width: 100%;
+  height: 100%;
   border-top: 1px solid #707070;
+  border-bottom: 1px solid #707070;
   padding: 25px 0;
+  margin-bottom: 25px;
+}
+
+.lower_content_text {
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.lower_content_img {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.lower_content_img img {
+  width: 45%;
+  height: 50%;
+  object-fit: contain;
 }
