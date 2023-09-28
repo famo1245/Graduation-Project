@@ -27,15 +27,13 @@ public class FriendService {
     private final CultureRepositoryUsingJPA cultureRepository;
     private final EntityManager entityManager;
 
-    public Friend InsertFriend(FriendInsertDTO friendInsertDTO) {
+    public Friend InsertFriend(FriendInsertDTO friendInsertDTO,Member member) {
+        member.plusTierScore(member.getTierScore()+10);
         Friend friend = new Friend();
         friend.CreatNewFriend(friendInsertDTO.getTitle(),
             friendInsertDTO.getContents(), friendInsertDTO.getNum(),
             friendInsertDTO.getCultureTitle(), friendInsertDTO.getMeatTime());
         return friendRepository.save(friend);
-    }
-    public List<Friend> findAll(){
-        return friendRepository.findAll();
     }
 
 
