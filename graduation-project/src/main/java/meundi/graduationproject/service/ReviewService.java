@@ -2,6 +2,7 @@ package meundi.graduationproject.service;
 
 
 import lombok.RequiredArgsConstructor;
+import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.domain.Review;
 import meundi.graduationproject.domain.ReviewComment;
 import meundi.graduationproject.repository.ReviewRepository;
@@ -17,8 +18,9 @@ import java.util.List;
 public class ReviewService {
     private final ReviewRepository reviewRepository;
 
-    public Review insertReview(Review review) {
-       reviewRepository.save(review);
+    public Review insertReview(Review review, Member member) {
+        member.plusTierScore(member.getTierScore()+30);
+        reviewRepository.save(review);
         return review;
     }
 
@@ -60,5 +62,20 @@ public class ReviewService {
         return reviewRepository.findComment(id);
     }
 
-
+    public void plusJimReview(Member member, Long review_id){
+        Review one = reviewRepository.findOne(review_id);
+        List<Member> jimMember = one.getJimMember();
+        /* 찜 유저에 있으면 리턴 */
+        for (Member member1 : jimMember) {
+            if (member1.equals(member)) {
+                return;
+            }
+        }
+        /* 짐멤버 추가 및 찜 +1 */
+        member.plusTierScore(member.getTierScore()+10);
+        jimMember.add(member);
+        one.setJimMember(jimMember);
+        one.setJim(one.getJim()+1);
+        return;
+    }
 }

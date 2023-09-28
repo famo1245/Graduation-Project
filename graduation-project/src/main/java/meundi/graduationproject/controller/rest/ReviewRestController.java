@@ -147,8 +147,7 @@ public class ReviewRestController {
      * */
     @PostMapping("/reviewWrite")/*리뷰 작성시, 내용 넘겨주고, 작성된 화면으로 넘어감*/
     public ResponseEntity<Map<String, Object>> addReview(@Validated @RequestBody Review review,
-        BindingResult bindingResult,
-        RedirectAttributes redirectAttributes, HttpSession session) throws IOException {
+        BindingResult bindingResult, HttpSession session) throws IOException {
         /* 같은 문화 제목이 없을때, 오류*/
         if (cultureService.findOneByTitle(review.getCultureTitle()).isEmpty()) {
             bindingResult.reject("NoCulture");
@@ -166,7 +165,8 @@ public class ReviewRestController {
         Member member = memberService.findById((Long) session.getAttribute("userId"));
         review.setMember(member);
         review.setCulture(culture); /*리뷰 객체에 문화 객체 넣기 */
-        Review savedReview = reviewService.insertReview(review);
+        review.setJim(0);
+        Review savedReview = reviewService.insertReview(review,member);
         message.put("data", savedReview);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
@@ -174,7 +174,7 @@ public class ReviewRestController {
     //  리뷰 수정
     @GetMapping("reviewDetail/{review_id}/edit")
     public ResponseEntity<Map<String, Object>> editReviewForm(
-        @PathVariable("review_id") Long reviewId, Model model, HttpSession session) {
+        @PathVariable("review_id") Long reviewId, HttpSession session) {
         Map<String, Object> message = new HashMap<>();
         // 세션이 없거나 세션 사용자와 리뷰 작성자가 다르면 거부 (URL 로 직접 접근시, 거부)
         if (session.getAttribute("userId") != null) {
@@ -211,7 +211,19 @@ public class ReviewRestController {
         Map<String, Object> message = new HashMap<>();
         message.put("data", reviewService.findOne(reviewId));
         return ResponseEntity.status(HttpStatus.OK).body(message);
-
     }
+    /* 찜 API */
+    @GetMapping("jim/{review_id}")
+    public  ResponseEntity<Map<String, Object>> JimReview(@PathVariable("review_id") Long reviewId
+    ,HttpSession session){
+        Member member = null;
+        if (session.getAttribute("userId") != null) {
+            member = memberService.findById((Long) session.getAttribute("userId"));
+        }
+        reviewService.plusJimReview(member, reviewId);
+        Map<String, Object> message = new HashMap<>();
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+
 }
 

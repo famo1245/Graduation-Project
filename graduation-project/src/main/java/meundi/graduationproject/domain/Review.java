@@ -36,6 +36,12 @@ public class Review {
     @NotNull
     @Range(min = 0, max = 5)
     private int reviewGrade;
+    /* 리뷰 찜 */
+    private Integer jim;
+
+    /* 찜한 유저 */
+    @OneToMany(mappedBy = "jimReview")
+    private List<Member> jimMember;
 
     /*userId for 어떤유저가 작성했는지 알기 위해*/
     @ManyToOne
@@ -50,6 +56,9 @@ public class Review {
     private String cultureTitle;
     @OneToMany(mappedBy = "review")
     private List<ReviewComment>  reviewComments;
+
+
+
 
     @Override
     public boolean equals(Object o) {
