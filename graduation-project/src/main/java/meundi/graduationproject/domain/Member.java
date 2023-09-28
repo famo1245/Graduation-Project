@@ -32,9 +32,15 @@ public class Member {
     /* 사용자의 등급, 이름은 추후 정할 것 */
     @Enumerated(EnumType.STRING)
     private Tiers tiers;
+    /* 사용자의 등급 점수 */
+    private Integer tierScore;
 
     @OneToMany(mappedBy = "member")
     private List<Review> reviews = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "review_id")
+    private Review jimReview;
 
     //==create logic==//
     public void create(Long id, String email, String nickName, String gender, String district, String age_range,
@@ -47,6 +53,7 @@ public class Member {
         this.age_range = age_range;
         this.favoriteCategory = favoriteCategory;
         this.tiers = Tiers.BRONZE;
+        this.tierScore = 0;
     }
 
     //==update logic==//
@@ -74,5 +81,18 @@ public class Member {
     public int hashCode() {
         return Objects.hash(getId(), getEmail(), getNickName(), getGender(),
                 getAge_range(), getDistrict(), getFavoriteCategory(), getTiers());
+    }
+
+    public void plusTierScore(int score){
+        this.tierScore += score;
+        if (this.tierScore >= 1000){
+            this.tiers = Tiers.DIAMOND;
+        } else if (this.tierScore > 500) {
+            this.tiers = Tiers.GOLD;
+        } else if (this.tierScore > 300) {
+            this.tiers = Tiers.SILVER;
+        } else if (this.tierScore >= 100) {
+            this.tiers = Tiers.BRONZE;
+        }
     }
 }
