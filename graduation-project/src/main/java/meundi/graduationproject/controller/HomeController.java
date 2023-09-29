@@ -45,8 +45,8 @@ public class HomeController {
             if (favoriteCategoryList != null) {
                 int randomIndex = (int) (Math.random() * favoriteCategoryList.size());
                 List<Culture> recommendList = cultureService.findByCategory(favoriteCategoryList.get(randomIndex));
-//                model.addAttribute("recommendList", recommendList);
-//                model.addAttribute("recommendName", favoriteCategoryList.get(randomIndex));
+                data.put("category", favoriteCategoryList.get(randomIndex));
+                data.put("recommendList", recommendList);
             }
         }
 
