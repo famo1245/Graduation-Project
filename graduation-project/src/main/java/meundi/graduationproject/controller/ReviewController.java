@@ -145,7 +145,7 @@ public class ReviewController {
         Member member = memberService.findById((Long)session.getAttribute("userId"));
         review.setMember(member);
         review.setCulture(culture); /*리뷰 객체에 문화 객체 넣기 */
-        Review savedReview = reviewService.insertReview(review);
+        Review savedReview = reviewService.insertReview(review, member);
         redirectAttributes.addAttribute("reviewId", savedReview.getId());
         redirectAttributes.addAttribute("status", true);
         return "redirect:/review/reviewDetail/{reviewId}";/*review_id를 통해, detail 열기*/
