@@ -4,12 +4,11 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  /* background-color: aquamarine; */
+  align-items: flex-start;
+  margin-left: 1%;
 }
 
 .home div h4 {
-  margin-right: 1485px;
   font-size: 20px;
   color: grey;
   font-weight: 600;
@@ -130,7 +129,7 @@ Button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   background-color: ghostwhite;
   padding: 35px;
 }
@@ -151,7 +150,7 @@ Button {
 }
 
 .lower_content_left .review_notice_board .a {
-  padding-right: 550px;
+  /* padding-right: 550px; */
   font-size: 23px;
 }
 
@@ -264,7 +263,7 @@ Button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   background-color: ghostwhite;
   padding: 35px;
 }
@@ -273,7 +272,7 @@ Button {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   margin-bottom: 25px;
   /* background-color: beige; */
 }
@@ -285,7 +284,7 @@ Button {
 }
 
 .lower_content_right .culture_friend .a {
-  padding-right: 540px;
+  /* padding-right: 540px; */
   font-size: 23px;
 }
 
