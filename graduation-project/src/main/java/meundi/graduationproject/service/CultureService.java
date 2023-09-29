@@ -22,7 +22,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +61,7 @@ public class CultureService {
         List<Culture> cultureList = CRJ.findByCodeNameContaining(category);
         int lastIndex = cultureList.size();
         log.info("lastIndx={}", lastIndex);
-        List<Culture> findList = cultureList.subList(lastIndex - 5, lastIndex);
+        List<Culture> findList = cultureList.subList(lastIndex - 10, lastIndex);
         Collections.reverse(findList);
         return findList;
     }
@@ -68,7 +70,7 @@ public class CultureService {
         List<Culture> cultureList = CRJ.findByGunameContaining(district);
         int lastIndex = cultureList.size();
         log.info("lastIndx={}", lastIndex);
-        List<Culture> findList = cultureList.subList(lastIndex - 5, lastIndex);
+        List<Culture> findList = cultureList.subList(lastIndex - 10, lastIndex);
         Collections.reverse(findList);
         return findList;
     }
@@ -123,6 +125,7 @@ public class CultureService {
         JsonObject jsonObject1 = parser.parse(result).getAsJsonObject();
         JsonObject jsonObject2 = jsonObject1.getAsJsonObject(CULTURE_SERVICE);
         JsonArray jsonArray = jsonObject2.getAsJsonArray("row");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         /* 문화 데이터 하나씩 받기 */
         for (int i = jsonArray.size() - 1; i >= 0; i--) {
             JsonObject childObj = (JsonObject) jsonArray.get(i);
@@ -137,6 +140,8 @@ public class CultureService {
             String codename = null;
             String userTrgt = null;
             String place = null;
+            String useFee = null;
+            Date endDate = null;
 
             /* 문화 field 채우기 */
             try {
@@ -179,14 +184,21 @@ public class CultureService {
                 if (childObj.has("PLACE")) {
                     place = childObj.get("PLACE").getAsString();
                 }
+
+                if (childObj.has("END_DATE")) {
+                    endDate = format.parse(childObj.get("END_DATE").getAsString());
+                }
+
+                if (childObj.has("IS_FREE")) {
+                    useFee = childObj.get("IS_FREE").getAsString();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
             /* 문화 객체 생성하여, 넣기 */
             Culture culture = new Culture();
-            culture.InsertCultureFromJson(title, player, orgLink, mainImg,
-                guname, date, rgstdate,
-                codename, userTrgt, place);
+            culture.InsertCultureFromJson(title, player, orgLink, mainImg, guname, date,
+                    rgstdate, codename, userTrgt, place, endDate, useFee);
             insertCulture(culture);
         }
         return "OK";
@@ -316,9 +328,9 @@ public class CultureService {
         return sb.toString();
     }
 
-    // 매일 밤 9시마다 호출되어 업데이트를 하는 함수
+    // 매일 새벽 4시마다 호출되어 업데이트를 하는 함수
     // cron = "초 분 시 일 월 요일"
-    @Scheduled(cron = "0 0 21 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 4 * * *", zone = "Asia/Seoul")
     public void update() throws Exception {
         log.info("update run");
         StringBuilder urlBuilder = new StringBuilder(CULTURE_URL); /*URL*/
@@ -360,6 +372,7 @@ public class CultureService {
         JsonObject jsonObject1 = parser.parse(sb.toString()).getAsJsonObject();
         JsonObject jsonObject2 = jsonObject1.getAsJsonObject("culturalEventInfo");
         JsonArray jsonArray = jsonObject2.getAsJsonArray("row");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Culture lastOne = cultureRepository.findLastOne();
 
@@ -377,6 +390,8 @@ public class CultureService {
             String codename = null;
             String userTrgt = null;
             String place = null;
+            Date endDate = null;
+            String useFee = null;
 
             /* 문화 field 채우기 */
             try {
@@ -419,19 +434,26 @@ public class CultureService {
                 if (childObj.has("PLACE")) {
                     place = childObj.get("PLACE").getAsString();
                 }
+
+                if (childObj.has("END_DATE")) {
+                    endDate = format.parse(childObj.get("END_DATE").getAsString());
+                }
+
+                if (childObj.has("IS_FREE")) {
+                    useFee = childObj.get("IS_FREE").getAsString();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
             /* 문화 객체 생성하여, 넣기 */
             Culture culture = new Culture();
-            culture.InsertCultureFromJson(title, player, orgLink, mainImg,
-                guname, date, rgstdate,
-                codename, userTrgt, place);
-            if (lastOne.getTitle().equals(culture.getTitle())) {
-                insertCulture(culture);
-            } else {
+            culture.InsertCultureFromJson(title, player, orgLink, mainImg, guname, date,
+                    rgstdate, codename, userTrgt, place, endDate, useFee);
+            if (lastOne.equals(culture)) {
                 return;
             }
+
+            insertCulture(culture);
         }
     }
 }

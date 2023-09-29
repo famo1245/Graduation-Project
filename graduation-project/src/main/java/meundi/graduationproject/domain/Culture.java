@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Date;
 
 @Entity
 @Getter @Setter
@@ -45,6 +46,8 @@ public class Culture {
     private String use_trgt;
     /*장소*/
     private String place;
+    private Date end_date;
+    private String isFree;
 
     @OneToMany(mappedBy = "culture")
     private List<Review> reviews = new ArrayList<>();
@@ -65,10 +68,9 @@ public class Culture {
     * org_link, main_img 가 있어서 익셉션이 터짐 -> 그냥 String으로 뒀음
     * */
 
-    public void InsertCultureFromJson(String title, String player,
-                   String org_link, String main_img, String guname,
-                   String date, String rgstDate, String codeName,
-                   String use_trgt, String place) throws MalformedURLException {
+    public void InsertCultureFromJson(String title, String player, String org_link, String main_img, String guname,
+                   String date, String rgstDate, String codeName, String use_trgt,
+                                      String place, Date endDate, String useFee) {
 
         this.title = title;
         this.player = player;
@@ -80,6 +82,8 @@ public class Culture {
         this.codeName = codeName;
         this.use_trgt = use_trgt;
         this.place = place;
+        this.end_date = endDate;
+        this.isFree = useFee;
     }
 
     @Override
