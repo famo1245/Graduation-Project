@@ -36,7 +36,7 @@ public class CultureRestController {
         List<Culture> cultureListAll = cultureService.findCultureAll();
         int lastIndex = cultureListAll.size();
         List<Culture> cultureList = cultureListAll.subList(lastIndex - (page * 10) + 1,
-            lastIndex - ((page - 1) * 10));
+                lastIndex - ((page - 1) * 10));
         Collections.reverse(cultureList);
         Map<String, Object> message = new HashMap<>();
 
@@ -44,7 +44,7 @@ public class CultureRestController {
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
-//    @GetMapping("/cultures/detail/{culture_id}")
+    //    @GetMapping("/cultures/detail/{culture_id}")
     public ResponseEntity<Map<String, Object>> cultureDetail(@PathVariable Long culture_id) {
         Culture findCulture = cultureService.findOne(culture_id);
         Map<String, Object> message = new HashMap<>();
@@ -74,6 +74,7 @@ public class CultureRestController {
         Map<String, String> categories = new HashMap<>();
         categories.put("뮤지컬", "뮤지컬/오페라");
         categories.put("문화교양", "문화교양/강좌");
+        categories.put("교육", "교육/체험");
         categories.put("독주", "독주/독창회");
         categories.put("전시", "전시/미술");
         categories.put("축제-문화", "축제-문화/예술");
