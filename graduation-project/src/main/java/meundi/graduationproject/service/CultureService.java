@@ -23,10 +23,7 @@ import java.net.URLEncoder;
 
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -38,6 +35,7 @@ public class CultureService {
     private String CULTURE_URL;
     @Value("${api.culture.service}")
     private String CULTURE_SERVICE;
+    private final int dateDiff = 5;
 
     private final CultureRepository cultureRepository;
     private final CultureRepositoryUsingJPA CRJ;
@@ -51,6 +49,21 @@ public class CultureService {
         return cultureRepository.findAll();
     }
 
+    public List<Culture> findSoonEndAll() {
+        Calendar calendar = Calendar.getInstance();
+        Date startDate = new Date();
+        calendar.setTime(startDate);
+        calendar.add(Calendar.DATE, dateDiff);
+        Date endDate = calendar.getTime();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-dd-MM");
+        String start = format.format(startDate);
+        String end = format.format(endDate);
+        List<Culture> temp = CRJ.findAllByEndDateBetween(startDate, endDate);
+        int lastIndex = temp.size();
+        List<Culture> soonEnd = temp.subList(lastIndex - 10, lastIndex);
+        Collections.reverse(soonEnd);
+        return soonEnd;
+    }
     public List<Culture> findByCodename(String codename) {
         List<Culture> findCultures = CRJ.findByCodeName(codename);
         Collections.reverse(findCultures);
@@ -177,8 +190,8 @@ public class CultureService {
                     codename = childObj.get("CODENAME").getAsString();
                 }
 
-                if (childObj.has("USER_TRGT")) {
-                    userTrgt = childObj.get("USER_TRGT").getAsString();
+                if (childObj.has("USE_TRGT")) {
+                    userTrgt = childObj.get("USE_TRGT").getAsString();
                 }
 
                 if (childObj.has("PLACE")) {

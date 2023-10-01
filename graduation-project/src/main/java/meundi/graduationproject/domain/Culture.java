@@ -46,7 +46,7 @@ public class Culture {
     private String use_trgt;
     /*장소*/
     private String place;
-    private Date end_date;
+    private Date endDate;
     private String isFree;
 
     @OneToMany(mappedBy = "culture")
@@ -82,7 +82,7 @@ public class Culture {
         this.codeName = codeName;
         this.use_trgt = use_trgt;
         this.place = place;
-        this.end_date = endDate;
+        this.endDate = endDate;
         this.isFree = useFee;
     }
 
