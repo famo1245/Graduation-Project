@@ -24,7 +24,6 @@ function CreatePost() {
   const navigate = useNavigate();
   const [imageURL1, setImageURL1] = useState(null);
   const [imageURL2, setImageURL2] = useState(null);
-  console.log(state);
 
   const onClick1 = async () => {
     setLike1(!like1);
@@ -101,7 +100,7 @@ function CreatePost() {
   //     imageInput2.current.click();
   //   };
 
-  const onGoReviewBoard = () => {
+  const onGoReviewBoard = (e) => {
     // const form = document.querySelector("#");
     // console.log(form);
     // const formData = new FormData(form);
@@ -110,6 +109,17 @@ function CreatePost() {
     //   contents[key] = value;
     // });
     // axios.post("", contents);
+    e.preventDefault();
+    const form = document.querySelector("#reviewForm");
+    const formData = new FormData(form);
+    const contents = {};
+    formData.forEach((value, key) => {
+      contents[key] = value;
+    });
+    const reviewContents = document.querySelector("#reviewContents");
+    contents.userId = sessionStorage.getItem("userId");
+    contents.reviewContents = reviewContents.value;
+    axios.post(`api/review/reviewWrite`, contents);
     navigate(`/reviewBoard`);
   };
 
@@ -131,52 +141,30 @@ function CreatePost() {
             </h1>
           </div>
           <div className={styles.body}>
-            <form name="" id="" action="" method="post">
+            <form id="reviewForm" method="post">
               <div>
-                문화제목 :{" "}
-                <input type="hidden" name="" value={state.codeName} />
-                <input type="hidden" name="" value={state.title} />[
-                {state.codeName}]{state.title}
+                문화제목 : <input type="hidden" name="cultureTitle" value={state.title} />[{state.codeName}]
+                {state.title}
               </div>
               <div>
-                제목 : <input type="text" name="" id="" />
+                제목 : <input type="text" name="reviewTitle" />
               </div>
               <div>
                 <span>추천도 :</span>
-                <img
-                  src={like1 ? "img/star (1).png" : "img/star.png"}
-                  onClick={onClick1}
-                />
-                <img
-                  src={like2 ? "img/star (1).png" : "img/star.png"}
-                  onClick={onClick2}
-                />
-                <img
-                  src={like3 ? "img/star (1).png" : "img/star.png"}
-                  onClick={onClick3}
-                />
-                <img
-                  src={like4 ? "img/star (1).png" : "img/star.png"}
-                  onClick={onClick4}
-                />
-                <img
-                  src={like5 ? "img/star (1).png" : "img/star.png"}
-                  onClick={onClick5}
-                />
-                <input
-                  className={styles.likeCount}
-                  type="text"
-                  name=""
-                  value={likeCount}
-                />
+                <img src={like1 ? "img/star (1).png" : "img/star.png"} onClick={onClick1} />
+                <img src={like2 ? "img/star (1).png" : "img/star.png"} onClick={onClick2} />
+                <img src={like3 ? "img/star (1).png" : "img/star.png"} onClick={onClick3} />
+                <img src={like4 ? "img/star (1).png" : "img/star.png"} onClick={onClick4} />
+                <img src={like5 ? "img/star (1).png" : "img/star.png"} onClick={onClick5} />
+                <input className={styles.likeCount} type="text" name="reviewGrade" value={likeCount} />
               </div>
             </form>
           </div>
           <div className={styles.body_content}>
-            <form name="" id="" action="" method="post">
+            <form method="post">
               <textarea
-                name=""
-                id=""
+                name="reviewContents"
+                id="reviewContents"
                 cols="30"
                 rows="30"
                 placeholder="내용을 입력하세요."
@@ -231,12 +219,7 @@ function CreatePost() {
             </form>
           </div>
           <div className={styles.post_button}>
-            <button
-              className={styles.text_link}
-              type="button"
-              form=""
-              onClick={onGoReviewBoard}
-            >
+            <button className={styles.text_link} type="button" onClick={onGoReviewBoard}>
               작성완료
             </button>
           </div>
