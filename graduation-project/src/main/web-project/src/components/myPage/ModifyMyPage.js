@@ -59,11 +59,15 @@ function ModifyMyPage() {
               <div className={styles.text}>관심지역 변경하기</div>
               <div className={styles.text}>관심문화 변경하기</div>
               <div id={styles.text}>
-                <Link className={styles.text_link} to={`/MyPage`}>
-                  <button type="button" form="profileForm" onClick={onClick}>
-                    수정완료
-                  </button>
-                </Link>
+                {duplicate ? (
+                  <div>수정완료</div>
+                ) : (
+                  <Link className={styles.text_link} to={`/MyPage`}>
+                    <button type="button" form="profileForm" onClick={onClick}>
+                      수정완료
+                    </button>
+                  </Link>
+                )}
               </div>
             </div>
             <div className={styles.b}>
