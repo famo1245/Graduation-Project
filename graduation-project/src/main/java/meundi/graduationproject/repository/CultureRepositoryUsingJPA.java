@@ -3,6 +3,7 @@ package meundi.graduationproject.repository;
 import meundi.graduationproject.domain.Culture;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CultureRepositoryUsingJPA  extends JpaRepository<Culture,Long> {
@@ -14,4 +15,6 @@ public interface CultureRepositoryUsingJPA  extends JpaRepository<Culture,Long> 
     List<Culture> findByGunameContaining(String guName);
 
     List<Culture> findByCodeName(String codename);
+
+    List<Culture> findAllByEndDateBetween(Date start, Date end);
 }
