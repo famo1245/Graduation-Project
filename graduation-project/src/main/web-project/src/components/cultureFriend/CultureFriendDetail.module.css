@@ -122,6 +122,8 @@
   height: 500px;
   background-color: #f1f3f5;
   padding: 30px;
+  scroll-behavior: smooth;
+  overflow-y: auto;
 }
 
 .renderList_container {
