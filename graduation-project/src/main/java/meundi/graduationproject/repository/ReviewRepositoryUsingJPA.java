@@ -4,6 +4,7 @@ import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.domain.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -14,4 +15,7 @@ public interface ReviewRepositoryUsingJPA extends JpaRepository<Review,Long> {
     List<Review> findByMemberLike(Member member);
     //select * from Review WHERE Culture LIKE "%Culture%" equals 를 이용한 동등비교
     List<Review> findByCultureLike(Culture culture);
+
+    @Query(value = "select r, m.nickName from Review r left outer join Member m on r.member = m")
+    List<Review> findAllBy();
 }
