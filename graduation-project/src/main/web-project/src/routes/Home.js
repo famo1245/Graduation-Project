@@ -23,24 +23,20 @@ function Home(props) {
 
   useEffect(() => {
     setLoading(true);
-    const userId =
-      sessionStorage.getItem("userId") != null
-        ? parseInt(sessionStorage.getItem("userId"))
-        : -1;
+    const userId = sessionStorage.getItem("userId") != null ? parseInt(sessionStorage.getItem("userId")) : -1;
     setIsLogin(sessionStorage.getItem("userId") === null ? false : true);
     axios
       .get(`/api/home?userId=${userId}`)
       .then((response) => {
         setData(response.data);
         setLoading(false);
-        console.log(response.data);
       })
       .catch((err) => setError(err));
   }, []);
 
-  const starCount = () => {
+  const starCount = (count) => {
     let arr = [];
-    for (let i = 0; i < star; i++) {
+    for (let i = 0; i < count; i++) {
       arr.push(<img className={styles.star_fill} src="/img/star.png" />);
     }
 
@@ -96,9 +92,7 @@ function Home(props) {
         </div>
       </div>
       <div>
-        <h4>
-          {isLogin ? data.category + " 문화 생활" : "곧 끝나는 문화 생활"}
-        </h4>
+        <h4>{isLogin ? data.category + " 문화 생활" : "곧 끝나는 문화 생활"}</h4>
       </div>
       <div className={styles.home_upper}>
         <div className={styles.home_upper_content}>
@@ -113,7 +107,7 @@ function Home(props) {
                   </div>
                 );
               })
-            : data.recentCultures.map((culture) => {
+            : data.soonEnd.map((culture) => {
                 const url = `/munhwaRow/${culture.id}`;
                 return (
                   <div key={culture.id}>
@@ -143,13 +137,39 @@ function Home(props) {
                 </Link>
               </div>
             </div>
-            <div className={styles.content_both_inner}>
+            {data.reviews.map((review) => {
+              return (
+                <div className={styles.content_both_inner}>
+                  <div>
+                    <Link>
+                      <img className={styles.review_img} src={`/img/눈의꽃 사진.png`} />
+                    </Link>
+                  </div>
+                  <div className={styles.inner_content}>
+                    <span className={styles.inner_content_title}>
+                      {review.reviewTitle}
+                      <hr style={{ border: 0 }} />
+                    </span>
+                    <div className={styles.container_star_ratings}>
+                      <span className={styles.star_ratings_title}>평점:</span>
+                      <div className={styles.star_ratings}>
+                        <div className={styles.star_ratings_fill}>{starCount(parseInt(review.reviewGrade))}</div>
+                        <div className={styles.star_ratings_base}>{starBase()}</div>
+                      </div>
+                    </div>
+                    <span>작성자: 오미크론</span>
+                    <br />
+                    <span>작성일자: 2023/06/06</span>
+                    <br />
+                    <span className={styles.user_short_text}>정말 멋있어요 강추!!!!합니다.</span>
+                  </div>
+                </div>
+              );
+            })}
+            {/* <div className={styles.content_both_inner}>
               <div>
                 <Link>
-                  <img
-                    className={styles.review_img}
-                    src={`/img/눈의꽃 사진.png`}
-                  />
+                  <img className={styles.review_img} src={`/img/눈의꽃 사진.png`} />
                 </Link>
               </div>
               <div className={styles.inner_content}>
@@ -160,9 +180,7 @@ function Home(props) {
                 <div className={styles.container_star_ratings}>
                   <span className={styles.star_ratings_title}>평점:</span>
                   <div className={styles.star_ratings}>
-                    <div className={styles.star_ratings_fill}>
-                      {starCount()}
-                    </div>
+                    <div className={styles.star_ratings_fill}>{starCount()}</div>
                     <div className={styles.star_ratings_base}>{starBase()}</div>
                   </div>
                 </div>
@@ -170,18 +188,13 @@ function Home(props) {
                 <br />
                 <span>작성일자: 2023/06/06</span>
                 <br />
-                <span className={styles.user_short_text}>
-                  정말 멋있어요 강추!!!!합니다.
-                </span>
+                <span className={styles.user_short_text}>정말 멋있어요 강추!!!!합니다.</span>
               </div>
             </div>
             <div className={styles.content_both_inner}>
               <div>
                 <Link>
-                  <img
-                    className={styles.review_img}
-                    src={`/img/눈의꽃 사진.png`}
-                  />
+                  <img className={styles.review_img} src={`/img/눈의꽃 사진.png`} />
                 </Link>
               </div>
               <div className={styles.inner_content}>
@@ -192,9 +205,7 @@ function Home(props) {
                 <div className={styles.container_star_ratings}>
                   <span className={styles.star_ratings_title}>평점:</span>
                   <div className={styles.star_ratings}>
-                    <div className={styles.star_ratings_fill}>
-                      {starCount()}
-                    </div>
+                    <div className={styles.star_ratings_fill}>{starCount()}</div>
                     <div className={styles.star_ratings_base}>{starBase()}</div>
                   </div>
                 </div>
@@ -203,19 +214,15 @@ function Home(props) {
                 <span>작성일자: 2023/06/06</span>
                 <br />
                 <div className={styles.user_short_text}>
-                  정말 멋있어요 강추!!!!합니다. 너무좋아요 사랑해요 레미제라블
-                  너는 나의 하나뿐인 뮤지컬이야. 제발 후속작 이만개 내줘요
-                  제작자님!!
+                  정말 멋있어요 강추!!!!합니다. 너무좋아요 사랑해요 레미제라블 너는 나의 하나뿐인 뮤지컬이야. 제발
+                  후속작 이만개 내줘요 제작자님!!
                 </div>
               </div>
             </div>
             <div className={styles.content_both_inner}>
               <div>
                 <Link>
-                  <img
-                    className={styles.review_img}
-                    src={`/img/눈의꽃 사진.png`}
-                  />
+                  <img className={styles.review_img} src={`/img/눈의꽃 사진.png`} />
                 </Link>
               </div>
               <div className={styles.inner_content}>
@@ -226,9 +233,7 @@ function Home(props) {
                 <div className={styles.container_star_ratings}>
                   <span className={styles.star_ratings_title}>평점:</span>
                   <div className={styles.star_ratings}>
-                    <div className={styles.star_ratings_fill}>
-                      {starCount()}
-                    </div>
+                    <div className={styles.star_ratings_fill}>{starCount()}</div>
                     <div className={styles.star_ratings_base}>{starBase()}</div>
                   </div>
                 </div>
@@ -236,18 +241,13 @@ function Home(props) {
                 <br />
                 <span>작성일자: 2023/06/06</span>
                 <br />
-                <span className={styles.user_short_text}>
-                  정말 멋있어요 강추!!!!합니다.
-                </span>
+                <span className={styles.user_short_text}>정말 멋있어요 강추!!!!합니다.</span>
               </div>
             </div>
             <div className={styles.content_both_inner}>
               <div>
                 <Link>
-                  <img
-                    className={styles.review_img}
-                    src={`/img/눈의꽃 사진.png`}
-                  />
+                  <img className={styles.review_img} src={`/img/눈의꽃 사진.png`} />
                 </Link>
               </div>
               <div className={styles.inner_content}>
@@ -258,9 +258,7 @@ function Home(props) {
                 <div className={styles.container_star_ratings}>
                   <span className={styles.star_ratings_title}>평점:</span>
                   <div className={styles.star_ratings}>
-                    <div className={styles.star_ratings_fill}>
-                      {starCount()}
-                    </div>
+                    <div className={styles.star_ratings_fill}>{starCount()}</div>
                     <div className={styles.star_ratings_base}>{starBase()}</div>
                   </div>
                 </div>
@@ -268,11 +266,9 @@ function Home(props) {
                 <br />
                 <span>작성일자: 2023/06/06</span>
                 <br />
-                <span className={styles.user_short_text}>
-                  정말 멋있어요 강추!!!!합니다.
-                </span>
+                <span className={styles.user_short_text}>정말 멋있어요 강추!!!!합니다.</span>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className={styles.lower_content_right}>
             <div className={styles.culture_friend}>
@@ -286,10 +282,7 @@ function Home(props) {
             <div className={styles.content_both_inner}>
               <div>
                 <Link>
-                  <img
-                    className={styles.review_img}
-                    src={`/img/사랑했나봐.png`}
-                  />
+                  <img className={styles.review_img} src={`/img/사랑했나봐.png`} />
                 </Link>
               </div>
               <div className={styles.inner_content}>
@@ -312,10 +305,7 @@ function Home(props) {
             <div className={styles.content_both_inner}>
               <div>
                 <Link>
-                  <img
-                    className={styles.review_img}
-                    src={`/img/사랑했나봐.png`}
-                  />
+                  <img className={styles.review_img} src={`/img/사랑했나봐.png`} />
                 </Link>
               </div>
               <div className={styles.inner_content}>
@@ -338,10 +328,7 @@ function Home(props) {
             <div className={styles.content_both_inner}>
               <div>
                 <Link>
-                  <img
-                    className={styles.review_img}
-                    src={`/img/사랑했나봐.png`}
-                  />
+                  <img className={styles.review_img} src={`/img/사랑했나봐.png`} />
                 </Link>
               </div>
               <div className={styles.inner_content}>
@@ -364,10 +351,7 @@ function Home(props) {
             <div className={styles.content_both_inner}>
               <div>
                 <Link>
-                  <img
-                    className={styles.review_img}
-                    src={`/img/사랑했나봐.png`}
-                  />
+                  <img className={styles.review_img} src={`/img/사랑했나봐.png`} />
                 </Link>
               </div>
               <div className={styles.inner_content}>
