@@ -6,6 +6,7 @@ import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.domain.Review;
 import meundi.graduationproject.domain.ReviewComment;
 import meundi.graduationproject.repository.ReviewRepository;
+import meundi.graduationproject.repository.ReviewRepositoryUsingJPA;
 import meundi.graduationproject.repository.ReviewSearch;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewService {
     private final ReviewRepository reviewRepository;
+    private final ReviewRepositoryUsingJPA reviewRepositoryUsingJPA;
 
     public Review insertReview(Review review, Member member) {
         member.plusTierScore(member.getTierScore()+30);
@@ -34,7 +36,7 @@ public class ReviewService {
     }
 
     public List<Review> findReviewAll(){
-        return reviewRepository.findAll();
+        return reviewRepositoryUsingJPA.findAll();
     }
 
     public List<Review> findReviewSearch(String cultureTitle) {

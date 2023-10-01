@@ -1,8 +1,8 @@
 package meundi.graduationproject.controller.rest;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
@@ -30,8 +30,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -44,12 +42,18 @@ public class ReviewRestController {
     private final MemberService memberService;
 
     @GetMapping /*home*/
-    public ResponseEntity<Map<String, Object>> HomeReview()
-        throws MalformedURLException {
-        List<Review> reviewAll = reviewService.findReviewAll();
-        Map<String, Object> message = new HashMap<>();
-        message.put("data", reviewAll);
-        return ResponseEntity.status(HttpStatus.OK).body(message);
+    public ResponseEntity<Map<String, Object>> HomeReview() {
+        List<Review> temp = reviewService.findReviewAll();
+        Collections.reverse(temp);
+        Map<String, Object> data = new HashMap<>();
+        List<ReviewDTO> reviewAll = new ArrayList<>();
+        for (Review r : temp) {
+            ReviewDTO rdto = new ReviewDTO();
+            rdto.setReviewDTO(r, r.getMember().getNickName(), r.getCulture().getMain_img());
+            reviewAll.add(rdto);
+        }
+        data.put("reviews", reviewAll);
+        return ResponseEntity.status(HttpStatus.OK).body(data);
 
     }
 
@@ -146,23 +150,20 @@ public class ReviewRestController {
      * 수정 후: 문화 제목으로 검색하여, 문화들을 띄워주고, 문화를 선택하는 방식
      * */
     @PostMapping("/reviewWrite")/*리뷰 작성시, 내용 넘겨주고, 작성된 화면으로 넘어감*/
-    public ResponseEntity<Map<String, Object>> addReview(@Validated @RequestBody Review review,
-        BindingResult bindingResult, HttpSession session) throws IOException {
-        /* 같은 문화 제목이 없을때, 오류*/
-        if (cultureService.findOneByTitle(review.getCultureTitle()).isEmpty()) {
-            bindingResult.reject("NoCulture");
-        }
-        /* 검증에 문제 발생 시, 다시 add */
-        if (bindingResult.hasErrors()) {
-            throw new java.net.BindException();
-        }
-
+    public ResponseEntity<Map<String, Object>> addReview(@RequestBody Map<String, Object> body) throws IOException {
+        Review review = new Review();
         Map<String, Object> message = new HashMap<>();
+
+        Long userId = Long.parseLong((String) body.get("userId"));
+        review.setReviewTitle((String) body.get("reviewTitle"));
+        review.setReviewContents((String) body.get("reviewContents"));
+        review.setCultureTitle((String) body.get("cultureTitle"));
+        review.setReviewGrade(Integer.parseInt((String) body.get("reviewGrade")));
         review.setReviewDateTime(LocalDateTime.now());
         Culture culture = cultureService.findOneByTitle(review.getCultureTitle())
             .get(); /* 문화 제목(입력)으로 문화 찾기*/
 //      세션을 통해, 멤버 가져오기
-        Member member = memberService.findById((Long) session.getAttribute("userId"));
+        Member member = memberService.findById(userId);
         review.setMember(member);
         review.setCulture(culture); /*리뷰 객체에 문화 객체 넣기 */
         review.setJim(0);
