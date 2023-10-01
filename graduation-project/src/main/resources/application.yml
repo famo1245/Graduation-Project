@@ -8,6 +8,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    database-platform: org.hibernate.dialect.MariaDBDialect
   h2:
     console:
       enabled: true
@@ -20,6 +21,22 @@ spring:
     basename: messages, errors
   profiles:
     include: secret
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail.smtp:
+        auth: true
+        starttls:
+          enable: true
+          required: true
+          timeout: 5000
 
 logging.level:
   org.hibernate.SQL: info
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
