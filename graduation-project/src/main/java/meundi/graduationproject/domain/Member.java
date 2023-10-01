@@ -1,5 +1,7 @@
 package meundi.graduationproject.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import meundi.graduationproject.domain.DTO.MemberForm;
 
@@ -36,10 +38,12 @@ public class Member {
     private Integer tierScore;
 
     @OneToMany(mappedBy = "member")
+    @JsonManagedReference
     private List<Review> reviews = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "review_id")
+    @JsonBackReference
     private Review jimReview;
 
     //==create logic==//
