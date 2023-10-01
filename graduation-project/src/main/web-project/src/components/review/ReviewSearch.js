@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { FaSearch } from 'react-icons/fa';
-import styles from './ReviewSearch.module.css';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import ReviewContent from './ReviewContent';
-import ReactPaginate from 'react-paginate';
+import React, { useState, useEffect } from "react";
+import { FaSearch } from "react-icons/fa";
+import styles from "./ReviewSearch.module.css";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import ReviewContent from "./ReviewContent";
+import ReactPaginate from "react-paginate";
 
 function ReviewSearch({ inputD }) {
-  const [data, setData] = useState('');
+  const [data, setData] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ function ReviewSearch({ inputD }) {
   // const [pageCount, setPageCount] = useState();
 
   useEffect(() => {
-    if (sessionStorage.getItem('userId')) {
+    if (sessionStorage.getItem("userId")) {
       setIsLogin(true);
     }
   }, []);
@@ -33,14 +33,14 @@ function ReviewSearch({ inputD }) {
   };
 
   const handleOnKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       pageCount = 1;
     }
   };
 
   const displayCultures = inputD
     .filter((val) => {
-      if (data == '') {
+      if (data == "") {
         return val;
       } else if (val.title.toLowerCase().includes(data.toLowerCase())) {
         return val;
@@ -48,18 +48,19 @@ function ReviewSearch({ inputD }) {
     })
     .slice(pagesVisited, pagesVisited + culturePerPage)
     .map((val, key) => {
+      console.log(val.jimCount);
       return (
         <ReviewContent
           key={key}
           poster={val.main_img}
-          title={val.title}
-          date={val.date}
-          guname={val.guname}
-          id={val.id}
-          org_link={val.org_link}
-          place={val.place}
-          codeName={val.codeName}
-          player={val.player}
+          title={val.reviewTitle}
+          date={val.reviewDateTime}
+          contents={val.reviewContents}
+          nickname={val.nickname}
+          id={val.review_id}
+          grade={val.reviewGrade}
+          likeCount={val.jimCount}
+          likeId={val.jimMember}
         />
       );
     });
@@ -91,8 +92,8 @@ function ReviewSearch({ inputD }) {
         <div className={styles.row}>
           {displayCultures}
           <ReactPaginate
-            previousLabel={'Previous'}
-            nextLabel={'Next'}
+            previousLabel={"Previous"}
+            nextLabel={"Next"}
             pageCount={pageCount}
             onPageChange={changePage}
             containerClassName={styles.paginationBttns}

@@ -15,13 +15,7 @@ function ReviewBoard(props) {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `/api/home?userId=${
-          sessionStorage.getItem("userId") != null
-            ? parseInt(sessionStorage.getItem("userId"))
-            : -1
-        }`
-      )
+      .get(`api/review/`)
       .then((response) => {
         setInputD(response.data);
         setLoading(false);
@@ -43,7 +37,7 @@ function ReviewBoard(props) {
             </h1>
           </div>
           <div className={styles.searchbarcontainer}>
-            <ReviewSearch inputD={inputD.recentCultures} />
+            <ReviewSearch inputD={inputD.reviews} />
           </div>
         </div>
       </div>

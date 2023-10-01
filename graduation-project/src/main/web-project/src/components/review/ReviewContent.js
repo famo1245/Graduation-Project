@@ -38,6 +38,10 @@ function ReviewContent(props) {
   };
 
   useEffect(() => {
+    setLikeCount(props.likeCount);
+    if (props.likeId.includes(sessionStorage.getItem("userId"))) {
+      setLike(false);
+    }
     if (sessionStorage.getItem("userId")) {
       setIsLogin(true);
     }
@@ -54,24 +58,19 @@ function ReviewContent(props) {
             {props.title}
           </div>
           <div className={styles.content_box_inner} id={styles.user_name}>
-            작성자: {props.date}
+            작성자: {props.nickname}
           </div>
           <div className={styles.content_box_inner} id={styles.date}>
-            작성 날짜: {props.place}
+            작성 날짜: {new Date(props.date).toLocaleDateString()}
           </div>
           <div className={styles.content_box_inner} id={styles.user_content}>
-            내용: 어쩌구 저쩌구
-            내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용
-            내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용내욘내용
+            내용: {props.contents}
           </div>
           <div
             className={isLogin ? styles.content_box_inner : styles.none_content}
             id={isLogin ? styles.like : styles.none_content}
           >
-            <img
-              src={like ? "img/heart.png" : "img/heart (2).png"}
-              onClick={toggleLike}
-            />
+            <img src={like ? "img/heart.png" : "img/heart (2).png"} onClick={toggleLike} />
             <span>{likeCount}</span>
           </div>
         </div>
