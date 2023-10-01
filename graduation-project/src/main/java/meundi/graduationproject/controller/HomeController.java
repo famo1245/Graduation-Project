@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.domain.DTO.MemberForm;
+import meundi.graduationproject.domain.Review;
 import meundi.graduationproject.service.CultureService;
 import meundi.graduationproject.service.MemberService;
+import meundi.graduationproject.service.ReviewService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ public class HomeController {
 
     private final CultureService cultureService;
     private final MemberService memberService;
+    private final ReviewService reviewService;
 
     private List<Culture> getRecentCultures() {
         List<Culture> cultureListAll = cultureService.findCultureAll();
@@ -27,6 +30,17 @@ public class HomeController {
         List<Culture> cultureList = cultureListAll.subList(lastIndex - 10, lastIndex);
         Collections.reverse(cultureList);
         return cultureList;
+    }
+
+    private List<Review> getRecentReview() {
+        List<Review> temp = reviewService.findReviewAll();
+        int lastIndex = temp.size();
+        if (lastIndex == 0) {
+            return temp;
+        }
+        List<Review> recentReviews = temp.subList(lastIndex - 5, lastIndex);
+        Collections.reverse(recentReviews);
+        return recentReviews;
     }
 
     @GetMapping("/api/home")
@@ -48,10 +62,15 @@ public class HomeController {
                 data.put("category", favoriteCategoryList.get(randomIndex));
                 data.put("recommendList", recommendList);
             }
+        } else{
+            List<Culture> recentCultures = getRecentCultures();
+            data.put("recentCultures", recentCultures);
+            List<Culture> soonEnd = cultureService.findSoonEndAll();
+            data.put("soonEnd", soonEnd);
         }
 
-        List<Culture> recentCultures = getRecentCultures();
-        data.put("recentCultures", recentCultures);
+        List<Review> reviews = getRecentReview();
+        data.put("reviews", reviews);
         return data;
     }
 }
