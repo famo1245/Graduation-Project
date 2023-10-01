@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.domain.DTO.MemberForm;
+import meundi.graduationproject.domain.DTO.ReviewDTO;
+import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.domain.Review;
 import meundi.graduationproject.service.CultureService;
 import meundi.graduationproject.service.MemberService;
@@ -32,13 +34,20 @@ public class HomeController {
         return cultureList;
     }
 
-    private List<Review> getRecentReview() {
+    private List<ReviewDTO> getRecentReview() {
         List<Review> temp = reviewService.findReviewAll();
+        List<ReviewDTO> temp2 = new ArrayList<>();
         int lastIndex = temp.size();
-        if (lastIndex == 0) {
-            return temp;
+        for(Review r : temp) {
+            ReviewDTO rdto = new ReviewDTO();
+            rdto.setReviewDTO(r, r.getMember().getNickName(), r.getCulture().getMain_img());
+            temp2.add(rdto);
         }
-        List<Review> recentReviews = temp.subList(lastIndex - 5, lastIndex);
+        if (lastIndex < 4) {
+            Collections.reverse(temp2);
+            return temp2;
+        }
+        List<ReviewDTO> recentReviews = temp2.subList(lastIndex - 4, lastIndex);
         Collections.reverse(recentReviews);
         return recentReviews;
     }
@@ -69,7 +78,7 @@ public class HomeController {
             data.put("soonEnd", soonEnd);
         }
 
-        List<Review> reviews = getRecentReview();
+        List<ReviewDTO> reviews = getRecentReview();
         data.put("reviews", reviews);
         return data;
     }

@@ -142,7 +142,7 @@ function Home(props) {
                 <div className={styles.content_both_inner}>
                   <div>
                     <Link>
-                      <img className={styles.review_img} src={`/img/눈의꽃 사진.png`} />
+                      <img className={styles.review_img} src={review.main_img} />
                     </Link>
                   </div>
                   <div className={styles.inner_content}>
@@ -157,11 +157,11 @@ function Home(props) {
                         <div className={styles.star_ratings_base}>{starBase()}</div>
                       </div>
                     </div>
-                    <span>작성자: 오미크론</span>
+                    <span>작성자: {review.nickname}</span>
                     <br />
-                    <span>작성일자: 2023/06/06</span>
+                    <span>작성일자: {new Date(review.reviewDateTime).toLocaleDateString()}</span>
                     <br />
-                    <span className={styles.user_short_text}>정말 멋있어요 강추!!!!합니다.</span>
+                    <span className={styles.user_short_text}>{review.reviewContents}</span>
                   </div>
                 </div>
               );
