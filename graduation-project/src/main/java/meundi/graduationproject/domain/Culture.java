@@ -1,5 +1,6 @@
 package meundi.graduationproject.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,6 +51,7 @@ public class Culture {
     private String isFree;
 
     @OneToMany(mappedBy = "culture")
+    @JsonManagedReference
     private List<Review> reviews = new ArrayList<>();
 
     /* 2023-09-28~2023-09-28 이렇게 data가 들어오는데,
