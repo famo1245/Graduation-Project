@@ -1,26 +1,48 @@
 import React from "react";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import styles from "./ReviewDetailComment.module.css";
+import styles from "./CultureDetailComment.module.css";
 
 function ReviewDetailComment({ addList }) {
   const [value, setValue] = useState("");
   const [isLogin, setIsLogin] = useState(false);
+  const [time, setTime] = useState();
+
+  const todayTime = () => {
+    let now = new Date();
+    let todayYear = now.getFullYear();
+    let todayMonth =
+      now.getMonth() + 1 > 9 ? now.getMonth() + 1 : "0" + (now.getMonth() + 1);
+    let todayDate = now.getDate() > 9 ? now.getDate() : "0" + now.getDate();
+    let hours = now.getHours() > 9 ? now.getHours() : "0" + now.getHours();
+    let minutes =
+      now.getMinutes() > 9 ? now.getMinutes() : "0" + now.getMinutes();
+
+    return (
+      todayYear +
+      "/" +
+      todayMonth +
+      "/" +
+      todayDate +
+      " " +
+      hours +
+      " : " +
+      minutes
+    );
+  };
 
   const handleChange = (e) => {
     setValue(e.target.value);
+    setTime(todayTime());
   };
 
   const handleSubmit = (e) => {
-    if (value === "") {
+    if (!value) {
       e.preventDefault();
-      addList(
-        ";;;;;;;;;;;;;;;;;;;;;; 빈 댓글을 제출하였습니다. 클릭 후 삭제 요망"
-      );
-      setValue("");
+      return;
     } else {
       e.preventDefault();
-      addList(value);
+      addList((addList.content = value), (addList.date = time));
       setValue("");
     }
   };
@@ -32,7 +54,7 @@ function ReviewDetailComment({ addList }) {
           <input
             type="text"
             className={styles.int}
-            placeholder="댓글 달기..."
+            placeholder="입력..."
             onChange={handleChange}
             value={value}
           />

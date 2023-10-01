@@ -142,7 +142,7 @@ function CreatePost() {
                 제목 : <input type="text" name="" id="" />
               </div>
               <div>
-                추천도 :{" "}
+                <span>추천도 :</span>
                 <img
                   src={like1 ? "img/star (1).png" : "img/star.png"}
                   onClick={onClick1}
@@ -178,7 +178,7 @@ function CreatePost() {
                 name=""
                 id=""
                 cols="30"
-                rows="10"
+                rows="30"
                 placeholder="내용을 입력하세요."
               ></textarea>
             </form>

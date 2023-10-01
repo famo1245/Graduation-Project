@@ -71,7 +71,7 @@ function MyPage() {
                 문화친구 티어 : {data.tiers}(현재티어)
               </div>
               <div className={styles.rank}>
-                <img src={`img/star.png`} />
+                <img src={`/img/챌린저.png`} />
                 <div className={styles.rank_text}>
                   <div className={styles.rank_text_field}>
                     상위 99% 문화친구에요!

@@ -16,7 +16,7 @@ function ReviewDetail() {
   const location = useLocation();
   const reviewInfo = location.state;
   const navigate = useNavigate();
-  console.log(reviewInfo);
+  // console.log(reviewInfo);
   const [star, setStar] = useState(3);
   const [state, setState] = useState({
     value: "",
@@ -39,6 +39,8 @@ function ReviewDetail() {
       },
     ],
   });
+
+  console.log(state.list);
 
   const handleClick = (i) => (e) => {
     setState({
@@ -85,35 +87,55 @@ function ReviewDetail() {
 
   let renderList = state.list.map((v, k) => {
     return (
-      <ul className={styles.comment_row} key={k}>
-        <li className={styles.comment_id}>{v.userId}</li>
-        <li className={styles.comment_content}>
+      <div key={k} className={styles.renderList_container}>
+        <div className={styles.comment_row}>
+          <div className={styles.comment_id}>{v.userId}</div>
+          <div className={styles.comment_date}>{v.date}</div>
+        </div>
+        <div className={styles.comment_content}>
           <span>
             {state.update === k ? (
-              <input
-                type="text"
-                value={state.value}
-                onChange={handleChange}
-                className={styles.comment_update_input}
-                onKeyDown={updateKeyDown(k)}
-              />
+              isLogin ? (
+                <div className={styles.update_div}>
+                  <input
+                    type="text"
+                    value={state.value}
+                    onChange={handleChange}
+                    className={styles.comment_update_input}
+                    onKeyDown={updateKeyDown(k)}
+                  />
+                  <button
+                    className={styles.comment_delete_btn}
+                    onClick={() => {
+                      deleteList(k);
+                    }}
+                  >
+                    삭제
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <span
+                    className={styles.comment_content_inner}
+                    onClick={handleClick(k)}
+                  >
+                    {v.content}
+                  </span>
+                </div>
+              )
             ) : (
               <div>
-                <span onClick={handleClick(k)}>{v.content}</span>
-                <button
-                  className={styles.comment_delete_btn}
-                  onClick={() => {
-                    deleteList(k);
-                  }}
+                <span
+                  className={styles.comment_content_inner}
+                  onClick={handleClick(k)}
                 >
-                  댓글삭제
-                </button>
+                  {v.content}
+                </span>
               </div>
             )}
           </span>
-        </li>
-        <li className={styles.comment_date}>{v.date}</li>
-      </ul>
+        </div>
+      </div>
     );
   });
 
@@ -271,8 +293,8 @@ function ReviewDetail() {
           </div>
           <div className={styles.comment_container}>
             <div className={styles.comment_title}>댓글</div>
-            <ReviewDetailComment addList={addList} />
-            <li>{renderList}</li>
+            {isLogin ? <ReviewDetailComment addList={addList} /> : <></>}
+            {renderList}
           </div>
         </div>
       </div>
