@@ -1,7 +1,12 @@
 package meundi.graduationproject.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
@@ -14,6 +19,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@ToString
 public class Review {
 
     /*리뷰 고유 번호*/
@@ -26,6 +32,7 @@ public class Review {
 
     /*리뷰 내용*/
     @NotBlank
+    @Column(length = 800)
     private String reviewContents;
 
     /*리뷰 제목*/
@@ -41,20 +48,26 @@ public class Review {
 
     /* 찜한 유저 */
     @OneToMany(mappedBy = "jimReview")
+    @JsonManagedReference
     private List<Member> jimMember;
 
     /*userId for 어떤유저가 작성했는지 알기 위해*/
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "member_id")
     private Member member;
 
     /*cultureId for 어떤 문화에 대한 리뷰인지*/
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "culture_id")
     private Culture culture;
+
     @NotBlank
     private String cultureTitle;
+
     @OneToMany(mappedBy = "review")
+    @JsonManagedReference
     private List<ReviewComment>  reviewComments;
 
 
