@@ -17,7 +17,7 @@ function MyCultureFriend(dummyData) {
     <div className={styles.body_inner_bottom}>
       <div>
         <div>
-          <h4>내가 찜한 문화</h4>
+          <h4>내가 작성한 문화친구 글</h4>
         </div>
         <div className={styles.home_upper}>
           <div className={styles.home_upper_content}>
