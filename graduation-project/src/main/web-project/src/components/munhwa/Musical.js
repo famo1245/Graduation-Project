@@ -21,8 +21,6 @@ function Musical() {
         setInputD(res.data.category);
         setCategory(res.data.categoryName);
         setLoading(false);
-        console.log(res.data.category);
-        console.log(res.data.categoryName);
       })
       .catch((err) => setError(err));
   }, [location]);

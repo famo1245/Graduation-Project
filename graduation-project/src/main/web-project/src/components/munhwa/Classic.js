@@ -17,7 +17,6 @@ function Classic() {
       )
       .then((res) => {
         setInputD(res.data.favorite);
-        console.log(res.data);
       });
   }, []);
 
