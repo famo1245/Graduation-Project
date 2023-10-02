@@ -252,10 +252,13 @@ public class CultureService {
         graph.get(23).add(24);
         graph.get(24).add(23);
         ArrayList<String> guNames = new ArrayList<>();
+        /* 현재 주소 */
+        guNames.add(guName);
         for (int i : graph.get(gu.get(guName))) {
             Set<String> strings = gu.keySet();
             for (String string : strings) {
                 if (gu.get(string).equals(i)){
+                    /* 주변구들*/
                     guNames.add(string);
                 }
             }
