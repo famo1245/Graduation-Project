@@ -7,7 +7,7 @@ import ReviewDetailComment from "./ReviewDetailComment";
 
 function ReviewDetail() {
   const { id } = useParams();
-  const [userName, setUserName] = useState("뚱이");
+  const [userName, setUserName] = useState("");
   const [comment, setComment] = useState("");
   const [feedComments, setFeedComments] = useState([]); // 댓글리스트
   const [isValid, setIsValid] = useState(false); //댓글 게시 가능여부, 유효성 검사
@@ -16,31 +16,12 @@ function ReviewDetail() {
   const location = useLocation();
   const reviewInfo = location.state;
   const navigate = useNavigate();
-  // console.log(reviewInfo);
-  const [star, setStar] = useState(3);
+  const [star, setStar] = useState(0);
   const [state, setState] = useState({
     value: "",
     update: null,
-    list: [
-      {
-        userId: "뚱이",
-        content: "게시글 리스트 테스트 1",
-        date: "2023-09-29 16:40:40",
-      },
-      {
-        userId: "뚱이",
-        content: "게시글 리스트 테스트 2",
-        date: "2023-09-29 16:41:24",
-      },
-      {
-        userId: "뚱이",
-        content: "게시글 리스트 테스트 3",
-        date: "2023-09-29 16:41:55",
-      },
-    ],
+    list: [],
   });
-
-  console.log(state.list);
 
   const handleClick = (i) => (e) => {
     setState({
@@ -60,8 +41,7 @@ function ReviewDetail() {
 
   const updateList = (list) => {
     setState({
-      ...state,
-      list,
+      list: list,
     });
   };
 
@@ -80,8 +60,11 @@ function ReviewDetail() {
   };
 
   const deleteList = (k) => {
-    const newList = [...state.list].filter((v, i) => i !== k);
-
+    const newList = state.list.filter((v, i) => {
+      if (i !== k) {
+        return v;
+      }
+    });
     updateList(newList);
   };
 
@@ -89,13 +72,15 @@ function ReviewDetail() {
     return (
       <div key={k} className={styles.renderList_container}>
         <div className={styles.comment_row}>
-          <div className={styles.comment_id}>{v.userId}</div>
-          <div className={styles.comment_date}>{v.date}</div>
+          <div className={styles.comment_id}>{v.nickname}</div>
+          <div className={styles.comment_date}>
+            <small>{new Date(v.createdDate).toLocaleDateString()}</small>
+          </div>
         </div>
         <div className={styles.comment_content}>
           <span>
             {state.update === k ? (
-              isLogin ? (
+              sessionStorage.getItem("userId") == v.userId ? (
                 <div className={styles.update_div}>
                   <input
                     type="text"
@@ -115,20 +100,14 @@ function ReviewDetail() {
                 </div>
               ) : (
                 <div>
-                  <span
-                    className={styles.comment_content_inner}
-                    onClick={handleClick(k)}
-                  >
+                  <span className={styles.comment_content_inner} onClick={handleClick(k)}>
                     {v.content}
                   </span>
                 </div>
               )
             ) : (
               <div>
-                <span
-                  className={styles.comment_content_inner}
-                  onClick={handleClick(k)}
-                >
+                <span className={styles.comment_content_inner} onClick={handleClick(k)}>
                   {v.content}
                 </span>
               </div>
@@ -140,9 +119,14 @@ function ReviewDetail() {
   });
 
   const addList = (content) => {
-    setState({
-      list: [...state.list, { userId: "뚱이", content, date: "2023-09-29" }],
-    });
+    const body = { content: content };
+    axios
+      .post(`/api/review/reviewDetail/${reviewInfo.id}?userId=${sessionStorage.getItem("userId")}`, body)
+      .then((res) => {
+        setState({
+          list: [...state.list, res.data.comment],
+        });
+      });
   };
 
   const starCount = () => {
@@ -154,13 +138,20 @@ function ReviewDetail() {
   };
 
   const onClickCultureDetail = () => {
-    navigate(`/munhwaRow/${reviewInfo.id}`, {
+    navigate(`/munhwaRow/${reviewInfo.cultureId}`, {
       replace: false,
       state: reviewInfo,
     });
   };
 
   useEffect(() => {
+    setState({
+      list: [...reviewInfo.comments],
+    });
+    setStar(parseInt(reviewInfo.grade));
+    if (reviewInfo.likeId.includes(sessionStorage.getItem("userId"))) {
+      setLike(false);
+    }
     if (sessionStorage.getItem("userId")) {
       setIsLogin(true);
     }
@@ -183,24 +174,17 @@ function ReviewDetail() {
               <hr style={{ border: 0 }} />
             </h1>
             <h1 className={styles.title2}>
-              리뷰게시판 제목 <hr style={{ border: 0 }} />
+              {reviewInfo.title} <hr style={{ border: 0 }} />
             </h1>
           </div>
           <div className={styles.body}>
-            <img
-              src={reviewInfo.poster}
-              className={styles.poster}
-              alt="문화 포스터 이미지"
-            />
+            <img src={reviewInfo.poster} className={styles.poster} alt="문화 포스터 이미지" />
             <div className={styles.inner_content}>
-              <div className={styles.inner_title}>
-                [{reviewInfo.codeName}] {reviewInfo.title}
+              <div className={styles.info}>
+                <div>작성자 : {reviewInfo.nickname}</div>
               </div>
               <div className={styles.info}>
-                <div>작성자 : 뚱이</div>
-              </div>
-              <div className={styles.info}>
-                <div>작성 날짜 : 2023년 9월 23일 20시 34분 24초</div>
+                <div>작성 날짜 : {new Date(reviewInfo.date).toLocaleDateString()}</div>
               </div>
               <div className={styles.info}>
                 <div className={styles.star_ratings_fill}>
@@ -222,70 +206,14 @@ function ReviewDetail() {
                 ) : (
                   <div></div>
                 )}
-                <div
-                  className={styles.link_site}
-                  onClick={onClickCultureDetail}
-                >
+                <div className={styles.link_site} onClick={onClickCultureDetail}>
                   문화상세
                 </div>
               </div>
             </div>
           </div>
           <div className={styles.lower_content}>
-            <div className={styles.lower_content_text}>
-              Speaking slowly, carefully, the prime minister stuck closely to
-              his talking points. "We're not looking to provoke or cause
-              problems," he said. "We're standing up for the rules-based order."
-              But where, several reporters asked, were Canada's allies? "So far
-              in time," one journalist said to Mr Trudeau, "you seem to be
-              alone". In the public eye at least, Mr Trudeau has appeared to be
-              left largely on his own as he goes toe to toe with India, one of
-              the world's fastest-growing economies, with a population 35 times
-              bigger than Canada's. In the days since the prime minister made
-              the explosive announcement, his allies in the Five Eyes
-              intelligence alliance provided seemingly boilerplate public
-              statements, all stopping far short of full-throated support. UK
-              Foreign Secretary James Cleverly said his country took "very
-              seriously the things that Canada are saying". Using nearly
-              identical language, Australia said it was "deeply concerned" by
-              the accusations. But perhaps the most deafening silence came from
-              Canada's southern neighbour, the United States. The two countries
-              are close allies, but the US did not speak up with outrage on
-              Canada's behalf. When President Joe Biden publicly raised India
-              this week, while speaking at the UN, it was not to condemn, but to
-              praise the country for helping to establish a new economic
-              pathway. Mr Biden's National Security Adviser Jake Sullivan later
-              denied that there was a "wedge" between the US and its neighbour,
-              saying Canada was being closely consulted. But other public
-              statements were tepid, more nods to "deep concern", coupled with
-              affirmations of India's growing importance to the Western world.
-              Speaking slowly, carefully, the prime minister stuck closely to
-              his talking points. "We're not looking to provoke or cause
-              problems," he said. "We're standing up for the rules-based order."
-              But where, several reporters asked, were Canada's allies? "So far
-              in time," one journalist said to Mr Trudeau, "you seem to be
-              alone". In the public eye at least, Mr Trudeau has appeared to be
-              left largely on his own as he goes toe to toe with India, one of
-              the world's fastest-growing economies, with a population 35 times
-              bigger than Canada's. In the days since the prime minister made
-              the explosive announcement, his allies in the Five Eyes
-              intelligence alliance provided seemingly boilerplate public
-              statements, all stopping far short of full-throated support. UK
-              Foreign Secretary James Cleverly said his country took "very
-              seriously the things that Canada are saying". Using nearly
-              identical language, Australia said it was "deeply concerned" by
-              the accusations. But perhaps the most deafening silence came from
-              Canada's southern neighbour, the United States. The two countries
-              are close allies, but the US did not speak up with outrage on
-              Canada's behalf. When President Joe Biden publicly raised India
-              this week, while speaking at the UN, it was not to condemn, but to
-              praise the country for helping to establish a new economic
-              pathway. Mr Biden's National Security Adviser Jake Sullivan later
-              denied that there was a "wedge" between the US and its neighbour,
-              saying Canada was being closely consulted. But other public
-              statements were tepid, more nods to "deep concern", coupled with
-              affirmations of India's growing importance to the Western world.
-            </div>
+            <div className={styles.lower_content_text}>{reviewInfo.contents}</div>
             <div className={styles.lower_content_img}>
               <img src="/img/눈의꽃 사진.png" alt="" />
               <img src="/img/사랑했나봐.png" alt="" />

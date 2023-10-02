@@ -40,24 +40,6 @@ public class MemberController {
     @PostMapping("/new")
     @ResponseBody
     public String create(@RequestBody MemberForm form) {
-//        if (!StringUtils.hasText(form.getNickName())) {
-//            bindingResult.rejectValue("nickName", "required");
-//        }
-//        if (!StringUtils.hasText(form.getDistrict())) {
-//            bindingResult.rejectValue("district", "required");
-//        }
-//        if (memberService.validateDuplicatedNickName(form.getNickName())) {
-//            bindingResult.rejectValue("nickName", "duplicated");
-//        }
-//
-//        if (bindingResult.hasErrors()) {
-//            log.info("errors={}", bindingResult);
-//            model.addAttribute("id", form.getId());
-//            model.addAttribute("email", form.getEmail());
-//            model.addAttribute("gender", form.getGender());
-//            model.addAttribute("age_range", form.getAge_range());
-//            return "members/createMemberForm";
-//        }
         log.info("member={}", form);
         Member member = memberService.createMember(form);
         memberService.join(member);

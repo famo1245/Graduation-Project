@@ -42,13 +42,15 @@ function ReviewSearch({ inputD }) {
     .filter((val) => {
       if (data == "") {
         return val;
-      } else if (val.title.toLowerCase().includes(data.toLowerCase())) {
+      } else if (
+        val.reviewTitle.toLowerCase().includes(data.toLowerCase()) ||
+        val.nickname.toLowerCase().includes(data.toLowerCase())
+      ) {
         return val;
       }
     })
     .slice(pagesVisited, pagesVisited + culturePerPage)
     .map((val, key) => {
-      console.log(val.jimCount);
       return (
         <ReviewContent
           key={key}
@@ -57,10 +59,12 @@ function ReviewSearch({ inputD }) {
           date={val.reviewDateTime}
           contents={val.reviewContents}
           nickname={val.nickname}
-          id={val.review_id}
+          id={val.id}
           grade={val.reviewGrade}
           likeCount={val.jimCount}
           likeId={val.jimMember}
+          comments={val.reviewComments}
+          cultureId={val.culture_id}
         />
       );
     });
