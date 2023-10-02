@@ -36,6 +36,29 @@ public class CultureDTO {
     private String isFree;
     private List<ReviewDTO> reviews;
 
+    public CultureDTO() {
+    }
+    public CultureDTO(Culture c){
+        this.id = c.getId();
+        this.title = c.getTitle();
+        this.player = c.getPlayer();
+        this.org_link = c.getOrg_link();
+        this.main_img = c.getMain_img();
+        this.guname = c.getGuname();
+        this.Date = c.getDate();
+        this.rgstDate = c.getRgstDate();
+        this.codeName = c.getCodeName();
+        this.use_trgt = c.getUse_trgt();
+        this.place = c.getPlace();
+        this.endDate = c.getEndDate();
+        this.reviews = new ArrayList<>();
+        for(Review r : c.getReviews()) {
+            ReviewDTO temp = new ReviewDTO();
+            temp.setReviewDTO(r, r.getMember().getNickName(), r.getCulture().getMain_img());
+            this.reviews.add(temp);
+        }
+    }
+
     // initialization
     public void setCultureDTO(Culture c) {
         this.id = c.getId();

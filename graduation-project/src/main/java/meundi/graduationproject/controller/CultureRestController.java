@@ -76,6 +76,14 @@ public class CultureRestController {
         message.put("category", result);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
+    @GetMapping("/cultures/favorite")
+    public ResponseEntity<Map<String, Object>> cultureListByFavorite(@RequestParam String guName, Model model) {
+
+        Map<String, Object> message = new HashMap<>();
+        List<CultureDTO> result = cultureService.getFavoriteCultures(guName);
+        message.put("favorite", result);
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
 
     @ModelAttribute("categories")
     public Map<String, String> getCategories() {
