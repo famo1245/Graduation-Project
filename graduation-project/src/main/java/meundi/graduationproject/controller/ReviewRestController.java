@@ -6,6 +6,7 @@ import java.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
+import meundi.graduationproject.domain.DTO.ReviewCommentDTO;
 import meundi.graduationproject.domain.DTO.ReviewDTO;
 import meundi.graduationproject.domain.DTO.response.ReviewResponseDTO;
 import meundi.graduationproject.domain.Member;
@@ -88,24 +89,19 @@ public class ReviewRestController {
     }
 
     @PostMapping("/reviewDetail/{review_id}")
-    public ResponseEntity<Map<String, Object>> reviewAddComment(
-        @Validated @RequestBody ReviewComment reviewComment,
-        BindingResult bindingResult, @PathVariable Long review_id, HttpSession session)
-        throws BindException {
-
-        if (bindingResult.hasErrors()) {
-            throw new BindException(bindingResult);
-        }
+    public ResponseEntity<Map<String, Object>> reviewAddComment(@RequestBody ReviewComment reviewComment,
+                                                                @PathVariable Long review_id, @RequestParam Long userId) {
         Map<String, Object> message = new HashMap<>();
         // 리뷰 가져오기
         reviewComment.setReview(reviewService.findOne(review_id));
 
         // 댓글에 작성자 추가
-        Member member = memberService.findById((Long) session.getAttribute("userId"));
+        Member member = memberService.findById(userId);
         reviewComment.setMember(member);
         reviewService.insertReviewComment(reviewComment);
-
-        message.put("data", reviewComment);
+        ReviewCommentDTO result = new ReviewCommentDTO();
+        result.setReviewCommentDTO(reviewComment);
+        message.put("comment", result);
         return ResponseEntity.status(HttpStatus.OK).body(message);
 
     }

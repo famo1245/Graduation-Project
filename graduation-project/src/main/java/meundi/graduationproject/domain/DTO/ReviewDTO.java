@@ -29,6 +29,7 @@ public class ReviewDTO {
     private String nickname;
     private String main_img;
     private List<ReviewCommentDTO> reviewComments;
+    private Long culture_id;
 
     public void setReviewDTO(Review review, String nickname, String main_img) {
         this.id = review.getId();
@@ -49,5 +50,6 @@ public class ReviewDTO {
             temp.setReviewCommentDTO(c);
             reviewComments.add(temp);
         }
+        this.culture_id = review.getCulture().getId();
     }
 }

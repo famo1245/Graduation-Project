@@ -47,8 +47,10 @@ public class CultureRestController {
 
     @GetMapping("/cultures/detail/{culture_id}")
     @ResponseBody
-    public Culture apiCultureDetail(@PathVariable Long culture_id) {
-        return cultureService.findOne(culture_id);
+    public CultureDTO apiCultureDetail(@PathVariable Long culture_id) {
+        CultureDTO find = new CultureDTO();
+        find.setCultureDTO(cultureService.findOne(culture_id));
+        return find;
     }
 
     @GetMapping("/cultures/codename/{code_name}")

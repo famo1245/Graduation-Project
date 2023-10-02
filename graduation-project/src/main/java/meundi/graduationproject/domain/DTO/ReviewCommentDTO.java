@@ -19,5 +19,6 @@ public class ReviewCommentDTO {
         this.content = c.getContent();
         this.userId = c.getMember().getId();
         this.nickname = c.getMember().getNickName();
+        this.createdDate = c.getCreatedDate();
     }
 }
