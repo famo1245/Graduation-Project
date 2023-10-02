@@ -51,7 +51,7 @@ public class Culture {
     private String isFree;
 
     @OneToMany(mappedBy = "culture")
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<Review> reviews = new ArrayList<>();
 
     /* 2023-09-28~2023-09-28 이렇게 data가 들어오는데,

@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
+import meundi.graduationproject.domain.DTO.CultureDTO;
 import meundi.graduationproject.service.CultureService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,7 +66,14 @@ public class CultureRestController {
 
         Map<String, Object> message = new HashMap<>();
         message.put("categoryName", category);
-        message.put("category", cultureService.findByCodename(category));
+        List<Culture> temp = cultureService.findByCodename(category);
+        List<CultureDTO> result = new ArrayList<>();
+        for (Culture c : temp) {
+            CultureDTO dto = new CultureDTO();
+            dto.setCultureDTO(c);
+            result.add(dto);
+        }
+        message.put("category", result);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 

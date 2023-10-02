@@ -38,12 +38,12 @@ public class Member {
     private Integer tierScore;
 
     @OneToMany(mappedBy = "member")
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<Review> reviews = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "review_id")
-    @JsonBackReference
+//    @JsonBackReference
     private Review jimReview;
 
     //==create logic==//

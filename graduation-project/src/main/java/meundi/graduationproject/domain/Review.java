@@ -48,18 +48,18 @@ public class Review {
 
     /* 찜한 유저 */
     @OneToMany(mappedBy = "jimReview")
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<Member> jimMember;
 
     /*userId for 어떤유저가 작성했는지 알기 위해*/
     @ManyToOne
-    @JsonBackReference
+//    @JsonBackReference
     @JoinColumn(name = "member_id")
     private Member member;
 
     /*cultureId for 어떤 문화에 대한 리뷰인지*/
     @ManyToOne
-    @JsonBackReference
+//    @JsonBackReference
     @JoinColumn(name = "culture_id")
     private Culture culture;
 
@@ -67,7 +67,7 @@ public class Review {
     private String cultureTitle;
 
     @OneToMany(mappedBy = "review")
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<ReviewComment>  reviewComments;
 
 

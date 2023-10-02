@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.domain.Review;
+import meundi.graduationproject.domain.ReviewComment;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class ReviewDTO {
     private List<Long> jimMember;
     private String nickname;
     private String main_img;
+    private List<ReviewCommentDTO> reviewComments;
 
     public void setReviewDTO(Review review, String nickname, String main_img) {
         this.id = review.getId();
@@ -38,8 +40,14 @@ public class ReviewDTO {
         this.main_img = main_img;
         this.jimCount = review.getJim();
         this.jimMember = new ArrayList<>();
+        this.reviewComments = new ArrayList<>();
         for (Member m : review.getJimMember()) {
             jimMember.add(m.getId());
+        }
+        for (ReviewComment c : review.getReviewComments()) {
+            ReviewCommentDTO temp = new ReviewCommentDTO();
+            temp.setReviewCommentDTO(c);
+            reviewComments.add(temp);
         }
     }
 }

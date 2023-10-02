@@ -22,15 +22,15 @@ public class CultureController {
     private final CultureService cultureService;
 
     /*우선 api 읽어와서 화면에 찍음*/
-    @PostConstruct
-    public void getCulture() throws Exception {
-        if(cultureService.isEmpty()) {
-            cultureService.getCultureTotal();
-            return;
-        }
-
-        log.info("Already has Cultures");
-    }
+//    @PostConstruct
+//    public void getCulture() throws Exception {
+//        if(cultureService.isEmpty()) {
+//            cultureService.getCultureTotal();
+//            return;
+//        }
+//
+//        log.info("Already has Cultures");
+//    }
 
     /* 문화 10개씩 화면에 출력 */
     @GetMapping("/cultures/{page}")

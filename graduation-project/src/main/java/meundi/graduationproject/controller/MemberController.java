@@ -58,6 +58,7 @@ public class MemberController {
 //            model.addAttribute("age_range", form.getAge_range());
 //            return "members/createMemberForm";
 //        }
+        log.info("member={}", form);
         Member member = memberService.createMember(form);
         memberService.join(member);
 
