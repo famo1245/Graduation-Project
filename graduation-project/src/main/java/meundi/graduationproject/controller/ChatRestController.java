@@ -1,4 +1,4 @@
-package meundi.graduationproject.controller.rest;
+package meundi.graduationproject.controller;
 
 
 import java.util.HashMap;

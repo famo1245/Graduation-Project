@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
+import meundi.graduationproject.domain.DTO.CultureDTO;
 import meundi.graduationproject.repository.CultureRepository;
 import meundi.graduationproject.repository.CultureRepositoryUsingJPA;
 import org.springframework.beans.factory.annotation.Value;
@@ -116,6 +117,161 @@ public class CultureService {
             }
         }
         return String.valueOf(count);
+    }
+
+    public List<CultureDTO>  getFavoriteCultures(String guName) {
+        Map<String, Integer> gu = new HashMap<>();
+        gu.put("종로구",0);
+        gu.put("중구",1);
+        gu.put("용산구",2);
+        gu.put("성동구",3);
+        gu.put("광진구",4);
+        gu.put("동대문구",5);
+        gu.put("중랑구",6);
+        gu.put("성북구",7);
+        gu.put("강북구",8);
+        gu.put("도봉구",9);
+        gu.put("노원구",10);
+        gu.put("은평구",11);
+        gu.put("서대문구",12);
+        gu.put("마포구",13);
+        gu.put("양천구",14);
+        gu.put("강서구",15);
+        gu.put("구로구",16);
+        gu.put("금천구",17);
+        gu.put("영등포구",18);
+        gu.put("동작구",19);
+        gu.put("관악구",20);
+        gu.put("서초구",21);
+        gu.put("강남구",22);
+        gu.put("송파구",23);
+        gu.put("강동구",24);
+
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<ArrayList<Integer>>();
+        for (int i = 0; i < 25; i++){
+            graph.add(new ArrayList<Integer>());
+        }
+        graph.get(0).add(11);
+        graph.get(11).add(0);
+        graph.get(0).add(12);
+        graph.get(12).add(0);
+        graph.get(0).add(1);
+        graph.get(1).add(0);
+        graph.get(0).add(7);
+        graph.get(7).add(0);
+        graph.get(1).add(12);
+        graph.get(12).add(1);
+        graph.get(1).add(13);
+        graph.get(13).add(1);
+        graph.get(1).add(2);
+        graph.get(2).add(1);
+        graph.get(1).add(3);
+        graph.get(3).add(1);
+        graph.get(1).add(5);
+        graph.get(5).add(1);
+        graph.get(2).add(13);
+        graph.get(13).add(2);
+        graph.get(2).add(18);
+        graph.get(18).add(2);
+        graph.get(2).add(19);
+        graph.get(19).add(2);
+        graph.get(2).add(21);
+        graph.get(21).add(2);
+        graph.get(2).add(22);
+        graph.get(22).add(2);
+        graph.get(2).add(3);
+        graph.get(3).add(2);
+        graph.get(3).add(5);
+        graph.get(5).add(3);
+        graph.get(3).add(4);
+        graph.get(4).add(3);
+        graph.get(3).add(22);
+        graph.get(22).add(3);
+        graph.get(4).add(5);
+        graph.get(5).add(4);
+        graph.get(4).add(6);
+        graph.get(6).add(4);
+        graph.get(4).add(24);
+        graph.get(24).add(4);
+        graph.get(4).add(23);
+        graph.get(23).add(4);
+        graph.get(5).add(6);
+        graph.get(6).add(5);
+        graph.get(5).add(7);
+        graph.get(7).add(5);
+        graph.get(6).add(10);
+        graph.get(10).add(6);
+        graph.get(6).add(7);
+        graph.get(7).add(6);
+        graph.get(7).add(10);
+        graph.get(10).add(7);
+        graph.get(7).add(8);
+        graph.get(8).add(7);
+        graph.get(8).add(9);
+        graph.get(9).add(8);
+        graph.get(8).add(10);
+        graph.get(10).add(8);
+        graph.get(9).add(10);
+        graph.get(10).add(9);
+        graph.get(11).add(12);
+        graph.get(12).add(11);
+        graph.get(11).add(13);
+        graph.get(13).add(11);
+        graph.get(12).add(13);
+        graph.get(13).add(12);
+        graph.get(13).add(18);
+        graph.get(18).add(13);
+        graph.get(13).add(15);
+        graph.get(15).add(13);
+        graph.get(14).add(15);
+        graph.get(15).add(14);
+        graph.get(14).add(18);
+        graph.get(18).add(14);
+        graph.get(14).add(16);
+        graph.get(16).add(14);
+        graph.get(16).add(18);
+        graph.get(18).add(16);
+        graph.get(16).add(20);
+        graph.get(20).add(16);
+        graph.get(16).add(17);
+        graph.get(17).add(16);
+        graph.get(17).add(20);
+        graph.get(20).add(17);
+        graph.get(18).add(19);
+        graph.get(19).add(18);
+        graph.get(19).add(20);
+        graph.get(20).add(19);
+        graph.get(19).add(21);
+        graph.get(21).add(19);
+        graph.get(20).add(21);
+        graph.get(21).add(20);
+        graph.get(21).add(22);
+        graph.get(22).add(21);
+        graph.get(22).add(23);
+        graph.get(23).add(22);
+        graph.get(23).add(24);
+        graph.get(24).add(23);
+        ArrayList<String> guNames = new ArrayList<>();
+        /* 현재 주소 */
+        guNames.add(guName);
+        for (int i : graph.get(gu.get(guName))) {
+            Set<String> strings = gu.keySet();
+            for (String string : strings) {
+                if (gu.get(string).equals(i)){
+                    /* 주변구들*/
+                    guNames.add(string);
+                }
+            }
+        }
+        List<CultureDTO> cultureDTOS = new ArrayList<>();
+        for (String name : guNames) {
+            List<Culture> cultures = CRJ.findByGunameContaining(name);
+            for (Culture culture : cultures) {
+                cultureDTOS.add(new CultureDTO(culture));
+            }
+        }
+        return cultureDTOS;
+
     }
 
     /* 문화 전체 갯수 출력 */

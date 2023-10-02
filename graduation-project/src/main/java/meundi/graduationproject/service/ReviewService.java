@@ -21,7 +21,7 @@ public class ReviewService {
     private final ReviewRepositoryUsingJPA reviewRepositoryUsingJPA;
 
     public Review insertReview(Review review, Member member) {
-        member.plusTierScore(member.getTierScore()+30);
+        member.plusTierScore(30);
         reviewRepository.save(review);
         return review;
     }
@@ -60,6 +60,11 @@ public class ReviewService {
         reviewRepository.deleteComment(reviewComment);
     }
 
+    public void editReviewComment(Long id,String content){
+        ReviewComment comment = reviewRepository.findComment(id);
+        comment.updateReviewComment(content);
+    }
+
     public ReviewComment findReviewComment(Long id){
         return reviewRepository.findComment(id);
     }
@@ -74,9 +79,9 @@ public class ReviewService {
             }
         }
         /* 짐멤버 추가 및 찜 +1 */
-        member.plusTierScore(member.getTierScore()+10);
+        member.plusTierScore(10);
         jimMember.add(member);
-        one.setJimMember(jimMember);
+        one.getJimMember().add(member);
         one.setJim(one.getJim()+1);
         return;
     }

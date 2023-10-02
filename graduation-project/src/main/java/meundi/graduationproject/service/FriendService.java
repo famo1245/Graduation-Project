@@ -28,7 +28,7 @@ public class FriendService {
     private final EntityManager entityManager;
 
     public Friend InsertFriend(FriendInsertDTO friendInsertDTO,Member member) {
-        member.plusTierScore(member.getTierScore()+10);
+        member.plusTierScore(10);
         Friend friend = new Friend();
         friend.CreatNewFriend(friendInsertDTO.getTitle(),
             friendInsertDTO.getContents(), friendInsertDTO.getNum(),

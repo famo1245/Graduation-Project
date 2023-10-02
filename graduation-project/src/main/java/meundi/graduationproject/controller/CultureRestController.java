@@ -1,12 +1,15 @@
-package meundi.graduationproject.controller.rest;
+package meundi.graduationproject.controller;
 
 import java.util.*;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.domain.DTO.CultureDTO;
+import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.service.CultureService;
+import meundi.graduationproject.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class CultureRestController {
 
     private final CultureService cultureService;
+    private final MemberService memberService;
 
     /*우선 api 읽어와서 화면에 찍음*/
     @PostConstruct
@@ -45,12 +49,12 @@ public class CultureRestController {
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
-    //    @GetMapping("/cultures/detail/{culture_id}")
-    public ResponseEntity<Map<String, Object>> cultureDetail(@PathVariable Long culture_id) {
-        Culture findCulture = cultureService.findOne(culture_id);
-        Map<String, Object> message = new HashMap<>();
-        message.put("data", findCulture);
-        return ResponseEntity.status(HttpStatus.OK).body(message);
+    @GetMapping("/cultures/detail/{culture_id}")
+    @ResponseBody
+    public CultureDTO apiCultureDetail(@PathVariable Long culture_id) {
+        CultureDTO find = new CultureDTO();
+        find.setCultureDTO(cultureService.findOne(culture_id));
+        return find;
     }
 
     @GetMapping("/cultures/codename/{code_name}")
@@ -74,6 +78,17 @@ public class CultureRestController {
             result.add(dto);
         }
         message.put("category", result);
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+    @GetMapping("/cultures/favorite")
+    public ResponseEntity<Map<String, Object>> cultureListByFavorite(@RequestParam Long user_id) {
+        List<CultureDTO> result = new ArrayList<>();
+        Map<String, Object> message = new HashMap<>();
+        if (!user_id.equals(-1L)) {
+            Member byId = memberService.findById(user_id);
+            result = cultureService.getFavoriteCultures(byId.getDistrict());
+        }
+        message.put("favorite", result);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 

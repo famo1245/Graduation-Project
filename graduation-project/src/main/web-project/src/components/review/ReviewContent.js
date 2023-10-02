@@ -22,6 +22,7 @@ function ReviewContent(props) {
     // const res = await axios.post(
     //   ""
     // ); /* [POST] 사용자가 좋아요를 누름 -> DB 갱신 */
+    axios.get(`/api/review/jim/${props.id}?userId=${sessionStorage.getItem("userId")}`);
     setLike(!like);
     if (like === true) {
       setLikeCount(likeCount + 1);
@@ -57,6 +58,7 @@ function ReviewContent(props) {
           <div className={styles.content_box_inner} id={styles.culture_title}>
             {props.title}
           </div>
+          <div className={styles.content_box_inner}>문화 제목: {props.cultureTitle}</div>
           <div className={styles.content_box_inner} id={styles.user_name}>
             작성자: {props.nickname}
           </div>

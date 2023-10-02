@@ -39,6 +39,10 @@ public class FirebaseService {
         return firebaseRepositoryDao.getChatRoom(roomId);
     }
 
+    public List<ChatRoomDTO> getChatRoomAll() throws Exception {
+        return firebaseRepositoryDao.getChatRooms();
+    }
+
     public boolean joinRoom(ChatRoomDTO room, Member member) throws Exception {
         // 이미 참여한 사용자인지 확인
         if (room.getParticipants().containsKey(member.getId().toString())) {

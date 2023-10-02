@@ -37,7 +37,7 @@ function ReviewBoard(props) {
             </h1>
           </div>
           <div className={styles.searchbarcontainer}>
-            <ReviewSearch inputD={inputD.reviews} />
+            <ReviewSearch inputD={inputD.reviews} state={state} />
           </div>
         </div>
       </div>

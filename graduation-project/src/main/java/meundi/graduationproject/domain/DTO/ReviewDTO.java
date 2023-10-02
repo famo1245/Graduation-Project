@@ -24,11 +24,13 @@ public class ReviewDTO {
     private String reviewTitle;
     /*평점: 0~5*/
     private int reviewGrade;
+    private String cultureTitle;
     private int jimCount;
     private List<Long> jimMember;
     private String nickname;
     private String main_img;
     private List<ReviewCommentDTO> reviewComments;
+    private Long culture_id;
 
     public void setReviewDTO(Review review, String nickname, String main_img) {
         this.id = review.getId();
@@ -49,5 +51,7 @@ public class ReviewDTO {
             temp.setReviewCommentDTO(c);
             reviewComments.add(temp);
         }
+        this.culture_id = review.getCulture().getId();
+        this.cultureTitle = review.getCulture().getTitle();
     }
 }

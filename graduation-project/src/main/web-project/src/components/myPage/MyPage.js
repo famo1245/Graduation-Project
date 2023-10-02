@@ -31,8 +31,6 @@ function MyPage() {
       .catch((err) => setError(err));
   }, []);
 
-  console.log(data);
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error...</div>;
   if (!data) return null;
@@ -50,6 +48,30 @@ function MyPage() {
     }
   };
 
+  const getNeedTierScore = () => {
+    let upperScore = 0;
+    switch (data.tierScore) {
+      case "BRONZE":
+        upperScore = 300;
+        break;
+      case "SILVER":
+        upperScore = 500;
+        break;
+      case "GOLD":
+        upperScore = 1000;
+        break;
+      default:
+        upperScore = -1;
+        break;
+    }
+
+    if (upperScore === -1) {
+      return "최고 티어 문화 친구에요";
+    }
+
+    return `다음 티어까지 ${upperScore - data.tierScore} MC 필요`;
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.container_body}>
@@ -63,24 +85,15 @@ function MyPage() {
             <div className={styles.a}>
               <div className={styles.text}>닉네임 : {data.nickName}</div>
               <div className={styles.text}>
-                나이/성별 : {data.age_range}/
-                {data.gender === "male" ? "남" : "여"}
+                나이/성별 : {data.age_range}/{data.gender === "male" ? "남" : "여"}
               </div>
               <div className={styles.text}>관심지역 : {data.district}</div>
-              <div className={styles.text}>
-                문화친구 티어 : {data.tiers}(현재티어)
-              </div>
+              <div className={styles.text}>문화친구 티어 : {data.tiers}(현재티어)</div>
               <div className={styles.rank}>
-                <img src={`/img/챌린저.png`} />
+                <img src={`/img/${data.tiers}.png`} />
                 <div className={styles.rank_text}>
-                  <div className={styles.rank_text_field}>
-                    상위 99% 문화친구에요!
-                  </div>
-                  <div
-                    className={styles.rank_text_field}
-                    id={styles.rank_text_field}
-                  >
-                    다음 티어까지 100MC 필요
+                  <div className={styles.rank_text_field} id={styles.rank_text_field}>
+                    {getNeedTierScore()}
                   </div>
                 </div>
               </div>
@@ -89,9 +102,7 @@ function MyPage() {
             <div className={styles.b}>
               <div className={styles.body_text}>
                 <button
-                  className={
-                    buttonColor1 ? styles.classicButton : styles.activeButton
-                  }
+                  className={buttonColor1 ? styles.classicButton : styles.activeButton}
                   onClick={() => {
                     if (viewPoint === 1) {
                       setViewPoint(0);
@@ -111,9 +122,7 @@ function MyPage() {
               </div>
               <div className={styles.body_text}>
                 <button
-                  className={
-                    buttonColor2 ? styles.classicButton : styles.activeButton
-                  }
+                  className={buttonColor2 ? styles.classicButton : styles.activeButton}
                   onClick={() => {
                     if (viewPoint === 2) {
                       setViewPoint(0);
@@ -133,9 +142,7 @@ function MyPage() {
               </div>
               <div className={styles.body_text}>
                 <button
-                  className={
-                    buttonColor3 ? styles.classicButton : styles.activeButton
-                  }
+                  className={buttonColor3 ? styles.classicButton : styles.activeButton}
                   onClick={() => {
                     if (viewPoint === 3) {
                       setViewPoint(0);
@@ -154,11 +161,7 @@ function MyPage() {
                 </button>
               </div>
               <div id={styles.body_text}>
-                <Link
-                  className={styles.body_text_link}
-                  to={`/ModifyMyPage`}
-                  state={{ myinfo: data }}
-                >
+                <Link className={styles.body_text_link} to={`/ModifyMyPage`} state={{ myinfo: data }}>
                   내 정보 수정하기
                 </Link>
               </div>

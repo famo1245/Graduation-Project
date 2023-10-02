@@ -12,8 +12,6 @@ function CultureFriend() {
   const [error, setError] = useState(null);
   const { id } = useParams();
   const [checkId, setCheckId] = useState(false);
-  console.log(location.state);
-  console.log(id);
 
   useEffect(() => {
     if (id > 0) {
@@ -24,13 +22,7 @@ function CultureFriend() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `/api/home?userId=${
-          sessionStorage.getItem("userId") != null
-            ? parseInt(sessionStorage.getItem("userId"))
-            : -1
-        }`
-      )
+      .get(`/api/chatRooms`)
       .then((response) => {
         setInputD(response.data);
         setLoading(false);
@@ -48,15 +40,11 @@ function CultureFriend() {
         <div className={styles.container_body_inner}>
           <div>
             <h1>
-              문화친구 <hr style={{ border: 0 }} />
+              문화 친구 <hr style={{ border: 0 }} />
             </h1>
           </div>
           <div className={styles.searchbarcontainer}>
-            <Searchbar
-              inputD={inputD.recentCultures}
-              checkId={checkId}
-              state={location.state}
-            />
+            <Searchbar inputD={inputD.chatRooms} checkId={checkId} state={location.state} />
           </div>
         </div>
       </div>

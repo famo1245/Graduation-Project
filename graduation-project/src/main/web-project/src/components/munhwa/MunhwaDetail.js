@@ -16,7 +16,6 @@ function MunhwaDetail(props) {
   const [clickCultureFriend, setClickCultureFriend] = useState(false);
   const [visible, setVisible] = useState(styles.join_none);
   const [isLogin, setIsLogin] = useState(false);
-  console.log(state);
 
   const navigate = useNavigate();
 
@@ -30,7 +29,7 @@ function MunhwaDetail(props) {
   const onClickReviewBoard = () => {
     navigate(`/ReviewBoard`, {
       replace: false,
-      state: props,
+      state: data,
     });
   };
 
@@ -109,11 +108,7 @@ function MunhwaDetail(props) {
             </h1>
           </div>
           <div className={styles.body}>
-            <img
-              src={data.main_img}
-              className={styles.poster}
-              alt="문화 포스터 이미지"
-            />
+            <img src={data.main_img} className={styles.poster} alt="문화 포스터 이미지" />
             <div className={styles.inner_content}>
               <div className={styles.inner_title}>
                 [{data.codeName}] {data.title}
@@ -125,9 +120,7 @@ function MunhwaDetail(props) {
                 <div>위치 : {data.place}</div>
               </div>
               <div className={styles.info}>
-                <div>
-                  연령 : {data.use_trgt === null ? "누구나" : data.use_trgt}
-                </div>
+                <div>연령 : {data.use_trgt === null ? "누구나" : data.use_trgt}</div>
               </div>
               <div className={styles.info}>
                 <div>가격 : {data.isFree}</div>
@@ -139,15 +132,8 @@ function MunhwaDetail(props) {
                   </a>
                 </div>
                 {isLogin ? (
-                  <div
-                    className={styles.createPost}
-                    onClick={onClickPlusButton}
-                  >
-                    <img
-                      className={styles.zzim}
-                      src={`/img/copy-writing.png`}
-                      alt="리뷰작성"
-                    />
+                  <div className={styles.createPost} onClick={onClickPlusButton}>
+                    <img className={styles.zzim} src={`/img/copy-writing.png`} alt="리뷰작성" />
                     <span>리뷰작성하기</span>
                   </div>
                 ) : (
@@ -171,9 +157,7 @@ function MunhwaDetail(props) {
                     {" "}
                     <img
                       className={styles.zzim}
-                      src={
-                        clickCultureFriend ? `/img/check.png` : `/img/add.png`
-                      }
+                      src={clickCultureFriend ? `/img/check.png` : `/img/add.png`}
                       alt="문화친구"
                       onClick={toggleCultureFriend}
                     />
@@ -184,12 +168,7 @@ function MunhwaDetail(props) {
                 )}
                 <div className={visible}>
                   {" "}
-                  <img
-                    className={styles.zzim}
-                    src={`/img/login.png`}
-                    alt="참여하기"
-                    onClick={onClickCultureFriend}
-                  />
+                  <img className={styles.zzim} src={`/img/login.png`} alt="참여하기" onClick={onClickCultureFriend} />
                   <span>참여하기</span>
                 </div>
                 <div className={visible}>
@@ -212,18 +191,13 @@ function MunhwaDetail(props) {
                 <HiPlus />
               </div>
             </div>
-            {dummy.reviewBoard.map((review) => {
+            {data.reviews.map((review) => {
               return (
                 <div className={styles.box_review_preview_content}>
-                  <div
-                    className={styles.review_preview_title}
-                    onClick={onClickReviewDetail}
-                  >
-                    [{review.category}]{review.reviewTitle}
+                  <div className={styles.review_preview_title} onClick={onClickReviewDetail}>
+                    {review.reviewTitle}
                   </div>
-                  <div className={styles.review_preview_content}>
-                    {review.reviewContent}
-                  </div>
+                  <div className={styles.review_preview_content}>{review.reviewContents}</div>
                 </div>
               );
             })}

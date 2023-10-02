@@ -9,21 +9,18 @@ import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.service.CultureService;
 import meundi.graduationproject.service.FirebaseService;
 import meundi.graduationproject.service.MemberService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/api")
 public class FirebaseChatController {
 
     private final FirebaseService fbService;
@@ -31,33 +28,39 @@ public class FirebaseChatController {
     private final MemberService memberService;
 
     @GetMapping("/chats/create/{culture_id}")
-    public String createForm(@PathVariable Long culture_id, Model model, HttpSession session) {
-        if (session.getAttribute("userId") == null) {
-            log.info("로그인을 먼저 해주세요");
-            return "redirect:/members/login";
-        }
+    public String createForm(@PathVariable Long culture_id, Model model) {
         model.addAttribute("culture_id", culture_id);
         model.addAttribute("create_form", new ChatRoomDTO());
         return "friend/create-chatroom";
     }
 
     @PostMapping("/chats/create/{culture_id}")
-    public String createChatRoom(@PathVariable Long culture_id, ChatRoomDTO chatRoomDTO,
-                                 HttpSession session, RedirectAttributes redirectAttributes) {
+    @ResponseBody
+    public ResponseEntity<?> createChatRoom(@PathVariable Long culture_id, @RequestBody Map<String, Object> body,
+                                         @RequestParam Long userId) {
         Culture find = cultureService.findOne(culture_id);
-        Long userId = (Long) session.getAttribute("userId");
+        Member author = memberService.findById(userId);
+        ChatRoomDTO chatRoomDTO = new ChatRoomDTO();
         String roomId = UUID.randomUUID().toString();
+        log.info("body={}", body);
 
         chatRoomDTO.setCultureId(culture_id);
         chatRoomDTO.setCultureTitle(find.getTitle());
         chatRoomDTO.setCultureImg(find.getMain_img());
         chatRoomDTO.setAuthorId(userId);
+        chatRoomDTO.setAuthorNickname(author.getNickName());
         chatRoomDTO.setRoomId(roomId);
         chatRoomDTO.addParticipants(userId);
+        chatRoomDTO.setAvailableAgeRange((String) body.get("availableAgeRange"));
+        chatRoomDTO.setMax(Integer.parseInt((String) body.get("max")));
+        chatRoomDTO.setMeetDate((String) body.get("meetDate"));
+        chatRoomDTO.setGender((String) body.get("gender"));
+        chatRoomDTO.setTitle((String) body.get("friendContents"));
         fbService.createChatRoom(chatRoomDTO);
         log.info("user: {} created {} chat room", userId, roomId);
-        redirectAttributes.addAttribute("room_id", roomId);
-        return "redirect:/chats/{room_id}";
+        Map<String, Object> data = new HashMap<>();
+//        data.put("chatRoom", chatRoomDTO);
+        return ResponseEntity.ok().body(data);
     }
 
     @GetMapping("/chats/{roomId}")
@@ -97,6 +100,14 @@ public class FirebaseChatController {
         message.setCreated_at(new Date());
         fbService.sendMessage(message);
         return "redirect:/chats/{roomId}";
+    }
+
+    @GetMapping("/chatRooms")
+    public ResponseEntity<?> getChatRoomAll() throws Exception {
+        Map<String, Object> data = new HashMap<>();
+        List<ChatRoomDTO> chatRooms = fbService.getChatRoomAll();
+        data.put("chatRooms", chatRooms);
+        return ResponseEntity.ok().body(data);
     }
 
     // notify

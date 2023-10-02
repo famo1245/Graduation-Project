@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ReviewContent from "./ReviewContent";
 import ReactPaginate from "react-paginate";
 
-function ReviewSearch({ inputD }) {
+function ReviewSearch({ inputD, state }) {
   const [data, setData] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
   const [isLogin, setIsLogin] = useState(false);
@@ -15,6 +15,9 @@ function ReviewSearch({ inputD }) {
   // const [pageCount, setPageCount] = useState();
 
   useEffect(() => {
+    if (state) {
+      setData(state.title);
+    }
     if (sessionStorage.getItem("userId")) {
       setIsLogin(true);
     }
@@ -42,25 +45,31 @@ function ReviewSearch({ inputD }) {
     .filter((val) => {
       if (data == "") {
         return val;
-      } else if (val.title.toLowerCase().includes(data.toLowerCase())) {
+      } else if (
+        val.reviewTitle.toLowerCase().includes(data.toLowerCase()) ||
+        val.nickname.toLowerCase().includes(data.toLowerCase()) ||
+        val.cultureTitle.toLowerCase().includes(data.toLowerCase())
+      ) {
         return val;
       }
     })
     .slice(pagesVisited, pagesVisited + culturePerPage)
     .map((val, key) => {
-      console.log(val.jimCount);
       return (
         <ReviewContent
           key={key}
           poster={val.main_img}
           title={val.reviewTitle}
+          cultureTitle={val.cultureTitle}
           date={val.reviewDateTime}
           contents={val.reviewContents}
           nickname={val.nickname}
-          id={val.review_id}
+          id={val.id}
           grade={val.reviewGrade}
           likeCount={val.jimCount}
           likeId={val.jimMember}
+          comments={val.reviewComments}
+          cultureId={val.culture_id}
         />
       );
     });
