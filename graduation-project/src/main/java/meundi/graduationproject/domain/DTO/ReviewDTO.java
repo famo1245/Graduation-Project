@@ -24,6 +24,7 @@ public class ReviewDTO {
     private String reviewTitle;
     /*평점: 0~5*/
     private int reviewGrade;
+    private String cultureTitle;
     private int jimCount;
     private List<Long> jimMember;
     private String nickname;
@@ -51,5 +52,6 @@ public class ReviewDTO {
             reviewComments.add(temp);
         }
         this.culture_id = review.getCulture().getId();
+        this.cultureTitle = review.getCulture().getTitle();
     }
 }
