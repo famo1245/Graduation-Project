@@ -19,6 +19,28 @@ function MyPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const [dummyData, setDummyData] = useState(null);
+  const [isLogin, setIsLogin] = useState(false);
+  // const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoading(true);
+    const userId =
+      sessionStorage.getItem("userId") != null
+        ? parseInt(sessionStorage.getItem("userId"))
+        : -1;
+    setIsLogin(sessionStorage.getItem("userId") === null ? false : true);
+    axios
+      .get(`/api/home?userId=${userId}`)
+      .then((response) => {
+        setDummyData(response.data);
+        // setLoading(false);
+      })
+      .catch((err) => setError(err));
+  }, []);
+
+  // console.log(dummyData);
+
   useEffect(() => {
     setLoading(true);
     const userId = sessionStorage.getItem("userId");
@@ -38,11 +60,11 @@ function MyPage() {
   const switchComponent = () => {
     switch (viewPoint) {
       case 1:
-        return <MyPickCulture />;
+        return <MyPickCulture dummyData={dummyData} />;
       case 2:
-        return <MyReview />;
+        return <MyReview dummyData={dummyData} />;
       case 3:
-        return <MyCultureFriend />;
+        return <MyCultureFriend dummyData={dummyData} />;
       default:
         return <></>;
     }
@@ -85,14 +107,20 @@ function MyPage() {
             <div className={styles.a}>
               <div className={styles.text}>닉네임 : {data.nickName}</div>
               <div className={styles.text}>
-                나이/성별 : {data.age_range}/{data.gender === "male" ? "남" : "여"}
+                나이/성별 : {data.age_range}/
+                {data.gender === "male" ? "남" : "여"}
               </div>
               <div className={styles.text}>관심지역 : {data.district}</div>
-              <div className={styles.text}>문화친구 티어 : {data.tiers}(현재티어)</div>
+              <div className={styles.text}>
+                문화친구 티어 : {data.tiers}(현재티어)
+              </div>
               <div className={styles.rank}>
                 <img src={`/img/${data.tiers}.png`} />
                 <div className={styles.rank_text}>
-                  <div className={styles.rank_text_field} id={styles.rank_text_field}>
+                  <div
+                    className={styles.rank_text_field}
+                    id={styles.rank_text_field}
+                  >
                     {getNeedTierScore()}
                   </div>
                 </div>
@@ -102,7 +130,9 @@ function MyPage() {
             <div className={styles.b}>
               <div className={styles.body_text}>
                 <button
-                  className={buttonColor1 ? styles.classicButton : styles.activeButton}
+                  className={
+                    buttonColor1 ? styles.classicButton : styles.activeButton
+                  }
                   onClick={() => {
                     if (viewPoint === 1) {
                       setViewPoint(0);
@@ -122,7 +152,9 @@ function MyPage() {
               </div>
               <div className={styles.body_text}>
                 <button
-                  className={buttonColor2 ? styles.classicButton : styles.activeButton}
+                  className={
+                    buttonColor2 ? styles.classicButton : styles.activeButton
+                  }
                   onClick={() => {
                     if (viewPoint === 2) {
                       setViewPoint(0);
@@ -142,7 +174,9 @@ function MyPage() {
               </div>
               <div className={styles.body_text}>
                 <button
-                  className={buttonColor3 ? styles.classicButton : styles.activeButton}
+                  className={
+                    buttonColor3 ? styles.classicButton : styles.activeButton
+                  }
                   onClick={() => {
                     if (viewPoint === 3) {
                       setViewPoint(0);
@@ -161,7 +195,11 @@ function MyPage() {
                 </button>
               </div>
               <div id={styles.body_text}>
-                <Link className={styles.body_text_link} to={`/ModifyMyPage`} state={{ myinfo: data }}>
+                <Link
+                  className={styles.body_text_link}
+                  to={`/ModifyMyPage`}
+                  state={{ myinfo: data }}
+                >
                   내 정보 수정하기
                 </Link>
               </div>

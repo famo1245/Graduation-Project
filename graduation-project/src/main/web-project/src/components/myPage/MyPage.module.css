@@ -18,7 +18,7 @@
   width: 100%;
   height: 100%;
   max-width: 1600px;
-  max-height: 600px;
+  /* max-height: 600px; */
   display: flex;
   /* background-color: aqua; */
   flex-direction: column;
@@ -105,7 +105,7 @@
   font-size: 16pt;
   color: #707070;
   margin: 35px;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .body_text .classicButton {
@@ -154,12 +154,13 @@
   text-decoration: underline;
   font-size: 16pt;
   color: #707070;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .body_text_link {
   text-decoration: none;
   color: #707070;
+  cursor: pointer;
 }
 
 .body_text_link:hover {
@@ -170,5 +171,7 @@
   width: 100%;
   height: 100%;
   /* background-color: blue; */
-  margin-top: 50px;
+  margin-top: 80px;
+  margin-bottom: 300px;
+  display: flex;
 }

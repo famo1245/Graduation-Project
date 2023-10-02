@@ -68,7 +68,7 @@
 #text {
   margin-top: 210px;
   margin-left: 35px;
-  text-decoration: underline;
+  /* text-decoration: underline; */
   font-size: 16pt;
   color: #707070;
   cursor: pointer;
@@ -101,6 +101,22 @@
   transform: scale(1.5);
 }
 
+.text_link_none {
+  width: fit-content;
+  position: relative;
+  padding: 10px 10px;
+  border-radius: 15px;
+  font-family: "paybooc-Light", sans-serif;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.25s;
+  margin-left: 30px;
+  border: 3px solid dodgerblue;
+  color: #707070;
+  background-color: whitesmoke;
+}
+
 .b {
   width: 65%;
   height: 100%;
@@ -121,7 +137,8 @@
 }
 
 #nickname {
-  width: 30%;
+  position: relative;
+  width: 50%;
   height: 30px;
   display: flex;
   flex-direction: row;

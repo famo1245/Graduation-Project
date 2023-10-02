@@ -107,14 +107,20 @@ function ReviewDetail() {
                 </div>
               ) : (
                 <div>
-                  <span className={styles.comment_content_inner} onClick={handleClick(k)}>
+                  <span
+                    className={styles.comment_content_inner}
+                    onClick={handleClick(k)}
+                  >
                     {v.content}
                   </span>
                 </div>
               )
             ) : (
               <div>
-                <span className={styles.comment_content_inner} onClick={handleClick(k)}>
+                <span
+                  className={styles.comment_content_inner}
+                  onClick={handleClick(k)}
+                >
                   {v.content}
                 </span>
               </div>
@@ -128,7 +134,12 @@ function ReviewDetail() {
   const addList = (content) => {
     const body = { content: content };
     axios
-      .post(`/api/review/reviewDetail/${reviewInfo.id}?userId=${sessionStorage.getItem("userId")}`, body)
+      .post(
+        `/api/review/reviewDetail/${
+          reviewInfo.id
+        }?userId=${sessionStorage.getItem("userId")}`,
+        body
+      )
       .then((res) => {
         setState({
           list: [...state.list, res.data.comment],
@@ -153,10 +164,10 @@ function ReviewDetail() {
 
   useEffect(() => {
     setState({
-      list: [...reviewInfo.comments],
+      list: [...reviewInfo.reviewComments],
     });
-    setStar(parseInt(reviewInfo.grade));
-    if (reviewInfo.likeId.includes(sessionStorage.getItem("userId"))) {
+    setStar(parseInt(reviewInfo.reviewGrade));
+    if (reviewInfo.jimMember.includes(sessionStorage.getItem("userId"))) {
       setLike(false);
     }
     if (sessionStorage.getItem("userId")) {
@@ -168,9 +179,15 @@ function ReviewDetail() {
     // const res = await axios.post(
     //   ""
     // ); /* [POST] 사용자가 좋아요를 누름 -> DB 갱신 */
-    axios.get(`/api/review/jim/${reviewInfo.id}?userId=${sessionStorage.getItem("userId")}`);
+    axios.get(
+      `/api/review/jim/${reviewInfo.id}?userId=${sessionStorage.getItem(
+        "userId"
+      )}`
+    );
     setLike(!like);
   };
+
+  console.log(reviewInfo);
 
   return (
     <div className={styles.container}>
@@ -182,17 +199,24 @@ function ReviewDetail() {
               <hr style={{ border: 0 }} />
             </h1>
             <h1 className={styles.title2}>
-              {reviewInfo.title} <hr style={{ border: 0 }} />
+              {reviewInfo.reviewTitle} <hr style={{ border: 0 }} />
             </h1>
           </div>
           <div className={styles.body}>
-            <img src={reviewInfo.poster} className={styles.poster} alt="문화 포스터 이미지" />
+            <img
+              src={reviewInfo.main_img}
+              className={styles.poster}
+              alt="문화 포스터 이미지"
+            />
             <div className={styles.inner_content}>
               <div className={styles.info}>
                 <div>작성자 : {reviewInfo.nickname}</div>
               </div>
               <div className={styles.info}>
-                <div>작성 날짜 : {new Date(reviewInfo.date).toLocaleDateString()}</div>
+                <div>
+                  작성 날짜 :{" "}
+                  {new Date(reviewInfo.reviewDateTime).toLocaleDateString()}
+                </div>
               </div>
               <div className={styles.info}>
                 <div className={styles.star_ratings_fill}>
@@ -214,14 +238,19 @@ function ReviewDetail() {
                 ) : (
                   <div></div>
                 )}
-                <div className={styles.link_site} onClick={onClickCultureDetail}>
+                <div
+                  className={styles.link_site}
+                  onClick={onClickCultureDetail}
+                >
                   문화상세
                 </div>
               </div>
             </div>
           </div>
           <div className={styles.lower_content}>
-            <div className={styles.lower_content_text}>{reviewInfo.contents}</div>
+            <div className={styles.lower_content_text}>
+              {reviewInfo.reviewContents}
+            </div>
             <div className={styles.lower_content_img}>
               <img src="/img/눈의꽃 사진.png" alt="" />
               <img src="/img/사랑했나봐.png" alt="" />

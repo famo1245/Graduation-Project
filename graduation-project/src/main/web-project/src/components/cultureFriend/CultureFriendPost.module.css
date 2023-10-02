@@ -97,20 +97,14 @@
 }
 
 #age {
-  width: 15%;
+  width: 12%;
   height: 25px;
-  /* padding-left: 4px; */
-  /* box-shadow: 5px 5px 10px 3px #ddd; */
+  padding: 0 10px;
+  box-shadow: 5px 5px 10px 3px #ddd;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  /* justify-content: space-around; */
   align-items: center;
-}
-
-#age span {
-  box-shadow: none;
-  padding: 0 13px;
-  font-size: 20px;
 }
 
 #age select {
@@ -118,9 +112,10 @@
   border: none;
   height: 100%;
   color: #707070;
-  box-shadow: 5px 5px 10px 3px #ddd;
+  /* box-shadow: 5px 5px 10px 3px #ddd; */
   width: 100%;
-  padding-left: 3px;
+  /* padding: 0 10px; */
+  margin-left: 20px;
   cursor: pointer;
   font-weight: 600;
 }
@@ -130,7 +125,7 @@
 }
 
 #sex {
-  width: 15%;
+  width: 12%;
   height: 25px;
   padding: 0 10px;
   box-shadow: 5px 5px 10px 3px #ddd;
@@ -145,7 +140,7 @@
   height: 100%;
   color: #707070;
   width: 100%;
-  margin-left: 25px;
+  margin-left: 20px;
   cursor: pointer;
   font-weight: 600;
 }
@@ -154,13 +149,41 @@
   font-weight: 700;
 }
 
-#join_date_div {
-  position: relative;
-  width: 50%;
-  height: 23px;
+#numberPeople {
+  width: 12%;
+  height: 25px;
+  padding: 0 10px;
+  box-shadow: 5px 5px 10px 3px #ddd;
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+#numberPeople select {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  color: #707070;
+  width: 100%;
+  margin-left: 20px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#numberPeople select option {
+  font-weight: 700;
+}
+
+#join_date_div {
+  position: relative;
+  width: 12%;
+  height: 23px;
+  display: flex;
+  box-shadow: 5px 5px 10px 3px #ddd;
+  padding: 0 3px;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
 }
 
 #join_date_div .join_date {
@@ -169,9 +192,9 @@
   height: 100%;
   font-weight: 700;
   color: #707070;
-  width: 30%;
-  box-shadow: 5px 5px 10px 3px #ddd;
-  padding-left: 15px;
+  width: 100%;
+  cursor: pointer;
+  margin-left: 10px;
 }
 
 .footer_content {

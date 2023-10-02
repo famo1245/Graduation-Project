@@ -58,18 +58,18 @@ function ReviewSearch({ inputD, state }) {
       return (
         <ReviewContent
           key={key}
-          poster={val.main_img}
-          title={val.reviewTitle}
+          main_img={val.main_img}
+          reviewTitle={val.reviewTitle}
           cultureTitle={val.cultureTitle}
-          date={val.reviewDateTime}
-          contents={val.reviewContents}
+          reviewDateTime={val.reviewDateTime}
+          reviewContents={val.reviewContents}
           nickname={val.nickname}
           id={val.id}
-          grade={val.reviewGrade}
-          likeCount={val.jimCount}
-          likeId={val.jimMember}
-          comments={val.reviewComments}
-          cultureId={val.culture_id}
+          reviewGrade={val.reviewGrade}
+          jimCount={val.jimCount}
+          jimMember={val.jimMember}
+          reviewComments={val.reviewComments}
+          culture_id={val.culture_id}
         />
       );
     });
@@ -86,7 +86,12 @@ function ReviewSearch({ inputD, state }) {
         <div className={styles.for_the_review_button}>
           <div className={styles.inputWrapper}>
             <div className={styles.searchLogo}>검색 |</div>
-            <input type="text" value={data} onChange={handleChange} onKeyDown={handleOnKeyPress} />
+            <input
+              type="text"
+              value={data}
+              onChange={handleChange}
+              onKeyDown={handleOnKeyPress}
+            />
             <FaSearch id={styles.searchIcon} />
           </div>
           {isLogin ? (

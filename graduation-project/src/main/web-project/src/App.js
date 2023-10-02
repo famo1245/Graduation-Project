@@ -37,6 +37,9 @@ import CreatePostSelf from "./components/review/CreatePostSelf";
 import CultureFriend from "./components/cultureFriend/CultureFriend";
 import CultureFriendDetail from "./components/cultureFriend/CultureFriendDetail";
 import CultureFriendPost from "./components/cultureFriend/CultureFriendPost";
+import CultureRequest from "./components/cultureRequest/CultureRequest";
+import CultureRequestDetail from "./components/cultureRequest/CultureRequestDetail";
+import CultureRequestPost from "./components/cultureRequest/CultureRequestPost";
 
 function App(props) {
   return (
@@ -60,9 +63,19 @@ function App(props) {
           <Route path="/CreatePostSelf" element={<CreatePostSelf />} />
           <Route path="/ReviewDetail/:id" element={<ReviewDetail />} />
           <Route path="/CultureFriend" element={<CultureFriend />} />
-          <Route path="/CultureFriendDetail/:id" element={<CultureFriendDetail />} />
+          <Route
+            path="/CultureFriendDetail/:id"
+            element={<CultureFriendDetail />}
+          />
           <Route path="/CultureFriendPost" element={<CultureFriendPost />} />
           <Route path="/CultureFriend/:id" element={<CultureFriend />} />
+          <Route path="/CultureRequest" element={<CultureRequest />} />
+          <Route
+            path="/CultureRequestDetail/:id"
+            element={<CultureRequestDetail />}
+          />
+          <Route path="/CultureRequestPost" element={<CultureRequestPost />} />
+          <Route path="/CultureRequest/:id" element={<CultureRequest />} />
         </Routes>
       </Layout>
     </Router>

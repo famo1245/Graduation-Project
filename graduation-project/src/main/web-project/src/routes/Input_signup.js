@@ -9,7 +9,7 @@ function Input_signup(props) {
     ? JSON.parse(localStorage.getItem("userData"))
     : [];
   const [userData, setUserData] = useState(initialData);
-  const [duplicate, setDuplicate] = useState(false);
+  const [duplicate, setDuplicate] = useState(true);
 
   const onClick = () => {
     const form = document.querySelector("#profileForm");
@@ -61,14 +61,18 @@ function Input_signup(props) {
               <div className={styles.text}>관심지역 |</div>
               <div className={styles.text}>관심문화 |</div>
               <div id={styles.text}>
-                <button
-                  className={styles.text_link}
-                  type="button"
-                  form="profileForm"
-                  onClick={onClick}
-                >
-                  회원가입 완료하기
-                </button>
+                {duplicate ? (
+                  <div className={styles.text_link_none}>회원가입 완료하기</div>
+                ) : (
+                  <button
+                    className={styles.text_link}
+                    type="button"
+                    form="profileForm"
+                    onClick={onClick}
+                  >
+                    회원가입 완료하기
+                  </button>
+                )}
               </div>
             </div>
             <div className={styles.b}>
@@ -88,6 +92,13 @@ function Input_signup(props) {
                   >
                     중복확인
                   </div>
+                </div>
+                <div
+                  className={
+                    duplicate ? styles.Duplicate_alert : styles.none_alert
+                  }
+                >
+                  중복된 닉네임입니다.
                 </div>
                 <div className={styles.text} id={styles.age}>
                   <input

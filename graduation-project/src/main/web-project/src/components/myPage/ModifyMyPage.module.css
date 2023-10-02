@@ -17,13 +17,14 @@
   width: 100%;
   height: 100%;
   max-width: 1600px;
-  max-height: 600px;
+  /* max-height: 600px; */
   display: flex;
   /* background-color: aqua; */
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
   margin-top: 30px;
+  margin-bottom: 300px;
 }
 
 /* .container_body_inner div {
@@ -53,6 +54,7 @@
   height: 100%;
   width: 18%;
   padding: 20px 0;
+  margin-bottom: 20px;
 }
 
 .a .text {
@@ -67,7 +69,7 @@
   text-decoration: underline;
   font-size: 16pt;
   color: #707070;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .text_link {

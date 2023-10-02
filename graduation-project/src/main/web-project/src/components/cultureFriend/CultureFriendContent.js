@@ -9,7 +9,7 @@ function CultureFriendContent(props) {
   const navigate = useNavigate();
 
   const onClickCultureFriendItem = () => {
-    navigate(`/CultureFriendDetail/${props.id}`, {
+    navigate(`/CultureFriendDetail/${props.roomId}`, {
       replace: false,
       state: props,
     });
@@ -25,7 +25,7 @@ function CultureFriendContent(props) {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.content_img}>
-          <img src={props.poster} />
+          <img src={props.cultureImg} />
         </div>
         <div className={styles.content_box}>
           <div className={styles.content_box_inner} id={styles.culture_title}>
@@ -35,13 +35,13 @@ function CultureFriendContent(props) {
             제목: {props.title}
           </div>
           <div className={styles.content_box_inner} id={styles.date}>
-            나이대: {props.ageRange}
+            나이대: {props.availableAgeRange}
           </div>
           <div className={styles.content_box_inner} id={styles.user_content}>
             성별: {props.gender === "male" ? "남" : "여"}
           </div>
           <div className={styles.content_box_inner} id={styles.user_content}>
-            관람 일자: {new Date(props.date).toLocaleDateString()}
+            관람 일자: {new Date(props.meetDate).toLocaleDateString()}
           </div>
           <div
             className={isLogin ? styles.content_box_inner : styles.none_content}

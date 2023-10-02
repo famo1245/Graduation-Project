@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Home.module.css";
 import PropTypes from "prop-types";
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
@@ -18,12 +18,14 @@ function Home(props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isLogin, setIsLogin] = useState(false);
-  const [star, setStar] = useState(3);
-  const [nextStar, setNextStar] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
-    const userId = sessionStorage.getItem("userId") != null ? parseInt(sessionStorage.getItem("userId")) : -1;
+    const userId =
+      sessionStorage.getItem("userId") != null
+        ? parseInt(sessionStorage.getItem("userId"))
+        : -1;
     setIsLogin(sessionStorage.getItem("userId") === null ? false : true);
     axios
       .get(`/api/home?userId=${userId}`)
@@ -33,6 +35,8 @@ function Home(props) {
       })
       .catch((err) => setError(err));
   }, []);
+
+  console.log(data);
 
   const starCount = (count) => {
     let arr = [];
@@ -92,7 +96,9 @@ function Home(props) {
         </div>
       </div>
       <div>
-        <h4>{isLogin ? data.category + " 문화 생활" : "곧 끝나는 문화 생활"}</h4>
+        <h4>
+          {isLogin ? data.category + " 문화 생활" : "곧 끝나는 문화 생활"}
+        </h4>
       </div>
       <div className={styles.home_upper}>
         <div className={styles.home_upper_content}>
@@ -141,9 +147,16 @@ function Home(props) {
               return (
                 <div className={styles.content_both_inner}>
                   <div>
-                    <Link>
-                      <img className={styles.review_img} src={review.main_img} />
-                    </Link>
+                    <img
+                      className={styles.review_img}
+                      src={review.main_img}
+                      onClick={() => {
+                        navigate(`/reviewDetail/${review.id}`, {
+                          replace: false,
+                          state: review,
+                        });
+                      }}
+                    />
                   </div>
                   <div className={styles.inner_content}>
                     <span className={styles.inner_content_title}>
@@ -153,15 +166,24 @@ function Home(props) {
                     <div className={styles.container_star_ratings}>
                       <span className={styles.star_ratings_title}>평점:</span>
                       <div className={styles.star_ratings}>
-                        <div className={styles.star_ratings_fill}>{starCount(parseInt(review.reviewGrade))}</div>
-                        <div className={styles.star_ratings_base}>{starBase()}</div>
+                        <div className={styles.star_ratings_fill}>
+                          {starCount(parseInt(review.reviewGrade))}
+                        </div>
+                        <div className={styles.star_ratings_base}>
+                          {starBase()}
+                        </div>
                       </div>
                     </div>
                     <span>작성자: {review.nickname}</span>
                     <br />
-                    <span>작성일자: {new Date(review.reviewDateTime).toLocaleDateString()}</span>
+                    <span>
+                      작성일자:{" "}
+                      {new Date(review.reviewDateTime).toLocaleDateString()}
+                    </span>
                     <br />
-                    <span className={styles.user_short_text}>{review.reviewContents}</span>
+                    <span className={styles.user_short_text}>
+                      {review.reviewContents}
+                    </span>
                   </div>
                 </div>
               );
@@ -282,7 +304,10 @@ function Home(props) {
             <div className={styles.content_both_inner}>
               <div>
                 <Link>
-                  <img className={styles.review_img} src={`/img/사랑했나봐.png`} />
+                  <img
+                    className={styles.review_img}
+                    src={`/img/사랑했나봐.png`}
+                  />
                 </Link>
               </div>
               <div className={styles.inner_content}>
@@ -305,7 +330,10 @@ function Home(props) {
             <div className={styles.content_both_inner}>
               <div>
                 <Link>
-                  <img className={styles.review_img} src={`/img/사랑했나봐.png`} />
+                  <img
+                    className={styles.review_img}
+                    src={`/img/사랑했나봐.png`}
+                  />
                 </Link>
               </div>
               <div className={styles.inner_content}>
@@ -328,7 +356,10 @@ function Home(props) {
             <div className={styles.content_both_inner}>
               <div>
                 <Link>
-                  <img className={styles.review_img} src={`/img/사랑했나봐.png`} />
+                  <img
+                    className={styles.review_img}
+                    src={`/img/사랑했나봐.png`}
+                  />
                 </Link>
               </div>
               <div className={styles.inner_content}>
@@ -351,7 +382,10 @@ function Home(props) {
             <div className={styles.content_both_inner}>
               <div>
                 <Link>
-                  <img className={styles.review_img} src={`/img/사랑했나봐.png`} />
+                  <img
+                    className={styles.review_img}
+                    src={`/img/사랑했나봐.png`}
+                  />
                 </Link>
               </div>
               <div className={styles.inner_content}>

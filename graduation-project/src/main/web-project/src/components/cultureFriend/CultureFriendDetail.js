@@ -3,7 +3,7 @@ import styles from "./CultureFriendDetail.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import CultureDetailComment from "./CultureDetailComment";
 
-function CultureFriendDetail() {
+function CultureFriendDetail(props) {
   const location = useLocation();
   const reviewInfo = location.state;
   console.log(reviewInfo);
@@ -46,6 +46,7 @@ function CultureFriendDetail() {
   });
 
   console.log(state);
+  console.log(reviewInfo);
 
   let renderList = state.list.map((v, k) => {
     return (
@@ -97,7 +98,7 @@ function CultureFriendDetail() {
               <hr style={{ border: 0 }} />
             </h1>
             <h1 className={styles.title2}>
-              [{reviewInfo.codeName}]{reviewInfo.title}
+              {reviewInfo.cultureTitle}
               <hr style={{ border: 0 }} />
             </h1>
           </div>
@@ -105,23 +106,23 @@ function CultureFriendDetail() {
             <div className={styles.body_left}>
               <div className={styles.body_left_top}>
                 <div className={styles.left_top_img}>
-                  <img src="/img/사랑했나봐.png" alt="" />
+                  <img src={reviewInfo.cultureImg} alt="" />
                 </div>
                 <div className={styles.left_top_content}>
                   <div className={styles.inner_title}>
-                    [{reviewInfo.codeName}] {reviewInfo.title}
+                    {reviewInfo.cultureTitle}
                   </div>
                   <div id={styles.inner_title}>
-                    <div>사용자가 작성한 문화친구 제목 들어올 위치</div>
+                    <div>{reviewInfo.title}</div>
                   </div>
                   <div className={styles.info}>
-                    <div>나이대 | 20대~20대</div>
+                    <div>나이대 | {reviewInfo.availableAgeRange}</div>
                   </div>
                   <div className={styles.info}>
-                    <div>성별 | 상관없음</div>
+                    <div>성별 | {reviewInfo.gender}</div>
                   </div>
                   <div className={styles.info}>
-                    <div>날짜 | 11월 17일</div>
+                    <div>날짜 | {reviewInfo.meetDate}</div>
                   </div>
                 </div>
               </div>

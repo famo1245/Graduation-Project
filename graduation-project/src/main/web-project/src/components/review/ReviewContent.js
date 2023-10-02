@@ -22,7 +22,9 @@ function ReviewContent(props) {
     // const res = await axios.post(
     //   ""
     // ); /* [POST] 사용자가 좋아요를 누름 -> DB 갱신 */
-    axios.get(`/api/review/jim/${props.id}?userId=${sessionStorage.getItem("userId")}`);
+    axios.get(
+      `/api/review/jim/${props.id}?userId=${sessionStorage.getItem("userId")}`
+    );
     setLike(!like);
     if (like === true) {
       setLikeCount(likeCount + 1);
@@ -39,8 +41,8 @@ function ReviewContent(props) {
   };
 
   useEffect(() => {
-    setLikeCount(props.likeCount);
-    if (props.likeId.includes(sessionStorage.getItem("userId"))) {
+    setLikeCount(props.jimCount);
+    if (props.jimMember.includes(sessionStorage.getItem("userId"))) {
       setLike(false);
     }
     if (sessionStorage.getItem("userId")) {
@@ -52,27 +54,32 @@ function ReviewContent(props) {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.content_img}>
-          <img src={props.poster} onClick={onClickReviewItem} />
+          <img src={props.main_img} onClick={onClickReviewItem} />
         </div>
         <div className={styles.content_box}>
           <div className={styles.content_box_inner} id={styles.culture_title}>
-            {props.title}
+            {props.reviewTitle}
           </div>
-          <div className={styles.content_box_inner}>문화 제목: {props.cultureTitle}</div>
+          <div className={styles.content_box_inner}>
+            문화 제목: {props.cultureTitle}
+          </div>
           <div className={styles.content_box_inner} id={styles.user_name}>
             작성자: {props.nickname}
           </div>
           <div className={styles.content_box_inner} id={styles.date}>
-            작성 날짜: {new Date(props.date).toLocaleDateString()}
+            작성 날짜: {new Date(props.reviewDateTime).toLocaleDateString()}
           </div>
           <div className={styles.content_box_inner} id={styles.user_content}>
-            내용: {props.contents}
+            내용: {props.reviewContents}
           </div>
           <div
             className={isLogin ? styles.content_box_inner : styles.none_content}
             id={isLogin ? styles.like : styles.none_content}
           >
-            <img src={like ? "img/heart.png" : "img/heart (2).png"} onClick={toggleLike} />
+            <img
+              src={like ? "img/heart.png" : "img/heart (2).png"}
+              onClick={toggleLike}
+            />
             <span>{likeCount}</span>
           </div>
         </div>

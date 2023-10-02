@@ -14,7 +14,7 @@ function CultureFriendSearchbar({ inputD, checkId, state }) {
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
 
-  const culturePerPage = 5;
+  const culturePerPage = 6;
   let pagesVisited = pageNumber * culturePerPage;
   let pageCount = Math.ceil(inputD.length / culturePerPage);
 
@@ -58,12 +58,12 @@ function CultureFriendSearchbar({ inputD, checkId, state }) {
       return (
         <CultureFriendContent
           key={key}
-          poster={val.cultureImg}
+          cultureImg={val.cultureImg}
           title={val.title}
-          date={val.meetDate}
-          id={val.roomId}
+          meetDate={val.meetDate}
+          roomId={val.roomId}
           cultureTitle={val.cultureTitle}
-          ageRange={val.availableAgeRange}
+          availableAgeRange={val.availableAgeRange}
           gender={val.gender}
         />
       );
@@ -74,7 +74,12 @@ function CultureFriendSearchbar({ inputD, checkId, state }) {
       <div className={styles.wrapper}>
         <div className={styles.inputWrapper}>
           <div className={styles.searchLogo}>검색 |</div>
-          <input type="text" value={data} onChange={handleChange} onKeyDown={handleOnKeyPress} />
+          <input
+            type="text"
+            value={data}
+            onChange={handleChange}
+            onKeyDown={handleOnKeyPress}
+          />
           <FaSearch id={styles.searchIcon} />
         </div>
         <div className={styles.line}></div>

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./CultureFriend.module.css";
 import axios from "axios";
 import { Link, useLocation, useParams } from "react-router-dom";
-import Searchbar from "./CultureFriendSearchbar";
+import CultureFriendSearchbar from "./CultureFriendSearchbar";
 
 function CultureFriend() {
   let location = useLocation();
@@ -44,7 +44,11 @@ function CultureFriend() {
             </h1>
           </div>
           <div className={styles.searchbarcontainer}>
-            <Searchbar inputD={inputD.chatRooms} checkId={checkId} state={location.state} />
+            <CultureFriendSearchbar
+              inputD={inputD.chatRooms}
+              checkId={checkId}
+              state={location.state}
+            />
           </div>
         </div>
       </div>

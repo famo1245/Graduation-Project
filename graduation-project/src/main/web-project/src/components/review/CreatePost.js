@@ -1,7 +1,13 @@
 import React, { useRef } from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useLocation, useParams, Link, useNavigate } from "react-router-dom";
+import {
+  useLocation,
+  useParams,
+  Link,
+  useNavigate,
+  redirect,
+} from "react-router-dom";
 import styles from "./CreatePost.module.css";
 
 // async function productFetch(id){
@@ -120,7 +126,11 @@ function CreatePost() {
     contents.userId = sessionStorage.getItem("userId");
     contents.reviewContents = reviewContents.value;
     axios.post(`api/review/reviewWrite`, contents);
-    navigate(`/reviewBoard`);
+    navigate(`/reviewBoard`, {
+      replace: true,
+    });
+    // window.location.href = "http://localhost:3000/reviewBoard";
+    // <redirect to="/reviewBoard" />;
   };
 
   console.log(imageURL1);
@@ -143,20 +153,41 @@ function CreatePost() {
           <div className={styles.body}>
             <form id="reviewForm" method="post">
               <div>
-                문화제목 : <input type="hidden" name="cultureTitle" value={state.title} />[{state.codeName}]
-                {state.title}
+                문화제목 :{" "}
+                <input type="hidden" name="cultureTitle" value={state.title} />[
+                {state.codeName}]{state.title}
               </div>
               <div>
                 제목 : <input type="text" name="reviewTitle" />
               </div>
               <div>
                 <span>추천도 :</span>
-                <img src={like1 ? "img/star (1).png" : "img/star.png"} onClick={onClick1} />
-                <img src={like2 ? "img/star (1).png" : "img/star.png"} onClick={onClick2} />
-                <img src={like3 ? "img/star (1).png" : "img/star.png"} onClick={onClick3} />
-                <img src={like4 ? "img/star (1).png" : "img/star.png"} onClick={onClick4} />
-                <img src={like5 ? "img/star (1).png" : "img/star.png"} onClick={onClick5} />
-                <input className={styles.likeCount} type="text" name="reviewGrade" value={likeCount} />
+                <img
+                  src={like1 ? "img/star (1).png" : "img/star.png"}
+                  onClick={onClick1}
+                />
+                <img
+                  src={like2 ? "img/star (1).png" : "img/star.png"}
+                  onClick={onClick2}
+                />
+                <img
+                  src={like3 ? "img/star (1).png" : "img/star.png"}
+                  onClick={onClick3}
+                />
+                <img
+                  src={like4 ? "img/star (1).png" : "img/star.png"}
+                  onClick={onClick4}
+                />
+                <img
+                  src={like5 ? "img/star (1).png" : "img/star.png"}
+                  onClick={onClick5}
+                />
+                <input
+                  className={styles.likeCount}
+                  type="text"
+                  name="reviewGrade"
+                  value={likeCount}
+                />
               </div>
             </form>
           </div>
@@ -219,7 +250,11 @@ function CreatePost() {
             </form>
           </div>
           <div className={styles.post_button}>
-            <button className={styles.text_link} type="button" onClick={onGoReviewBoard}>
+            <button
+              className={styles.text_link}
+              type="button"
+              onClick={onGoReviewBoard}
+            >
               작성완료
             </button>
           </div>

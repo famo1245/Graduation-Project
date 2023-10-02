@@ -9,7 +9,7 @@
 }
 
 .home div h4 {
-  margin-left: 240px;
+  margin-left: 230px;
   font-size: 20px;
   color: grey;
   font-weight: 600;
@@ -181,6 +181,7 @@ Button {
   box-shadow: none;
   text-shadow: none;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .inner_content {
