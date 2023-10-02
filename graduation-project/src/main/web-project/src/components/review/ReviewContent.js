@@ -22,6 +22,7 @@ function ReviewContent(props) {
     // const res = await axios.post(
     //   ""
     // ); /* [POST] 사용자가 좋아요를 누름 -> DB 갱신 */
+    axios.get(`/api/review/jim/${props.id}?userId=${sessionStorage.getItem("userId")}`);
     setLike(!like);
     if (like === true) {
       setLikeCount(likeCount + 1);

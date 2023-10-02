@@ -51,6 +51,8 @@ function ReviewDetail() {
     const newList = [...state.list];
     newList[k].content = state.value;
 
+    const data = { content: state.value };
+    axios.post(`/api/review/reviewComment/${newList[k].id}/edit`, data);
     setState({
       ...state,
       update: null,
@@ -60,11 +62,16 @@ function ReviewDetail() {
   };
 
   const deleteList = (k) => {
+    let comment;
     const newList = state.list.filter((v, i) => {
       if (i !== k) {
         return v;
+      } else {
+        comment = v;
       }
     });
+
+    axios.get(`/api/review/reviewComment/${comment.id}/delete`);
     updateList(newList);
   };
 

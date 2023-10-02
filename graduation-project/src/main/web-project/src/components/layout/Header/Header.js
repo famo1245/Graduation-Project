@@ -32,18 +32,10 @@ function Header(props) {
             문화 인 서울
           </Link>
           <div className={styles.login_route}>
-            <Link
-              to={urlLeft[isLogin]}
-              className={styles.link}
-              id={styles.login}
-            >
+            <Link to={urlLeft[isLogin]} className={styles.link} id={styles.login}>
               {nameLeft[isLogin]}
             </Link>
-            <Link
-              to={urlRight[isLogin]}
-              className={styles.link}
-              id={styles.signup}
-            >
+            <Link to={urlRight[isLogin]} className={styles.link} id={styles.signup}>
               {nameRight[isLogin]}
             </Link>
           </div>
@@ -74,10 +66,7 @@ function Header(props) {
                 </div>
                 <div>
                   <li>
-                    <Link
-                      to={`/culture/문화교양`}
-                      className={styles.depth2_link}
-                    >
+                    <Link to={`/culture/문화교양`} className={styles.depth2_link}>
                       문화교양/강좌
                     </Link>
                   </li>
@@ -123,34 +112,22 @@ function Header(props) {
                 </div>
                 <div>
                   <li>
-                    <Link
-                      to={`/culture/축제-문화`}
-                      className={styles.depth2_link}
-                    >
+                    <Link to={`/culture/축제-문화`} className={styles.depth2_link}>
                       축제-문화/예술
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      to={`/culture/축제-전통`}
-                      className={styles.depth2_link}
-                    >
+                    <Link to={`/culture/축제-전통`} className={styles.depth2_link}>
                       축제-전통/역사
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      to={`/culture/축제-시민화합`}
-                      className={styles.depth2_link}
-                    >
+                    <Link to={`/culture/축제-시민화합`} className={styles.depth2_link}>
                       축제-시민화합
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      to={`/culture/축제-기타`}
-                      className={styles.depth2_link}
-                    >
+                    <Link to={`/culture/축제-기타`} className={styles.depth2_link}>
                       축제-기타
                     </Link>
                   </li>
@@ -193,7 +170,7 @@ function Header(props) {
         </ul>
         <ul className={styles.header_nav2}>
           <li>
-            <Link to={`/ReviewDetail`} className={styles.a}>
+            <Link to={`/culture/favorite`} className={styles.a}>
               관심문화
             </Link>
           </li>

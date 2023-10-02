@@ -8,10 +8,7 @@ import meundi.graduationproject.domain.DTO.ChatRoomDTO;
 import meundi.graduationproject.domain.DTO.MessagesDTO;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 @Repository
@@ -51,6 +48,8 @@ public class FirebaseRepositoryDao {
         for (QueryDocumentSnapshot document : documents) {
             rooms.add(document.toObject(ChatRoomDTO.class));
         }
+
+        Collections.reverse(rooms);
         return rooms;
     }
 

@@ -81,7 +81,7 @@ public class ReviewService {
         /* 짐멤버 추가 및 찜 +1 */
         member.plusTierScore(member.getTierScore()+10);
         jimMember.add(member);
-        one.setJimMember(jimMember);
+        one.getJimMember().add(member);
         one.setJim(one.getJim()+1);
         return;
     }

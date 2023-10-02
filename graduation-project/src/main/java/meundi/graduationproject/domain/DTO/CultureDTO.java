@@ -6,6 +6,7 @@ import meundi.graduationproject.domain.Culture;
 import meundi.graduationproject.domain.Review;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -79,5 +80,11 @@ public class CultureDTO {
             temp.setReviewDTO(r, r.getMember().getNickName(), r.getCulture().getMain_img());
             this.reviews.add(temp);
         }
+
+        if (reviews.size() > 5) {
+            int lastIndex = reviews.size();
+            reviews.subList(lastIndex - 5, lastIndex);
+        }
+        Collections.reverse(reviews);
     }
 }

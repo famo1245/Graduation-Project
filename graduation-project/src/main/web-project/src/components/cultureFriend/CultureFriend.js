@@ -24,13 +24,7 @@ function CultureFriend() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(
-        `/api/home?userId=${
-          sessionStorage.getItem("userId") != null
-            ? parseInt(sessionStorage.getItem("userId"))
-            : -1
-        }`
-      )
+      .get(`/api/`)
       .then((response) => {
         setInputD(response.data);
         setLoading(false);
@@ -52,11 +46,7 @@ function CultureFriend() {
             </h1>
           </div>
           <div className={styles.searchbarcontainer}>
-            <Searchbar
-              inputD={inputD.recentCultures}
-              checkId={checkId}
-              state={location.state}
-            />
+            <Searchbar inputD={inputD.recentCultures} checkId={checkId} state={location.state} />
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./CultureFriendPost.module.css";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function CultureFriendPost() {
   const { id } = useParams();
@@ -8,16 +9,19 @@ function CultureFriendPost() {
   //   console.log(location);
   const navigate = useNavigate();
 
-  const onGoReviewBoard = () => {
-    // const form = document.querySelector("#");
-    // console.log(form);
-    // const formData = new FormData(form);
-    // const contents = {};
-    // formData.forEach((value, key) => {
-    //   contents[key] = value;
-    // });
-    // axios.post("", contents);
-    navigate(`/CultureFriend`);
+  const onGoReviewBoard = (e) => {
+    e.preventDefault();
+    const form = document.querySelector("#cultureFriendForm");
+    const formData = new FormData(form);
+    const contents = {};
+    formData.forEach((value, key) => {
+      contents[key] = value;
+    });
+    const friendContent = document.querySelector("#cultureFriendContent");
+    contents.friendContents = friendContent.value;
+    axios
+      .post(`/api//chats/create/${state.id}?userId=${sessionStorage.getItem("userId")}`, { chatRoomDTO: contents })
+      .then((res) => navigate(`/CultureFriend`));
   };
 
   return (
@@ -44,56 +48,37 @@ function CultureFriendPost() {
             <div className={styles.inner_content2}>
               <form name="profile" target="" encType="" id="cultureFriendForm">
                 <div className={styles.text} id={styles.age}>
-                  <select name="age">
-                    <option value="10">10대</option>
-                    <option value="20">20대</option>
-                    <option value="30">30대</option>
-                    <option value="40">40대</option>
-                    <option value="50">50대</option>
-                    <option value="60">60대</option>
-                    <option value="70">70대</option>
-                    <option value="80">80대</option>
-                    <option value="90">90대</option>
-                    <option value="100">100대</option>
-                  </select>
-                  <span>~</span>
-                  <select name="age2">
-                    <option value="10">10대</option>
-                    <option value="20">20대</option>
-                    <option value="30">30대</option>
-                    <option value="40">40대</option>
-                    <option value="50">50대</option>
-                    <option value="60">60대</option>
-                    <option value="70">70대</option>
-                    <option value="80">80대</option>
-                    <option value="90">90대</option>
-                    <option value="100">100대</option>
+                  <select name="availableAgeRange">
+                    <option value="10~19">10대</option>
+                    <option value="20~29">20대</option>
+                    <option value="30~39">30대</option>
+                    <option value="40~49">40대</option>
+                    <option value="50~59">50대</option>
+                    <option value="60~69">60대</option>
+                    <option value="70~79">70대</option>
+                    <option value="80~89">80대</option>
+                    <option value="90~99">90대</option>
+                    <option value="100~109">100대</option>
                   </select>
                 </div>
                 <div className={styles.text} id={styles.sex}>
-                  <select name="sex">
+                  <select name="gender">
                     <option value="상관없음">상관없음</option>
-                    <option value="남">남</option>
-                    <option value="여">여</option>
+                    <option value="male">남</option>
+                    <option value="female">여</option>
                   </select>
                 </div>
                 <div className={styles.text} id={styles.join_date_div}>
-                  <input className={styles.join_date} type="text" name="date" />
+                  <input className={styles.join_date} type="date" name="meetDate" />
                 </div>
               </form>
             </div>
           </div>
           <div className={styles.footer_content}>
-            <form
-              name=""
-              id="cultureFriendForm"
-              action=""
-              method="post"
-              target=""
-            >
+            <form action="" method="post" target="">
               <textarea
                 name=""
-                id="cultureFriendForm"
+                id="cultureFriendContent"
                 cols="30"
                 rows="5"
                 placeholder="글 작성 공간 간단한 내용 작성"
@@ -101,12 +86,7 @@ function CultureFriendPost() {
             </form>
           </div>
           <div className={styles.post_button}>
-            <button
-              className={styles.text_link}
-              type="submit"
-              form="cultureFriendForm"
-              onClick={onGoReviewBoard}
-            >
+            <button className={styles.text_link} type="submit" form="cultureFriendForm" onClick={onGoReviewBoard}>
               작성완료
             </button>
           </div>

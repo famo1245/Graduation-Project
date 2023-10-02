@@ -59,6 +59,18 @@ public class HomeController {
         return recentReviews;
     }
 
+    private List<CultureDTO> getSoonEnd() {
+        List<Culture> temp = cultureService.findSoonEndAll();
+        List<CultureDTO> result = new ArrayList<>();
+        for (Culture c : temp) {
+            CultureDTO dto = new CultureDTO();
+            dto.setCultureDTO(c);
+            result.add(dto);
+        }
+
+        return result;
+    }
+
     @GetMapping("/api/home")
     public Map<String, Object> home(@RequestParam(name = "userId") Long userId) {
         log.info("userId={}", userId);
@@ -81,7 +93,7 @@ public class HomeController {
         } else{
             List<CultureDTO> recentCultures = getRecentCultures();
             data.put("recentCultures", recentCultures);
-            List<Culture> soonEnd = cultureService.findSoonEndAll();
+            List<CultureDTO> soonEnd = getSoonEnd();
             data.put("soonEnd", soonEnd);
         }
 

@@ -114,11 +114,13 @@ public class ReviewRestController {
         message.put("status", "ok");
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
+
     @PostMapping("/reviewComment/{reviewComment_id}/edit")
     public ResponseEntity<Map<String, Object>> reviewEditComment
-            (@RequestBody String content, @PathVariable Long reviewComment_id) {
+            (@RequestBody Map<String, Object> data, @PathVariable Long reviewComment_id) {
+        log.info("content={}", data.get("content"));
         Map<String, Object> message = new HashMap<>();
-        reviewService.editReviewComment(reviewComment_id,content);
+        reviewService.editReviewComment(reviewComment_id, (String) data.get("content"));
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
@@ -216,12 +218,9 @@ public class ReviewRestController {
 
     /* 찜 API */
     @GetMapping("jim/{review_id}")
-    public ResponseEntity<Map<String, Object>> JimReview(@PathVariable("review_id") Long reviewId
-            , HttpSession session) {
-        Member member = null;
-        if (session.getAttribute("userId") != null) {
-            member = memberService.findById((Long) session.getAttribute("userId"));
-        }
+    public ResponseEntity<Map<String, Object>> JimReview(@PathVariable("review_id") Long reviewId,
+                                                         @RequestParam Long userId) {
+        Member member = memberService.findById(userId);
         reviewService.plusJimReview(member, reviewId);
         Map<String, Object> message = new HashMap<>();
         return ResponseEntity.status(HttpStatus.OK).body(message);

@@ -19,6 +19,7 @@ public class MemberForm {
     private String district;
     private String favoriteCategory;
     private Tiers tiers;
+    private int tierScore;
 
     //선호 카테고리를 리스트로 반환하는 함수
     public List<String> getFavoriteCategoryList() {
@@ -39,5 +40,6 @@ public class MemberForm {
         this.district = member.getDistrict();
         this.favoriteCategory = member.getFavoriteCategory();
         this.tiers = member.getTiers();
+        this.tierScore = member.getTierScore();
     }
 }
