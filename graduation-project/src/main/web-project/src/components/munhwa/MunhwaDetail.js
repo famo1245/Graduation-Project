@@ -16,7 +16,6 @@ function MunhwaDetail(props) {
   const [clickCultureFriend, setClickCultureFriend] = useState(false);
   const [visible, setVisible] = useState(styles.join_none);
   const [isLogin, setIsLogin] = useState(false);
-  console.log(state);
 
   const navigate = useNavigate();
 
@@ -30,7 +29,7 @@ function MunhwaDetail(props) {
   const onClickReviewBoard = () => {
     navigate(`/ReviewBoard`, {
       replace: false,
-      state: props,
+      state: data,
     });
   };
 
