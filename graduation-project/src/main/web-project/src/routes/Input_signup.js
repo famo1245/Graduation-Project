@@ -1,37 +1,49 @@
-import React from 'react';
-import styles from './Input_signup.module.css';
-import { Link, NavLink, useHistory, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from "react";
+import styles from "./Input_signup.module.css";
+import { Link, NavLink, useHistory, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function Input_signup(props) {
-  const initialData = localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')) : [];
+  const initialData = localStorage.getItem("userData")
+    ? JSON.parse(localStorage.getItem("userData"))
+    : [];
   const [userData, setUserData] = useState(initialData);
+  const [duplicate, setDuplicate] = useState(false);
 
   const onClick = () => {
-    const form = document.querySelector('#profileForm');
+    const form = document.querySelector("#profileForm");
     const formData = new FormData(form);
     const contents = {};
     const favoriteCategory = [];
     formData.forEach((value, key) => {
-      if (key === 'favoriteCategory') {
+      if (key === "favoriteCategory") {
         favoriteCategory.push(value);
         return;
       }
       contents[key] = value;
     });
-    contents['favoriteCategory'] = favoriteCategory.join();
-    axios.post('/api/members/new', contents);
-    localStorage.removeItem('userData');
-    sessionStorage.setItem('userId', userData.id);
-    window.location.href = 'http://localhost:3000';
+    contents["favoriteCategory"] = favoriteCategory.join();
+    axios.post("/api/members/new", contents);
+    localStorage.removeItem("userData");
+    sessionStorage.setItem("userId", userData.id);
+    window.location.href = "http://localhost:3000";
   };
 
   const checkDuplicated = () => {
-    const form = document.querySelector('#profileForm');
+    const form = document.querySelector("#profileForm");
     const formData = new FormData(form);
-    const nickName = formData.get('nickName');
-    axios.get(`/api/members/check-nickname?nickName=${nickName}`).then((res) => console.log(res.data.isDuplicated));
+    const nickName = formData.get("nickName");
+    axios
+      .get(`/api/members/check-nickname?nickName=${nickName}`)
+      .then((res) => {
+        console.log(res.data.isDuplicated);
+        if (res.data.isDuplicated) {
+          setDuplicate(true);
+        } else {
+          setDuplicate(false);
+        }
+      });
   };
 
   return (
@@ -49,7 +61,12 @@ function Input_signup(props) {
               <div className={styles.text}>관심지역 |</div>
               <div className={styles.text}>관심문화 |</div>
               <div id={styles.text}>
-                <button className={styles.text_link} type="button" form="profileForm" onClick={onClick}>
+                <button
+                  className={styles.text_link}
+                  type="button"
+                  form="profileForm"
+                  onClick={onClick}
+                >
                   회원가입 완료하기
                 </button>
               </div>
@@ -57,13 +74,27 @@ function Input_signup(props) {
             <div className={styles.b}>
               <form name="profile" target="" encType="" id="profileForm">
                 <div className={styles.text} id={styles.nickname}>
-                  <input type="text" name="nickName" />
-                  <div className={styles.Duplicate_check} onClick={checkDuplicated}>
+                  <input
+                    className={
+                      duplicate ? styles.duplicateName : styles.notDuplicateName
+                    }
+                    type="text"
+                    name="nickName"
+                    // defaultValue={myInfo.nickName}
+                  />
+                  <div
+                    className={styles.Duplicate_check}
+                    onClick={checkDuplicated}
+                  >
                     중복확인
                   </div>
                 </div>
                 <div className={styles.text} id={styles.age}>
-                  <input type="hidden" name="age_range" value={userData.age_range} />
+                  <input
+                    type="hidden"
+                    name="age_range"
+                    value={userData.age_range}
+                  />
                   <input type="hidden" name="email" value={userData.email} />
                   <input type="hidden" name="gender" value={userData.gender} />
                   <input type="hidden" name="id" value={userData.id} />
@@ -108,13 +139,20 @@ function Input_signup(props) {
                       />
                       <span className={styles.checkbox_tile}>
                         <span className={styles.checkbox_icon}></span>
-                        <span className={styles.checkbox_label}>뮤지컬/오페라</span>
+                        <span className={styles.checkbox_label}>
+                          뮤지컬/오페라
+                        </span>
                       </span>
                     </label>
                   </div>
                   <div className={styles.checkbox_container}>
                     <label className={styles.checkbox_wrapper}>
-                      <input type="checkbox" name="favoriteCategory" value="콘서트" className={styles.checkbox_input} />
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="콘서트"
+                        className={styles.checkbox_input}
+                      />
                       <span className={styles.checkbox_tile}>
                         <span className={styles.checkbox_icon}></span>
                         <span className={styles.checkbox_label}>콘서트</span>
@@ -131,7 +169,9 @@ function Input_signup(props) {
                       />
                       <span className={styles.checkbox_tile}>
                         <span className={styles.checkbox_icon}></span>
-                        <span className={styles.checkbox_label}>독주/독창회</span>
+                        <span className={styles.checkbox_label}>
+                          독주/독창회
+                        </span>
                       </span>
                     </label>
                   </div>
@@ -145,7 +185,9 @@ function Input_signup(props) {
                       />
                       <span className={styles.checkbox_tile}>
                         <span className={styles.checkbox_icon}></span>
-                        <span className={styles.checkbox_label}>문화교양/강좌</span>
+                        <span className={styles.checkbox_label}>
+                          문화교양/강좌
+                        </span>
                       </span>
                     </label>
                   </div>
@@ -179,7 +221,12 @@ function Input_signup(props) {
                   </div>
                   <div className={styles.checkbox_container}>
                     <label className={styles.checkbox_wrapper}>
-                      <input type="checkbox" name="favoriteCategory" value="클래식" className={styles.checkbox_input} />
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="클래식"
+                        className={styles.checkbox_input}
+                      />
                       <span className={styles.checkbox_tile}>
                         <span className={styles.checkbox_icon}></span>
                         <span className={styles.checkbox_label}>클래식</span>
@@ -188,7 +235,12 @@ function Input_signup(props) {
                   </div>
                   <div className={styles.checkbox_container}>
                     <label className={styles.checkbox_wrapper}>
-                      <input type="checkbox" name="favoriteCategory" value="국악" className={styles.checkbox_input} />
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="국악"
+                        className={styles.checkbox_input}
+                      />
                       <span className={styles.checkbox_tile}>
                         <span className={styles.checkbox_icon}></span>
                         <span className={styles.checkbox_label}>국악</span>
@@ -197,7 +249,12 @@ function Input_signup(props) {
                   </div>
                   <div className={styles.checkbox_container}>
                     <label className={styles.checkbox_wrapper}>
-                      <input type="checkbox" name="favoriteCategory" value="무용" className={styles.checkbox_input} />
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="무용"
+                        className={styles.checkbox_input}
+                      />
                       <span className={styles.checkbox_tile}>
                         <span className={styles.checkbox_icon}></span>
                         <span className={styles.checkbox_label}>무용</span>
@@ -206,7 +263,12 @@ function Input_signup(props) {
                   </div>
                   <div className={styles.checkbox_container}>
                     <label className={styles.checkbox_wrapper}>
-                      <input type="checkbox" name="favoriteCategory" value="연극" className={styles.checkbox_input} />
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="연극"
+                        className={styles.checkbox_input}
+                      />
                       <span className={styles.checkbox_tile}>
                         <span className={styles.checkbox_icon}></span>
                         <span className={styles.checkbox_label}>연극</span>
@@ -215,7 +277,12 @@ function Input_signup(props) {
                   </div>
                   <div className={styles.checkbox_container}>
                     <label className={styles.checkbox_wrapper}>
-                      <input type="checkbox" name="favoriteCategory" value="영화" className={styles.checkbox_input} />
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="영화"
+                        className={styles.checkbox_input}
+                      />
                       <span className={styles.checkbox_tile}>
                         <span className={styles.checkbox_icon}></span>
                         <span className={styles.checkbox_label}>영화</span>
@@ -224,7 +291,12 @@ function Input_signup(props) {
                   </div>
                   <div className={styles.checkbox_container}>
                     <label className={styles.checkbox_wrapper}>
-                      <input type="checkbox" name="favoriteCategory" value="축제" className={styles.checkbox_input} />
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="축제"
+                        className={styles.checkbox_input}
+                      />
                       <span className={styles.checkbox_tile}>
                         <span className={styles.checkbox_icon}></span>
                         <span className={styles.checkbox_label}>축제</span>
@@ -233,7 +305,12 @@ function Input_signup(props) {
                   </div>
                   <div className={styles.checkbox_container}>
                     <label className={styles.checkbox_wrapper}>
-                      <input type="checkbox" name="favoriteCategory" value="기타" className={styles.checkbox_input} />
+                      <input
+                        type="checkbox"
+                        name="favoriteCategory"
+                        value="기타"
+                        className={styles.checkbox_input}
+                      />
                       <span className={styles.checkbox_tile}>
                         <span className={styles.checkbox_icon}></span>
                         <span className={styles.checkbox_label}>기타</span>
