@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ReviewContent from "./ReviewContent";
 import ReactPaginate from "react-paginate";
 
-function ReviewSearch({ inputD }) {
+function ReviewSearch({ inputD, state }) {
   const [data, setData] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
   const [isLogin, setIsLogin] = useState(false);
@@ -15,6 +15,9 @@ function ReviewSearch({ inputD }) {
   // const [pageCount, setPageCount] = useState();
 
   useEffect(() => {
+    if (state) {
+      setData(state.title);
+    }
     if (sessionStorage.getItem("userId")) {
       setIsLogin(true);
     }
@@ -44,7 +47,8 @@ function ReviewSearch({ inputD }) {
         return val;
       } else if (
         val.reviewTitle.toLowerCase().includes(data.toLowerCase()) ||
-        val.nickname.toLowerCase().includes(data.toLowerCase())
+        val.nickname.toLowerCase().includes(data.toLowerCase()) ||
+        val.cultureTitle.toLowerCase().includes(data.toLowerCase())
       ) {
         return val;
       }
@@ -56,6 +60,7 @@ function ReviewSearch({ inputD }) {
           key={key}
           poster={val.main_img}
           title={val.reviewTitle}
+          cultureTitle={val.cultureTitle}
           date={val.reviewDateTime}
           contents={val.reviewContents}
           nickname={val.nickname}

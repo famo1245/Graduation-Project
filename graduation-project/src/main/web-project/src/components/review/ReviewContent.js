@@ -58,6 +58,7 @@ function ReviewContent(props) {
           <div className={styles.content_box_inner} id={styles.culture_title}>
             {props.title}
           </div>
+          <div className={styles.content_box_inner}>문화 제목: {props.cultureTitle}</div>
           <div className={styles.content_box_inner} id={styles.user_name}>
             작성자: {props.nickname}
           </div>
