@@ -29,22 +29,19 @@ function CultureFriendContent(props) {
         </div>
         <div className={styles.content_box}>
           <div className={styles.content_box_inner} id={styles.culture_title}>
-            [{props.codeName}]{props.title}
+            {props.cultureTitle}
           </div>
           <div className={styles.content_box_inner} id={styles.user_name}>
-            문화친구제목: {props.place}
+            제목: {props.title}
           </div>
           <div className={styles.content_box_inner} id={styles.date}>
-            나이대: 상관없음 / 10-20
+            나이대: {props.ageRange}
           </div>
           <div className={styles.content_box_inner} id={styles.user_content}>
-            성별: 남
+            성별: {props.gender === "male" ? "남" : "여"}
           </div>
           <div className={styles.content_box_inner} id={styles.user_content}>
-            날짜: {props.date}
-          </div>
-          <div className={styles.content_box_inner} id={styles.user_content}>
-            간단한 작성 내용~~~~~
+            관람 일자: {new Date(props.date).toLocaleDateString()}
           </div>
           <div
             className={isLogin ? styles.content_box_inner : styles.none_content}
