@@ -14,13 +14,14 @@ function CultureFriendSearchbar({ inputD, checkId, state }) {
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
 
-  console.log(state);
-
   const culturePerPage = 5;
   let pagesVisited = pageNumber * culturePerPage;
   let pageCount = Math.ceil(inputD.length / culturePerPage);
 
   useEffect(() => {
+    if (state) {
+      setData(state.title);
+    }
     if (sessionStorage.getItem("userId")) {
       setIsLogin(true);
     }
@@ -48,7 +49,7 @@ function CultureFriendSearchbar({ inputD, checkId, state }) {
     .filter((val) => {
       if (data == "") {
         return val;
-      } else if (val.title.toLowerCase().includes(data.toLowerCase())) {
+      } else if (val.cultureTitle.toLowerCase().includes(data.toLowerCase())) {
         return val;
       }
     })
@@ -57,15 +58,13 @@ function CultureFriendSearchbar({ inputD, checkId, state }) {
       return (
         <CultureFriendContent
           key={key}
-          poster={val.main_img}
+          poster={val.cultureImg}
           title={val.title}
-          date={val.date}
-          guname={val.guname}
-          id={val.id}
-          org_link={val.org_link}
-          place={val.place}
-          codeName={val.codeName}
-          player={val.player}
+          date={val.meetDate}
+          id={val.roomId}
+          cultureTitle={val.cultureTitle}
+          ageRange={val.availableAgeRange}
+          gender={val.gender}
         />
       );
     });
@@ -75,12 +74,7 @@ function CultureFriendSearchbar({ inputD, checkId, state }) {
       <div className={styles.wrapper}>
         <div className={styles.inputWrapper}>
           <div className={styles.searchLogo}>검색 |</div>
-          <input
-            type="text"
-            value={data}
-            onChange={handleChange}
-            onKeyDown={handleOnKeyPress}
-          />
+          <input type="text" value={data} onChange={handleChange} onKeyDown={handleOnKeyPress} />
           <FaSearch id={styles.searchIcon} />
         </div>
         <div className={styles.line}></div>
