@@ -6,7 +6,6 @@ import axios from "axios";
 function CultureFriendPost() {
   const { id } = useParams();
   const { state } = useLocation();
-  //   console.log(location);
   const navigate = useNavigate();
 
   const onGoReviewBoard = (e) => {
@@ -19,8 +18,9 @@ function CultureFriendPost() {
     });
     const friendContent = document.querySelector("#cultureFriendContent");
     contents.friendContents = friendContent.value;
+    contents.max = 4;
     axios
-      .post(`/api//chats/create/${state.id}?userId=${sessionStorage.getItem("userId")}`, { chatRoomDTO: contents })
+      .post(`/api/chats/create/${state.id}?userId=${sessionStorage.getItem("userId")}`, contents)
       .then((res) => navigate(`/CultureFriend`));
   };
 
@@ -63,7 +63,7 @@ function CultureFriendPost() {
                 </div>
                 <div className={styles.text} id={styles.sex}>
                   <select name="gender">
-                    <option value="상관없음">상관없음</option>
+                    <option value="">성별</option>
                     <option value="male">남</option>
                     <option value="female">여</option>
                   </select>
