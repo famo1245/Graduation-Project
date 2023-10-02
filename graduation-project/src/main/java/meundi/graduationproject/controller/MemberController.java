@@ -106,22 +106,6 @@ public class MemberController {
         myInfo.setFavoriteCategory((String) data.get("favoriteCategory"));
         Long userId = (Long) data.get("userId");
 
-//        //검증 로직
-//        if (!StringUtils.hasText(form.getNickName())) {
-//            bindingResult.rejectValue("nickName", "required");
-//        }
-//        if (!StringUtils.hasText(form.getDistrict())) {
-//            bindingResult.rejectValue("district", "required");
-//        }
-//        if (!form.getNickName().equals(currentNickName)) {
-//            if (memberService.validateDuplicatedNickName(form.getNickName())) {
-//                bindingResult.rejectValue("nickName", "duplicated");
-//            }
-//        }
-//        if (bindingResult.hasErrors()) {
-//            log.info("errors={}", bindingResult);
-//            return "members/update-myInfo";
-//        }
         memberService.updateMember(userId, myInfo);
         return "ok";
     }

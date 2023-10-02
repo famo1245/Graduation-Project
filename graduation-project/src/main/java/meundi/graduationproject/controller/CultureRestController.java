@@ -1,4 +1,4 @@
-package meundi.graduationproject.controller.rest;
+package meundi.graduationproject.controller;
 
 import java.util.*;
 import javax.annotation.PostConstruct;
@@ -45,12 +45,10 @@ public class CultureRestController {
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
-    //    @GetMapping("/cultures/detail/{culture_id}")
-    public ResponseEntity<Map<String, Object>> cultureDetail(@PathVariable Long culture_id) {
-        Culture findCulture = cultureService.findOne(culture_id);
-        Map<String, Object> message = new HashMap<>();
-        message.put("data", findCulture);
-        return ResponseEntity.status(HttpStatus.OK).body(message);
+    @GetMapping("/cultures/detail/{culture_id}")
+    @ResponseBody
+    public Culture apiCultureDetail(@PathVariable Long culture_id) {
+        return cultureService.findOne(culture_id);
     }
 
     @GetMapping("/cultures/codename/{code_name}")
