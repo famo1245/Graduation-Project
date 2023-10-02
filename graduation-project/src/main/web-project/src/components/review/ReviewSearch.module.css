@@ -57,6 +57,7 @@
 }
 
 .review_input_button {
+  display: none;
   width: 8%;
   margin-right: 20px;
   margin-bottom: 12px;
