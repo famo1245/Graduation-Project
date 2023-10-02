@@ -2,14 +2,18 @@ package meundi.graduationproject.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Entity
 @Setter
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 public class ReviewComment {
     @Id
     @GeneratedValue
@@ -26,4 +30,6 @@ public class ReviewComment {
     @ManyToOne
     @JoinColumn(name = "review_id")
     private Review review;
+    @CreatedDate
+    private LocalDateTime createdDate;
 }
