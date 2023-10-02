@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
@@ -37,25 +36,28 @@ public class FirebaseChatController {
 
     @PostMapping("/chats/create/{culture_id}")
     @ResponseBody
-    public ResponseEntity<?> createChatRoom(@PathVariable Long culture_id, ChatRoomDTO chatRoomDTO,
+    public ResponseEntity<?> createChatRoom(@PathVariable Long culture_id, @RequestBody Map<String, Object> body,
                                          @RequestParam Long userId) {
         Culture find = cultureService.findOne(culture_id);
         Member author = memberService.findById(userId);
-        log.info("userId={}", userId);
-        log.info("chatroom={}", chatRoomDTO);
-        log.info("culture={}", find);
+        ChatRoomDTO chatRoomDTO = new ChatRoomDTO();
+        String roomId = UUID.randomUUID().toString();
+        log.info("body={}", body);
 
-//        String roomId = UUID.randomUUID().toString();
-//
-//        chatRoomDTO.setCultureId(culture_id);
-//        chatRoomDTO.setCultureTitle(find.getTitle());
-//        chatRoomDTO.setCultureImg(find.getMain_img());
-//        chatRoomDTO.setAuthorId(userId);
-//        chatRoomDTO.setAuthorNickname(author.getNickName());
-//        chatRoomDTO.setRoomId(roomId);
-//        chatRoomDTO.addParticipants(userId);
-//        fbService.createChatRoom(chatRoomDTO);
-//        log.info("user: {} created {} chat room", userId, roomId);
+        chatRoomDTO.setCultureId(culture_id);
+        chatRoomDTO.setCultureTitle(find.getTitle());
+        chatRoomDTO.setCultureImg(find.getMain_img());
+        chatRoomDTO.setAuthorId(userId);
+        chatRoomDTO.setAuthorNickname(author.getNickName());
+        chatRoomDTO.setRoomId(roomId);
+        chatRoomDTO.addParticipants(userId);
+        chatRoomDTO.setAvailableAgeRange((String) body.get("availableAgeRange"));
+        chatRoomDTO.setMax(Integer.parseInt((String) body.get("max")));
+        chatRoomDTO.setMeetDate((String) body.get("meetDate"));
+        chatRoomDTO.setGender((String) body.get("gender"));
+        chatRoomDTO.setTitle((String) body.get("friendContents"));
+        fbService.createChatRoom(chatRoomDTO);
+        log.info("user: {} created {} chat room", userId, roomId);
         Map<String, Object> data = new HashMap<>();
 //        data.put("chatRoom", chatRoomDTO);
         return ResponseEntity.ok().body(data);
