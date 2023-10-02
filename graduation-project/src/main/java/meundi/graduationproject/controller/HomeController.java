@@ -33,7 +33,7 @@ public class HomeController {
         List<Culture> cultureList = cultureListAll.subList(lastIndex - 10, lastIndex);
         List<CultureDTO> result = new ArrayList<>();
         Collections.reverse(cultureList);
-        for(Culture c : cultureList) {
+        for (Culture c : cultureList) {
             CultureDTO temp = new CultureDTO();
             temp.setCultureDTO(c);
             result.add(temp);
@@ -41,11 +41,22 @@ public class HomeController {
         return result;
     }
 
+    private List<CultureDTO> cultureConverter(List<Culture> list) {
+        List<CultureDTO> result = new ArrayList<>();
+        for (Culture c : list) {
+            CultureDTO dto = new CultureDTO();
+            dto.setCultureDTO(c);
+            result.add(dto);
+        }
+
+        return result;
+    }
+
     private List<ReviewDTO> getRecentReview() {
         List<Review> temp = reviewService.findReviewAll();
         List<ReviewDTO> temp2 = new ArrayList<>();
         int lastIndex = temp.size();
-        for(Review r : temp) {
+        for (Review r : temp) {
             ReviewDTO rdto = new ReviewDTO();
             rdto.setReviewDTO(r, r.getMember().getNickName(), r.getCulture().getMain_img());
             temp2.add(rdto);
@@ -78,7 +89,7 @@ public class HomeController {
         if (userId != -1L) {
             log.info("true");
             MemberForm myInfo = memberService.research(userId);
-            List<Culture> guList = cultureService.findByDistrict(myInfo.getDistrict());
+            List<CultureDTO> guList = cultureConverter(cultureService.findByDistrict(myInfo.getDistrict()));
             data.put("district", myInfo.getDistrict() + " 최신 문화 생활");
             data.put("guList", guList);
             List<String> favoriteCategoryList = myInfo.getFavoriteCategoryList();
@@ -86,11 +97,12 @@ public class HomeController {
             // 사용자가 선호 카테고리를 선택하지 않은 경우
             if (favoriteCategoryList != null) {
                 int randomIndex = (int) (Math.random() * favoriteCategoryList.size());
-                List<Culture> recommendList = cultureService.findByCategory(favoriteCategoryList.get(randomIndex));
+                List<CultureDTO> recommendList = cultureConverter(
+                        cultureService.findByCategory(favoriteCategoryList.get(randomIndex)));
                 data.put("category", favoriteCategoryList.get(randomIndex));
                 data.put("recommendList", recommendList);
             }
-        } else{
+        } else {
             List<CultureDTO> recentCultures = getRecentCultures();
             data.put("recentCultures", recentCultures);
             List<CultureDTO> soonEnd = getSoonEnd();
