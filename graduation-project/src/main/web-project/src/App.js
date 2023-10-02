@@ -48,6 +48,7 @@ function App(props) {
           <Route path="/login" element={<Login />} />
           <Route path="/sign_up" element={<Sign_up />} />
           <Route path="/munhwaRow/:id" element={<MunhwaDetail />} />
+          <Route path="/culture/favorite" element={<Classic />} />
           <Route path="/culture/:categoryName" element={<Musical />} />
           <Route path="/MyPage" element={<MyPage />} />
           <Route path="/ModifyMyPage" element={<ModifyMyPage />} />
@@ -59,10 +60,7 @@ function App(props) {
           <Route path="/CreatePostSelf" element={<CreatePostSelf />} />
           <Route path="/ReviewDetail/:id" element={<ReviewDetail />} />
           <Route path="/CultureFriend" element={<CultureFriend />} />
-          <Route
-            path="/CultureFriendDetail/:id"
-            element={<CultureFriendDetail />}
-          />
+          <Route path="/CultureFriendDetail/:id" element={<CultureFriendDetail />} />
           <Route path="/CultureFriendPost" element={<CultureFriendPost />} />
           <Route path="/CultureFriend/:id" element={<CultureFriend />} />
         </Routes>

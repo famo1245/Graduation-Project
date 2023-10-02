@@ -9,10 +9,16 @@ function Classic() {
   const [inputD, setInputD] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/music.json").then((res) => {
-      setInputD(res.data);
-      console.log(res.data);
-    });
+    axios
+      .get(
+        `/api/cultures/favorite?user_id=${
+          sessionStorage.getItem("userId") === null ? -1 : sessionStorage.getItem("userId")
+        }`
+      )
+      .then((res) => {
+        setInputD(res.data.favorite);
+        console.log(res.data);
+      });
   }, []);
 
   return (
@@ -21,7 +27,7 @@ function Classic() {
         <div className={styles.container_body_inner}>
           <div>
             <h1>
-              클래식 <hr style={{ border: 0 }} />
+              관심 문화 <hr style={{ border: 0 }} />
             </h1>
           </div>
           <div className={styles.searchbarcontainer}>
