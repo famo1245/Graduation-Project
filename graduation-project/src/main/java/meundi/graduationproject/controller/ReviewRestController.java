@@ -117,6 +117,13 @@ public class ReviewRestController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
+    @PostMapping("/reviewComment/{reviewComment_id}/edit")
+    public ResponseEntity<Map<String, Object>> reviewEditComment
+            (@RequestBody String content, @PathVariable Long reviewComment_id) {
+        Map<String, Object> message = new HashMap<>();
+        reviewService.editReviewComment(reviewComment_id,content);
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
 
     // 리뷰 삭제
     @GetMapping("reviewDetail/{review_id}/delete")
