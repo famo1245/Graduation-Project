@@ -32,4 +32,8 @@ public class ReviewComment {
     private Review review;
     @CreatedDate
     private LocalDateTime createdDate;
+
+    public void updateReviewComment(String content){
+        this.content = content;
+    }
 }

@@ -6,6 +6,7 @@ import java.util.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
+import meundi.graduationproject.domain.DTO.ReviewCommentDTO;
 import meundi.graduationproject.domain.DTO.ReviewDTO;
 import meundi.graduationproject.domain.DTO.response.ReviewResponseDTO;
 import meundi.graduationproject.domain.Member;
@@ -59,8 +60,8 @@ public class ReviewRestController {
 
     @PostMapping/* search home */
     public ResponseEntity<Map<String, Object>> SearchReview(@RequestBody ReviewSearch reviewSearch,
-        Model model)
-        throws MalformedURLException {
+                                                            Model model)
+            throws MalformedURLException {
         List<Review> reviewAll = reviewService.SearchReview(reviewSearch);
         Map<String, Object> message = new HashMap<>();
         message.put("data", reviewAll);
@@ -70,7 +71,7 @@ public class ReviewRestController {
 
     @GetMapping("/reviewDetail/{review_id}") /*리뷰 하나를 클릭 시, 리뷰 자세히 보기*/
     public ResponseEntity<Map<String, Object>> reviewDetail(@PathVariable Long review_id,
-        Model model, HttpSession session) {
+                                                            Model model, HttpSession session) {
 
         Review reviewDetail = reviewService.findOne(review_id);
         Member member;
@@ -89,9 +90,9 @@ public class ReviewRestController {
 
     @PostMapping("/reviewDetail/{review_id}")
     public ResponseEntity<Map<String, Object>> reviewAddComment(
-        @Validated @RequestBody ReviewComment reviewComment,
-        BindingResult bindingResult, @PathVariable Long review_id, HttpSession session)
-        throws BindException {
+            @Validated @RequestBody ReviewComment reviewComment,
+            BindingResult bindingResult, @PathVariable Long review_id, HttpSession session)
+            throws BindException {
 
         if (bindingResult.hasErrors()) {
             throw new BindException(bindingResult);
@@ -112,20 +113,28 @@ public class ReviewRestController {
 
     @GetMapping("/reviewComment/{review_id}/{reviewComment_id}/delete")
     public ResponseEntity<Map<String, Object>> reviewDeleteComment(@PathVariable Long review_id,
-        @PathVariable Long reviewComment_id, HttpSession session) {
+                                                                   @PathVariable Long reviewComment_id, HttpSession session) {
         ReviewComment findComment = reviewService.findReviewComment(reviewComment_id);
         Map<String, Object> message = new HashMap<>();
         if (Objects.equals(findComment.getMember().getId(),
-            (Long) session.getAttribute("userId"))) {
+                (Long) session.getAttribute("userId"))) {
             reviewService.deleteReviewComment(findComment);
         }
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+
+    @PostMapping("/reviewComment/{reviewComment_id}/edit")
+    public ResponseEntity<Map<String, Object>> reviewEditComment
+            (@RequestBody String content, @PathVariable Long reviewComment_id) {
+        Map<String, Object> message = new HashMap<>();
+        reviewService.editReviewComment(reviewComment_id,content);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
     // 리뷰 삭제
     @GetMapping("reviewDetail/{review_id}/delete")
     public ResponseEntity<Map<String, Object>> reviewDelete(@PathVariable Long review_id,
-        HttpSession session) {
+                                                            HttpSession session) {
         Review review = reviewService.findOne(review_id);
         Map<String, Object> message = new HashMap<>();
 
@@ -161,13 +170,13 @@ public class ReviewRestController {
         review.setReviewGrade(Integer.parseInt((String) body.get("reviewGrade")));
         review.setReviewDateTime(LocalDateTime.now());
         Culture culture = cultureService.findOneByTitle(review.getCultureTitle())
-            .get(); /* 문화 제목(입력)으로 문화 찾기*/
+                .get(); /* 문화 제목(입력)으로 문화 찾기*/
 //      세션을 통해, 멤버 가져오기
         Member member = memberService.findById(userId);
         review.setMember(member);
         review.setCulture(culture); /*리뷰 객체에 문화 객체 넣기 */
         review.setJim(0);
-        Review savedReview = reviewService.insertReview(review,member);
+        Review savedReview = reviewService.insertReview(review, member);
         message.put("data", savedReview);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
@@ -175,13 +184,13 @@ public class ReviewRestController {
     //  리뷰 수정
     @GetMapping("reviewDetail/{review_id}/edit")
     public ResponseEntity<Map<String, Object>> editReviewForm(
-        @PathVariable("review_id") Long reviewId, HttpSession session) {
+            @PathVariable("review_id") Long reviewId, HttpSession session) {
         Map<String, Object> message = new HashMap<>();
         // 세션이 없거나 세션 사용자와 리뷰 작성자가 다르면 거부 (URL 로 직접 접근시, 거부)
         if (session.getAttribute("userId") != null) {
             Member member = memberService.findById((Long) session.getAttribute("userId"));
             if (!Objects.equals(member.getId(),
-                reviewService.findOne(reviewId).getMember().getId())) {
+                    reviewService.findOne(reviewId).getMember().getId())) {
             }
         }
         Review review = reviewService.findOne(reviewId);
@@ -193,8 +202,8 @@ public class ReviewRestController {
 
     @PostMapping("reviewDetail/{review_id}/edit")
     public ResponseEntity<Map<String, Object>> editReview(
-        @Validated @RequestBody ReviewDTO review, BindingResult bindingResult,
-        @PathVariable("review_id") Long reviewId) throws BindException {
+            @Validated @RequestBody ReviewDTO review, BindingResult bindingResult,
+            @PathVariable("review_id") Long reviewId) throws BindException {
         // 검증 로직
         if (!StringUtils.hasText(review.getReviewTitle())) {
             bindingResult.rejectValue("reviewTitle", "required");
@@ -208,15 +217,16 @@ public class ReviewRestController {
             throw new BindException(bindingResult);
         }
         reviewService.updateReview(reviewId, review.getReviewTitle()
-            , review.getReviewGrade(), review.getReviewContents());
+                , review.getReviewGrade(), review.getReviewContents());
         Map<String, Object> message = new HashMap<>();
         message.put("data", reviewService.findOne(reviewId));
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
+
     /* 찜 API */
     @GetMapping("jim/{review_id}")
-    public  ResponseEntity<Map<String, Object>> JimReview(@PathVariable("review_id") Long reviewId
-    ,HttpSession session){
+    public ResponseEntity<Map<String, Object>> JimReview(@PathVariable("review_id") Long reviewId
+            , HttpSession session) {
         Member member = null;
         if (session.getAttribute("userId") != null) {
             member = memberService.findById((Long) session.getAttribute("userId"));

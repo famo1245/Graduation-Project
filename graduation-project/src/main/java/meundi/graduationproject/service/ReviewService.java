@@ -60,6 +60,11 @@ public class ReviewService {
         reviewRepository.deleteComment(reviewComment);
     }
 
+    public void editReviewComment(Long id,String content){
+        ReviewComment comment = reviewRepository.findComment(id);
+        comment.updateReviewComment(content);
+    }
+
     public ReviewComment findReviewComment(Long id){
         return reviewRepository.findComment(id);
     }
