@@ -6,20 +6,14 @@ function Footer(props) {
     <div className={styles.footer}>
       <div className={styles.contents_nav}>
         <div className={styles.left}>
-          <Link className={styles.left_click} to={``}>
-            ◀
-          </Link>
+          <Link className={styles.left_click}>◀</Link>
         </div>
         <h2 className={styles.content}>
           <div>
-            <span className={styles.content_a}>
-              대한민국 근로소득자라면, 누구나 누리고, 연말정산 돌려받자!
-            </span>
+            <span className={styles.content_a}>대한민국 근로소득자라면, 누구나 누리고, 연말정산 돌려받자!</span>
           </div>
           <div>
-            <span className={styles.content_b}>
-              문화비 소득공제 바로가기 ⇒⇒⇒
-            </span>
+            <span className={styles.content_b}>문화비 소득공제 바로가기 ⇒⇒⇒</span>
           </div>
         </h2>
         <div className={styles.link}>
@@ -28,16 +22,12 @@ function Footer(props) {
               <span className={styles.link_title}>문화비 소득공제</span>
             </div>
             <div>
-              <span className={styles.link_content}>
-                도서/공연,박물관/미술관입장료/신문구독료
-              </span>
+              <span className={styles.link_content}>도서/공연,박물관/미술관입장료/신문구독료</span>
             </div>
           </a>
         </div>
         <div className={styles.right}>
-          <Link className={styles.right_click} to={`/Input_signup`}>
-            ▶
-          </Link>
+          <Link className={styles.right_click}>▶</Link>
         </div>
       </div>
       <div className={styles.contents_count}>
