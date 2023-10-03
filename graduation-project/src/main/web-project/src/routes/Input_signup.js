@@ -37,8 +37,10 @@ function Input_signup(props) {
       console.log(res.data.isDuplicated);
       if (res.data.isDuplicated) {
         setDuplicate(true);
+        setDuplicateFirst(true);
       } else {
         setDuplicate(false);
+        setDuplicateFirst(false);
       }
     });
   };

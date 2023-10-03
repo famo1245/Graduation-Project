@@ -163,6 +163,7 @@
 .lower_content_text {
   font-size: 20px;
   margin-bottom: 25px;
+  white-space: pre-wrap;
 }
 
 .lower_content_img {
