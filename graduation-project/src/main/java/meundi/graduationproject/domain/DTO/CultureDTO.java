@@ -74,6 +74,7 @@ public class CultureDTO {
         this.use_trgt = c.getUse_trgt();
         this.place = c.getPlace();
         this.endDate = c.getEndDate();
+        this.isFree = c.getIsFree();
         this.reviews = new ArrayList<>();
         for(Review r : c.getReviews()) {
             ReviewDTO temp = new ReviewDTO();
