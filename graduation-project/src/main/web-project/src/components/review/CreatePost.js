@@ -116,9 +116,10 @@ function CreatePost() {
     formData.forEach((value, key) => {
       contents[key] = value;
     });
-    const reviewContents = document.querySelector("#reviewContents");
+    const reviewContentValue = document.querySelector("#reviewContents").value;
+    const reviewContents = reviewContentValue.replaceAll("<br>", "\r\n");
     contents.userId = sessionStorage.getItem("userId");
-    contents.reviewContents = reviewContents.value;
+    contents.reviewContents = reviewContents;
     axios.post(`api/review/reviewWrite`, contents);
     navigate(`/reviewBoard`, {
       replace: true,

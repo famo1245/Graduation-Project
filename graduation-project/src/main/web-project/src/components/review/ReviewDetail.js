@@ -221,7 +221,7 @@ function ReviewDetail() {
             </div>
           </div>
           <div className={styles.lower_content}>
-            <div className={styles.lower_content_text}>{reviewInfo.reviewContents}</div>
+            <div className={styles.lower_content_text}>{`${reviewInfo.reviewContents}`}</div>
             <div className={styles.lower_content_img}>
               {/* <img src="/img/눈의꽃 사진.png" alt="" />
               <img src="/img/사랑했나봐.png" alt="" /> */}
