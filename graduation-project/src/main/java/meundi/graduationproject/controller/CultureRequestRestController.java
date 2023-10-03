@@ -2,8 +2,8 @@ package meundi.graduationproject.controller;
 
 
 import java.net.BindException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.*;
@@ -27,14 +27,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/api/culturerequest")
+@RequestMapping("/api/culture-request")
 public class CultureRequestRestController {
 
     private final MemberService memberService;
@@ -44,24 +41,28 @@ public class CultureRequestRestController {
     @GetMapping("/list")
     public ResponseEntity<Map<String, Object>> requestList() {
         Map<String, Object> message = new HashMap<>();
-        message.put("data", cultureRequestService.findRequestAll());
+        List<CultureRequest> list = cultureRequestService.findRequestAll();
+        List<CultureRequestDTO> result = new ArrayList<>();
+        for (CultureRequest c : list) {
+            CultureRequestDTO dto = new CultureRequestDTO();
+            dto.setDTO(c);
+            result.add(dto);
+        }
 
+        Collections.reverse(result);
+
+        message.put("requests", result);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
     @GetMapping("/requestDetail/{request_id}") /*리뷰 하나를 클릭 시, 리뷰 자세히 보기*/
-    public ResponseEntity<Map<String, Object>> requestDetail(@PathVariable Long request_id,
-        Model model, HttpSession session) {
+    public ResponseEntity<Map<String, Object>> requestDetail(@PathVariable Long request_id) {
 
         Member member;
         CultureRequestResponseDTO responseDTO = new CultureRequestResponseDTO();
         responseDTO.setRequestDetail(cultureRequestService.findOne(request_id));
-        if (session != null && session.getAttribute("userId") != null) {
-            member = memberService.findById((Long) session.getAttribute("userId"));
-            responseDTO.setMember(member);
-        }
         Map<String, Object> message = new HashMap<>();
-        message.put("data", responseDTO);
+        message.put("requestDetail", responseDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
@@ -86,20 +87,16 @@ public class CultureRequestRestController {
     }
 
     @PostMapping("/write")
-    public ResponseEntity<Map<String, Object>> addRequest(
-        @Validated @RequestBody CultureRequest cultureRequest, BindingResult bindingResult,
-        HttpSession session) throws IOException {
+    public ResponseEntity<Map<String, Object>> addRequest(@RequestBody CultureRequest cultureRequest,
+                                                          @RequestParam Long userId) {
 
-        if (bindingResult.hasErrors()) {
-            throw new BindException();
-        }
         Map<String, Object> message = new HashMap<>();
         cultureRequest.setRequestDateTime(LocalDateTime.now());
-        Member member = memberService.findById((Long) session.getAttribute("userId"));
+        Member member = memberService.findById(userId);
         cultureRequest.setMember(member);
-        CultureRequest savedRequest = cultureRequestService.insertCultureRequest(cultureRequest);
+        cultureRequestService.insertCultureRequest(cultureRequest);
 
-        message.put("data", savedRequest);
+        message.put("result", "ok");
         return ResponseEntity.status(HttpStatus.OK).body(message);
 
     }

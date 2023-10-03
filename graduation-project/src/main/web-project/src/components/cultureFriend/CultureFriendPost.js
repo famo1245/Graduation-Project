@@ -18,19 +18,11 @@ function CultureFriendPost() {
     });
     const friendContent = document.querySelector("#cultureFriendContent");
     contents.friendContents = friendContent.value;
-    contents.max = 4;
-    axios
-      .post(
-        `/api/chats/create/${state.id}?userId=${sessionStorage.getItem(
-          "userId"
-        )}`,
-        contents
-      )
-      .then((res) =>
-        navigate(`/CultureFriend`, {
-          replace: true,
-        })
-      );
+    axios.post(`/api/chats/create/${state.id}?userId=${sessionStorage.getItem("userId")}`, contents).then((res) =>
+      navigate(`/CultureFriend`, {
+        replace: true,
+      })
+    );
   };
 
   return (
@@ -59,6 +51,7 @@ function CultureFriendPost() {
               <form name="profile" target="" encType="" id="cultureFriendForm">
                 <div className={styles.text} id={styles.age}>
                   <select name="availableAgeRange">
+                    <option value="any">상관없음</option>
                     <option value="10~19">10대</option>
                     <option value="20~29">20대</option>
                     <option value="30~39">30대</option>
@@ -74,13 +67,14 @@ function CultureFriendPost() {
                 <div className={styles.text} id={styles.sex}>
                   <select name="gender">
                     <option value="">성별</option>
+                    <option value="any">아무나</option>
                     <option value="male">남</option>
                     <option value="female">여</option>
                   </select>
                 </div>
                 <div className={styles.text} id={styles.numberPeople}>
-                  <select name="numberOfPeople">
-                    <option value="1">1명</option>
+                  <select name="max">
+                    <option value="">인원 수</option>
                     <option value="2">2명</option>
                     <option value="3">3명</option>
                     <option value="4">4명</option>
@@ -93,11 +87,7 @@ function CultureFriendPost() {
                   </select>
                 </div>
                 <div className={styles.text} id={styles.join_date_div}>
-                  <input
-                    className={styles.join_date}
-                    type="date"
-                    name="meetDate"
-                  />
+                  <input className={styles.join_date} type="date" name="meetDate" />
                 </div>
               </form>
             </div>
@@ -114,12 +104,7 @@ function CultureFriendPost() {
             </form>
           </div>
           <div className={styles.post_button}>
-            <button
-              className={styles.text_link}
-              type="submit"
-              form="cultureFriendForm"
-              onClick={onGoReviewBoard}
-            >
+            <button className={styles.text_link} type="submit" form="cultureFriendForm" onClick={onGoReviewBoard}>
               작성완료
             </button>
           </div>

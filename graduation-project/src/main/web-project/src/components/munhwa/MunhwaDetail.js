@@ -87,16 +87,13 @@ function MunhwaDetail(props) {
   if (error) return <div>Error...</div>;
   if (!data) return null;
 
-  console.log(state);
-  console.log(data);
-
   return (
     <div className={styles.container}>
       <div className={styles.container_body}>
         <div className={styles.container_body_inner}>
           <div>
             <h1 className={styles.title1}>
-              {data.codeName} 상세
+              {data.codeName}
               <hr style={{ border: 0 }} />
             </h1>
             <h1 className={styles.title2}>
@@ -104,11 +101,7 @@ function MunhwaDetail(props) {
             </h1>
           </div>
           <div className={styles.body}>
-            <img
-              src={data.main_img}
-              className={styles.poster}
-              alt="문화 포스터 이미지"
-            />
+            <img src={data.main_img} className={styles.poster} alt="문화 포스터 이미지" />
             <div className={styles.inner_content}>
               <div className={styles.inner_title}>
                 [{data.codeName}] {data.title}
@@ -120,9 +113,7 @@ function MunhwaDetail(props) {
                 <div>위치 : {data.place}</div>
               </div>
               <div className={styles.info}>
-                <div>
-                  연령 : {data.use_trgt === null ? "누구나" : data.use_trgt}
-                </div>
+                <div>연령 : {data.use_trgt === null ? "누구나" : data.use_trgt}</div>
               </div>
               <div className={styles.info}>
                 <div>가격 : {data.isFree}</div>
@@ -134,15 +125,8 @@ function MunhwaDetail(props) {
                   </a>
                 </div>
                 {isLogin ? (
-                  <div
-                    className={styles.createPost}
-                    onClick={onClickReviewCreatePost}
-                  >
-                    <img
-                      className={styles.zzim}
-                      src={`/img/copy-writing.png`}
-                      alt="리뷰작성"
-                    />
+                  <div className={styles.createPost} onClick={onClickReviewCreatePost}>
+                    <img className={styles.zzim} src={`/img/copy-writing.png`} alt="리뷰작성" />
                     <span>리뷰작성하기</span>
                   </div>
                 ) : (
@@ -152,7 +136,7 @@ function MunhwaDetail(props) {
                   <div className={styles.zzim1}>
                     <img
                       className={styles.zzim}
-                      src={like ? `/img/heart (2).png` : `/img/heart.png`}
+                      src={like ? `/img/heart (2).png` : `/img/heart2v2.png`}
                       alt="찜하기"
                       onClick={toggleLike}
                     />
@@ -166,9 +150,7 @@ function MunhwaDetail(props) {
                     {" "}
                     <img
                       className={styles.zzim}
-                      src={
-                        clickCultureFriend ? `/img/check.png` : `/img/add.png`
-                      }
+                      src={clickCultureFriend ? `/img/check.png` : `/img/add.svg`}
                       alt="문화친구"
                       onClick={toggleCultureFriend}
                     />
@@ -179,12 +161,7 @@ function MunhwaDetail(props) {
                 )}
                 <div className={visible}>
                   {" "}
-                  <img
-                    className={styles.zzim}
-                    src={`/img/login.png`}
-                    alt="참여하기"
-                    onClick={onClickCultureFriend}
-                  />
+                  <img className={styles.zzim} src={`/img/login.png`} alt="참여하기" onClick={onClickCultureFriend} />
                   <span>참여하기</span>
                 </div>
                 <div className={visible}>
@@ -221,9 +198,7 @@ function MunhwaDetail(props) {
                   >
                     {review.reviewTitle}
                   </div>
-                  <div className={styles.review_preview_content}>
-                    {review.reviewContents}
-                  </div>
+                  <div className={styles.review_preview_content}>{review.reviewContents}</div>
                 </div>
               );
             })}

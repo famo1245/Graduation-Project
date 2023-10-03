@@ -73,16 +73,14 @@ public class ReviewService {
         Review one = reviewRepository.findOne(review_id);
         List<Member> jimMember = one.getJimMember();
         /* 찜 유저에 있으면 리턴 */
-        for (Member member1 : jimMember) {
-            if (member1.equals(member)) {
+        for (Member m : jimMember) {
+            if (m.equals(member)) {
                 return;
             }
         }
         /* 짐멤버 추가 및 찜 +1 */
         member.plusTierScore(10);
-        jimMember.add(member);
         one.getJimMember().add(member);
         one.setJim(one.getJim()+1);
-        return;
     }
 }

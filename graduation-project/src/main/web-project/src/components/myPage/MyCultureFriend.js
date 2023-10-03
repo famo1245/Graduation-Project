@@ -1,9 +1,9 @@
 import React, { Component, useEffect, useState } from "react";
-import styles from "./MyCultureFriend.module.css";
+import styles from "./MycultureFriend.module.css";
 import axios from "axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-function MyCultureFriend(dummyData) {
+function MyCultureFriend() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -11,7 +11,17 @@ function MyCultureFriend(dummyData) {
   const navigate = useNavigate();
   const location = useLocation();
   const info = location.state;
-  console.log(dummyData);
+
+  useEffect(() => {
+    setLoading(true);
+    axios.get(`/api/chatRooms/user/${sessionStorage.getItem("userId")}`).then((res) => {
+      setData(res.data.chatRooms);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (!data) return null;
 
   return (
     <div className={styles.body_inner_bottom}>
@@ -21,16 +31,16 @@ function MyCultureFriend(dummyData) {
         </div>
         <div className={styles.home_upper}>
           <div className={styles.home_upper_content}>
-            {dummyData.dummyData.guList.map((culture) => {
-              const url = `/munhwaRow/${culture.id}`;
+            {data.map((room) => {
+              const url = `/CultureFriend/${room.roomId}`;
               return (
                 <div className={styles.box}>
-                  <div key={culture.id}>
+                  <div key={room.roomId}>
                     <Link to={url}>
-                      <img src={culture.main_img} alt="상세페이지" />
+                      <img src={room.cultureImg} alt="상세페이지" />
                     </Link>
                   </div>
-                  <div className={styles.title}>{culture.title}</div>
+                  <div className={styles.title}>{room.title}</div>
                 </div>
               );
             })}

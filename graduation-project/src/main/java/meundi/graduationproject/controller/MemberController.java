@@ -3,7 +3,9 @@ package meundi.graduationproject.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.DTO.MemberForm;
+import meundi.graduationproject.domain.DTO.ReviewDTO;
 import meundi.graduationproject.domain.Member;
+import meundi.graduationproject.domain.Review;
 import meundi.graduationproject.service.MemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,10 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -59,13 +58,35 @@ public class MemberController {
     @PostMapping("/info")
     @ResponseBody
     public ResponseEntity<?> myInfo(@RequestBody Map<String, Long> body) {
-        MemberForm myInfo = memberService.research(body.get("userId"));
+        Long userId = body.get("userId");
+        Member m = memberService.findById(userId);
+        List<Review> temp = m.getReviews();
+        List<ReviewDTO> myReviews = convertReview(temp);
+        MemberForm myInfo = memberService.research(userId);
         Map<String, Object> data = new HashMap<>();
         if (myInfo != null) {
             data.put("myInfo", myInfo);
+            data.put("myReviews", myReviews);
         }
 
         return ResponseEntity.ok().body(data);
+    }
+
+    private List<ReviewDTO> convertReview(List<Review> temp) {
+        int size = temp.size();
+        List<ReviewDTO> result = new ArrayList<>();
+        if (size > 10) {
+            temp.subList(size - 10, size);
+        }
+
+        Collections.reverse(temp);
+        for (Review r : temp) {
+            ReviewDTO dto = new ReviewDTO();
+            dto.setReviewDTO(r, r.getMember().getNickName(), r.getCulture().getMain_img());
+            result.add(dto);
+        }
+
+        return result;
     }
 
     @GetMapping("/info/update")

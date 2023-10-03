@@ -58,13 +58,10 @@ function CultureRequestSearch({ inputD, checkId, state }) {
       return (
         <CultureRequestContent
           key={key}
-          cultureImg={val.cultureImg}
           title={val.title}
-          meetDate={val.meetDate}
-          roomId={val.roomId}
-          cultureTitle={val.cultureTitle}
-          availableAgeRange={val.availableAgeRange}
-          gender={val.gender}
+          contents={val.contents}
+          nickname={val.nickname}
+          id={val.id}
         />
       );
     });
@@ -81,12 +78,7 @@ function CultureRequestSearch({ inputD, checkId, state }) {
         <div className={styles.for_the_review_button}>
           <div className={styles.inputWrapper}>
             <div className={styles.searchLogo}>검색 |</div>
-            <input
-              type="text"
-              value={data}
-              onChange={handleChange}
-              onKeyDown={handleOnKeyPress}
-            />
+            <input type="text" value={data} onChange={handleChange} onKeyDown={handleOnKeyPress} />
             <FaSearch id={styles.searchIcon} />
           </div>
           {isLogin ? (

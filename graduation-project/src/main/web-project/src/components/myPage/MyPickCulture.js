@@ -13,7 +13,17 @@ function MyPickCulture(dummyData) {
   const navigate = useNavigate();
   const location = useLocation();
   const info = location.state;
-  console.log(dummyData.dummyData);
+
+  useEffect(() => {
+    setLoading(true);
+    axios.get(`/api/cultures/user/${sessionStorage.getItem("userId")}`).then((res) => {
+      setData(res.data.likedCultures);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (!data) return null;
 
   return (
     <div className={styles.body_inner_bottom}>
@@ -23,7 +33,7 @@ function MyPickCulture(dummyData) {
         </div>
         <div className={styles.home_upper}>
           <div className={styles.home_upper_content}>
-            {dummyData.dummyData.guList.map((culture) => {
+            {data.map((culture) => {
               const url = `/munhwaRow/${culture.id}`;
               return (
                 <div key={culture.id}>

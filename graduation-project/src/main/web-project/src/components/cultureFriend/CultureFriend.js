@@ -40,15 +40,11 @@ function CultureFriend() {
         <div className={styles.container_body_inner}>
           <div>
             <h1>
-              문화 친구 <hr style={{ border: 0 }} />
+              문화친구 <hr style={{ border: 0 }} />
             </h1>
           </div>
           <div className={styles.searchbarcontainer}>
-            <CultureFriendSearchbar
-              inputD={inputD.chatRooms}
-              checkId={checkId}
-              state={location.state}
-            />
+            <CultureFriendSearchbar inputD={inputD.chatRooms} checkId={checkId} state={location.state} />
           </div>
         </div>
       </div>

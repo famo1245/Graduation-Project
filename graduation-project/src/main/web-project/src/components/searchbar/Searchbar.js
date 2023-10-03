@@ -65,12 +65,7 @@ function Searchbar({ inputD }) {
       <div className={styles.wrapper}>
         <div className={styles.inputWrapper}>
           <div className={styles.searchLogo}>검색 |</div>
-          <input
-            type="text"
-            value={data}
-            onChange={handleChange}
-            onKeyDown={handleOnKeyPress}
-          />
+          <input type="text" value={data} onChange={handleChange} onKeyDown={handleOnKeyPress} />
           <FaSearch id={styles.searchIcon} />
         </div>
         <div className={styles.line}></div>

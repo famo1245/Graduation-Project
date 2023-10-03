@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import React, { Component, useEffect, useState } from "react";
 import styles from "./MyReview.module.css";
 
-function MyReview(dummyData) {
+function MyReview(props) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -11,7 +11,6 @@ function MyReview(dummyData) {
   const navigate = useNavigate();
   const location = useLocation();
   const info = location.state;
-  console.log(dummyData);
 
   return (
     <div className={styles.body_inner_bottom}>
@@ -21,16 +20,16 @@ function MyReview(dummyData) {
         </div>
         <div className={styles.home_upper}>
           <div className={styles.home_upper_content}>
-            {dummyData.dummyData.guList.map((culture) => {
-              const url = `/munhwaRow/${culture.id}`;
+            {props.reviews.map((review) => {
+              const url = `/ReviewDetail/${review.id}`;
               return (
                 <div className={styles.box}>
-                  <div key={culture.id}>
+                  <div key={review.id}>
                     <Link to={url}>
-                      <img src={culture.main_img} alt="상세페이지" />
+                      <img src={review.main_img} alt="상세페이지" />
                     </Link>
                   </div>
-                  <div className={styles.title}>{culture.title}</div>
+                  <div className={styles.title}>{review.reviewTitle}</div>
                 </div>
               );
             })}

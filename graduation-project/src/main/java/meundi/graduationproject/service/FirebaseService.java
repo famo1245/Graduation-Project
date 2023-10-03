@@ -11,7 +11,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -25,6 +27,10 @@ public class FirebaseService {
 
     public List<MessagesDTO> getMessages(String roomId) throws ExecutionException, InterruptedException {
         return firebaseRepositoryDao.getMessages(roomId);
+    }
+
+    public List<ChatRoomDTO> getUserChatRooms(Long userId) throws Exception {
+        return  firebaseRepositoryDao.getUserChatRooms(userId);
     }
 
     public void sendMessage(MessagesDTO message) throws Exception {
@@ -43,30 +49,44 @@ public class FirebaseService {
         return firebaseRepositoryDao.getChatRooms();
     }
 
-    public boolean joinRoom(ChatRoomDTO room, Member member) throws Exception {
+    public Map<String, Object> joinRoom(ChatRoomDTO room, Member member) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+
         // 이미 참여한 사용자인지 확인
         if (room.getParticipants().containsKey(member.getId().toString())) {
             log.info("already participated");
+            result.put("accessible", true);
             // enter 시 true -> false 로
             firebaseRepositoryDao.enterRoom(room, member.getId().toString());
-            return false;
+            return result;
         }
 
         // 참여자가 아니라면 정원이 찼는지 확인
         if (room.getParticipants().size() == room.getMax()) {
-            log.info("max");
-            return true;
+            log.info("room already full");
+            result.put("accessible", false);
+            result.put("message", "인원이 가득 찼습니다");
+            return result;
         }
 
         // 나잇대가 맞는지 확인
-        if (room.getAvailableAgeRange().equals(member.getAge_range())) {
-            log.info("join complete");
-            firebaseRepositoryDao.join(room, member.getId());
-            return false;
+        if (!room.getAvailableAgeRange().equals("any") && !room.getAvailableAgeRange().equals(member.getAge_range())) {
+            log.info("not mismatch age");
+            result.put("accessible", false);
+            result.put("message", "해당하는 범위의 나이가 아닙니다");
+            return result;
         }
 
-        log.info("age not match require: {}, user: {}", room.getAvailableAgeRange(), member.getAge_range());
-        return true;
+        if (!room.getGender().equals("any") && !room.getGender().equals(member.getGender())) {
+            log.info("not mismatch gender");
+            result.put("accessible", false);
+            result.put("message", "해당하는 성별이 아닙니다");
+            return result;
+        }
+
+        result.put("accessible", true);
+        firebaseRepositoryDao.join(room, member.getId());
+        return result;
     }
 
     // 2시간마다 채팅방에 업데이트 된 내용이 있으면 실행됨

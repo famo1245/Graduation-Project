@@ -43,6 +43,22 @@ public class FirebaseRepositoryDao {
     public List<ChatRoomDTO> getChatRooms() throws Exception {
         List<ChatRoomDTO> rooms = new ArrayList<>();
         ApiFuture<QuerySnapshot> future = db.collection(COLLECTION_CHAT_ROOM)
+                .orderBy("meetDate", Query.Direction.ASCENDING)
+                .get();
+        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+        for (QueryDocumentSnapshot document : documents) {
+            rooms.add(document.toObject(ChatRoomDTO.class));
+        }
+
+        Collections.reverse(rooms);
+        return rooms;
+    }
+
+    public List<ChatRoomDTO> getUserChatRooms(Long userId) throws Exception {
+        List<ChatRoomDTO> rooms = new ArrayList<>();
+        ApiFuture<QuerySnapshot> future = db.collection(COLLECTION_CHAT_ROOM)
+                .whereEqualTo("authorId", userId)
+                .orderBy("meetDate", Query.Direction.ASCENDING)
                 .get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
         for (QueryDocumentSnapshot document : documents) {

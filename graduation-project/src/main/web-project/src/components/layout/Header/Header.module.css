@@ -57,8 +57,12 @@
 
 .logo {
   display: block;
-  font-size: 32px;
-  font-weight: 700;
+  height: 40px;
+}
+
+.logo_link {
+  opacity: 1;
+  margin-left: 1%;
 }
 
 .login_route {
@@ -82,7 +86,7 @@
   text-decoration: none;
   display: inline-block;
   vertical-align: text-bottom;
-  color: lightslategrey;
+  color: #2c2c2c;
 }
 
 .header_lower {
@@ -158,7 +162,8 @@ li {
 
 .depth2_link {
   text-decoration: none;
-  color: darkgray;
+  color: #2c2c2c;
+  opacity: 1;
 }
 
 .depth2 ul li:hover {
@@ -207,7 +212,12 @@ li {
 } */
 
 .a {
-  color: grey;
+  color: #2c2c2c;
+  text-decoration: none;
+}
+
+.a__blue {
+  color: #2051c2;
   text-decoration: none;
 }
 

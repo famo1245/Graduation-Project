@@ -152,6 +152,7 @@ input:focus {
 .comment_row {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
 }
 .comment_id {
   font-size: 15px;
@@ -160,7 +161,7 @@ input:focus {
 
 .comment_date {
   padding-top: 0.5px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .comment_content {

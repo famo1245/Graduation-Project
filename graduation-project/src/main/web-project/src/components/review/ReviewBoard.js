@@ -27,8 +27,6 @@ function ReviewBoard(props) {
   if (error) return <div>Error...</div>;
   if (!inputD) return null;
 
-  console.log(inputD);
-
   return (
     <div className={styles.container}>
       <div className={styles.container_body}>

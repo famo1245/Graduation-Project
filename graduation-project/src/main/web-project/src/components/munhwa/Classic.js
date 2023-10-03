@@ -26,7 +26,7 @@ function Classic() {
         <div className={styles.container_body_inner}>
           <div>
             <h1>
-              관심 문화 <hr style={{ border: 0 }} />
+              관심문화 <hr style={{ border: 0 }} />
             </h1>
           </div>
           <div className={styles.searchbarcontainer}>

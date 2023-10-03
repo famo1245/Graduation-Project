@@ -94,7 +94,8 @@ public class CultureService {
     }
 
     public Culture findOne(Long id) {
-        return cultureRepository.findOneById(id);
+//        return cultureRepository.findOneById(id);
+        return CRJ.findDistinctByIdEquals(id);
     }
 
     /* Culture 객체로 받고 싶으면 .get()하면 받아짐 */

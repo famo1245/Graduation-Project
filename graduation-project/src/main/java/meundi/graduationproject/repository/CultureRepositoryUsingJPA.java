@@ -17,4 +17,6 @@ public interface CultureRepositoryUsingJPA  extends JpaRepository<Culture,Long> 
     List<Culture> findByCodeName(String codename);
 
     List<Culture> findAllByEndDateBetween(Date start, Date end);
+
+    Culture findDistinctByIdEquals(Long id);
 }

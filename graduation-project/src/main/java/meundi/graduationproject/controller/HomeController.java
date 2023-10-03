@@ -3,12 +3,14 @@ package meundi.graduationproject.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import meundi.graduationproject.domain.Culture;
+import meundi.graduationproject.domain.DTO.ChatRoomDTO;
 import meundi.graduationproject.domain.DTO.CultureDTO;
 import meundi.graduationproject.domain.DTO.MemberForm;
 import meundi.graduationproject.domain.DTO.ReviewDTO;
 import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.domain.Review;
 import meundi.graduationproject.service.CultureService;
+import meundi.graduationproject.service.FirebaseService;
 import meundi.graduationproject.service.MemberService;
 import meundi.graduationproject.service.ReviewService;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,7 @@ public class HomeController {
     private final CultureService cultureService;
     private final MemberService memberService;
     private final ReviewService reviewService;
+    private final FirebaseService firebaseService;
 
     private List<CultureDTO> getRecentCultures() {
         List<Culture> cultureListAll = cultureService.findCultureAll();
@@ -82,8 +85,18 @@ public class HomeController {
         return result;
     }
 
+    private List<ChatRoomDTO> getRecentChatRoom(List<ChatRoomDTO> list) {
+        int size = list.size();
+        List<ChatRoomDTO> result = list;
+        if (size > 4) {
+            result.subList(0, 5);
+        }
+
+        return result;
+    }
+
     @GetMapping("/api/home")
-    public Map<String, Object> home(@RequestParam(name = "userId") Long userId) {
+    public Map<String, Object> home(@RequestParam(name = "userId") Long userId) throws Exception {
         log.info("userId={}", userId);
         Map<String, Object> data = new HashMap<>();
         if (userId != -1L) {
@@ -110,7 +123,9 @@ public class HomeController {
         }
 
         List<ReviewDTO> reviews = getRecentReview();
+        List<ChatRoomDTO> friends = getRecentChatRoom(firebaseService.getChatRoomAll());
         data.put("reviews", reviews);
+        data.put("friends", friends);
         return data;
     }
 }

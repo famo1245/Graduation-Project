@@ -24,7 +24,6 @@ function CreatePost() {
   const navigate = useNavigate();
   const [imageURL1, setImageURL1] = useState(null);
   const [imageURL2, setImageURL2] = useState(null);
-  console.log(state);
 
   const onClick1 = async () => {
     setLike1(!like1);
@@ -113,9 +112,6 @@ function CreatePost() {
     navigate(`/reviewBoard`);
   };
 
-  console.log(imageURL1);
-  console.log(imageURL2);
-
   return (
     <div className={styles.container}>
       <div className={styles.container_body}>
@@ -134,72 +130,27 @@ function CreatePost() {
             <form name="" id="" action="" method="post">
               <div>
                 문화제목 : [
-                <input
-                  className={styles.input_codeName}
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder="카테고리 입력"
-                />
+                <input className={styles.input_codeName} type="text" name="" id="" placeholder="카테고리 입력" />
                 ]
-                <input
-                  className={styles.input_title}
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder="문화 제목 입력"
-                />
+                <input className={styles.input_title} type="text" name="" id="" placeholder="문화 제목 입력" />
               </div>
               <div>
-                제목 :{" "}
-                <input
-                  className={styles.input_reviewTitle}
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder="제목 입력"
-                />
+                제목 : <input className={styles.input_reviewTitle} type="text" name="" id="" placeholder="제목 입력" />
               </div>
               <div>
                 <span>추천도 : </span>
-                <img
-                  src={like1 ? "img/star (1).png" : "img/star.png"}
-                  onClick={onClick1}
-                />
-                <img
-                  src={like2 ? "img/star (1).png" : "img/star.png"}
-                  onClick={onClick2}
-                />
-                <img
-                  src={like3 ? "img/star (1).png" : "img/star.png"}
-                  onClick={onClick3}
-                />
-                <img
-                  src={like4 ? "img/star (1).png" : "img/star.png"}
-                  onClick={onClick4}
-                />
-                <img
-                  src={like5 ? "img/star (1).png" : "img/star.png"}
-                  onClick={onClick5}
-                />
-                <input
-                  className={styles.likeCount}
-                  type="text"
-                  name=""
-                  value={likeCount}
-                />
+                <img src={like1 ? "img/star (1).png" : "img/star.png"} onClick={onClick1} />
+                <img src={like2 ? "img/star (1).png" : "img/star.png"} onClick={onClick2} />
+                <img src={like3 ? "img/star (1).png" : "img/star.png"} onClick={onClick3} />
+                <img src={like4 ? "img/star (1).png" : "img/star.png"} onClick={onClick4} />
+                <img src={like5 ? "img/star (1).png" : "img/star.png"} onClick={onClick5} />
+                <input className={styles.likeCount} type="text" name="" value={likeCount} />
               </div>
             </form>
           </div>
           <div className={styles.body_content}>
             <form name="" id="" action="" method="post">
-              <textarea
-                name=""
-                id=""
-                cols="30"
-                rows="30"
-                placeholder="내용을 입력하세요."
-              ></textarea>
+              <textarea name="" id="" cols="30" rows="30" placeholder="내용을 입력하세요."></textarea>
             </form>
           </div>
           <div className={styles.lower_content}>
@@ -250,12 +201,7 @@ function CreatePost() {
             </form>
           </div>
           <div className={styles.post_button}>
-            <button
-              className={styles.text_link}
-              type="button"
-              form=""
-              onClick={onGoReviewBoard}
-            >
+            <button className={styles.text_link} type="button" form="" onClick={onGoReviewBoard}>
               작성완료
             </button>
           </div>

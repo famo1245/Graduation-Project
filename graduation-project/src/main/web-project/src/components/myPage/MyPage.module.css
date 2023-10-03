@@ -175,3 +175,7 @@
   margin-bottom: 300px;
   display: flex;
 }
+
+small {
+  font-size: 70%;
+}

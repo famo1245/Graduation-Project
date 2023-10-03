@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import styles from "./CultureFriendDetail.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import CultureDetailComment from "./CultureDetailComment";
+import axios from "axios";
 
 function CultureFriendDetail(props) {
   const location = useLocation();
-  const reviewInfo = location.state;
-  console.log(reviewInfo);
+  const cultureFriend = location.state;
   const [isLogin, setIsLogin] = useState(false);
   const [userId, setUserId] = useState("");
   const navigate = useNavigate();
@@ -17,52 +17,46 @@ function CultureFriendDetail(props) {
     }
   }, []);
 
-  const addList = (content, date) => {
-    setState({
-      list: [...state.list, { userId: "뚱이", content, date }],
-    });
+  const addList = (content) => {
+    axios
+      .post(`/api/chats/new-message/${cultureFriend.roomId}?userId=${sessionStorage.getItem("userId")}`, {
+        text: content,
+      })
+      .then((res) => {
+        setState({
+          list: [...state.list, res.data.chat],
+        });
+      });
   };
 
   const [state, setState] = useState({
     value: "",
     update: null,
-    list: [
-      {
-        userId: "뚱보",
-        content: "게시글 리스트 테스트 1",
-        date: "2023/09/29 16 : 37",
-      },
-      {
-        userId: "먹보",
-        content: "게시글 리스트 테스트 2",
-        date: "2023/09/29 16 : 40",
-      },
-      {
-        userId: "또라에몽",
-        content: "게시글 리스트 테스트 3",
-        date: "2023/09/29 16 : 41",
-      },
-    ],
+    list: cultureFriend.chats,
   });
 
-  console.log(state);
-  console.log(reviewInfo);
+  const dateConverter = (data) => {
+    const date = new Date(data);
+    let result = "";
+    result += date.toLocaleDateString().slice(0, -1).replace(/ /g, "");
+    result += " ";
+    result += date.toTimeString().slice(0, 5);
+    return result;
+  };
 
   let renderList = state.list.map((v, k) => {
     return (
       <div>
-        {v.userId !== "뚱이" ? (
+        {v.author != sessionStorage.getItem("userId") ? (
           <div key={k} className={styles.renderList_container}>
             <div className={styles.comment_row}>
-              <div className={styles.comment_id}>{v.userId}</div>
-              <div className={styles.comment_date}>{v.date}</div>
+              <div className={styles.comment_id}>{v.nickName}</div>
+              <div className={styles.comment_date}>{dateConverter(v.created_at)}</div>
             </div>
             <div className={styles.comment_content}>
               <span>
                 <div>
-                  <span className={styles.comment_content_inner}>
-                    {v.content}
-                  </span>
+                  <span className={styles.comment_content_inner}>{v.text}</span>
                 </div>
               </span>
             </div>
@@ -70,15 +64,13 @@ function CultureFriendDetail(props) {
         ) : (
           <div key={k} className={styles.renderList_container2}>
             <div className={styles.comment_row}>
-              <div className={styles.comment_id}>{v.userId}</div>
-              <div className={styles.comment_date}>{v.date}</div>
+              <div className={styles.comment_id}>{v.nickName}</div>
+              <div className={styles.comment_date}>{dateConverter(v.created_at)}</div>
             </div>
             <div className={styles.comment_content}>
               <span>
                 <div>
-                  <span className={styles.comment_content_inner2}>
-                    {v.content}
-                  </span>
+                  <span className={styles.comment_content_inner2}>{v.text}</span>
                 </div>
               </span>
             </div>
@@ -98,7 +90,7 @@ function CultureFriendDetail(props) {
               <hr style={{ border: 0 }} />
             </h1>
             <h1 className={styles.title2}>
-              {reviewInfo.cultureTitle}
+              {cultureFriend.cultureTitle}
               <hr style={{ border: 0 }} />
             </h1>
           </div>
@@ -106,36 +98,32 @@ function CultureFriendDetail(props) {
             <div className={styles.body_left}>
               <div className={styles.body_left_top}>
                 <div className={styles.left_top_img}>
-                  <img src={reviewInfo.cultureImg} alt="" />
+                  <img src={cultureFriend.cultureImg} alt="" />
                 </div>
                 <div className={styles.left_top_content}>
-                  <div className={styles.inner_title}>
-                    {reviewInfo.cultureTitle}
-                  </div>
+                  <div className={styles.inner_title}>{cultureFriend.cultureTitle}</div>
                   <div id={styles.inner_title}>
-                    <div>{reviewInfo.title}</div>
+                    <div>{cultureFriend.title}</div>
                   </div>
                   <div className={styles.info}>
-                    <div>나이대 | {reviewInfo.availableAgeRange}</div>
+                    <div>
+                      나이대 |{" "}
+                      {cultureFriend.availableAgeRange === "any" ? "상관없음" : cultureFriend.availableAgeRange}
+                    </div>
                   </div>
                   <div className={styles.info}>
-                    <div>성별 | {reviewInfo.gender}</div>
+                    <div>
+                      성별 | {cultureFriend.gender === "any" ? "아무나" : cultureFriend.gender === "male" ? "남" : "여"}
+                    </div>
                   </div>
                   <div className={styles.info}>
-                    <div>날짜 | {reviewInfo.meetDate}</div>
+                    <div>날짜 | {new Date(cultureFriend.meetDate).toLocaleDateString()}</div>
                   </div>
                 </div>
               </div>
-              <div className={styles.body_left_bottom}>
-                <span>
-                  사용자가 적은 간단한 내용이 들어올 위치 사용자가 적은 간단한
-                  내용이 들어올 위치 사용자가 적은 간단한 내용이 들어올 위치
-                  사용자가 적은 간단한 내용이 들어올 위치 사용자가 적은 간단한
-                  내용이 들어올 위치 사용자가 적은 간단한 내용이 들어올 위치
-                  사용자가 적은 간단한 내용이 들어올 위치사용자가 적은 간단한
-                  내용이 들어올 위치 사용자가 적은 간단한 내용이 들어올 위치
-                </span>
-              </div>
+              {/* <div className={styles.body_left_bottom}>
+                <span>{cultureFriend.title}</span>
+              </div> */}
             </div>
             <div className={styles.body_right}>
               <div className={styles.talk_box}>{renderList}</div>

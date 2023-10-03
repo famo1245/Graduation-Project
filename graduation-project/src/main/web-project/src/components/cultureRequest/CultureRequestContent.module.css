@@ -46,6 +46,7 @@
   margin-bottom: 10px;
   font-size: 22px;
   font-weight: 600;
+  cursor: pointer;
 }
 
 #user_content {

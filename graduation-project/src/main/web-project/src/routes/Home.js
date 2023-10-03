@@ -22,10 +22,7 @@ function Home(props) {
 
   useEffect(() => {
     setLoading(true);
-    const userId =
-      sessionStorage.getItem("userId") != null
-        ? parseInt(sessionStorage.getItem("userId"))
-        : -1;
+    const userId = sessionStorage.getItem("userId") != null ? parseInt(sessionStorage.getItem("userId")) : -1;
     setIsLogin(sessionStorage.getItem("userId") === null ? false : true);
     axios
       .get(`/api/home?userId=${userId}`)
@@ -35,8 +32,6 @@ function Home(props) {
       })
       .catch((err) => setError(err));
   }, []);
-
-  console.log(data);
 
   const starCount = (count) => {
     let arr = [];
@@ -52,6 +47,52 @@ function Home(props) {
       arr.push(<img className={styles.star_empty} src="/img/star (1).png" />);
     }
     return arr;
+  };
+
+  const getAgeRange = (ageRange) => {
+    switch (ageRange) {
+      case "10~19":
+        return "10대";
+      case "20~29":
+        return "20대";
+      case "30~39":
+        return "30대";
+      case "40~49":
+        return "40대";
+      case "50~59":
+        return "50대";
+      case "60~69":
+        return "60대";
+      case "70~79":
+        return "70대";
+      case "80~89":
+        return "80대";
+      case "90~99":
+        return "90대";
+      case "100~109":
+        return "100대";
+      default:
+        return "상관없음";
+    }
+  };
+
+  const onClickCultureFriendItem = (e, friend) => {
+    if (!isLogin) {
+      alert("로그인을 해야 이용 가능한 서비스입니다");
+      return;
+    }
+    axios.get(`/api/chats/${friend.roomId}?userId=${sessionStorage.getItem("userId")}`).then((res) => {
+      if (res.data.accessible) {
+        alert("채팅방에 입장합니다");
+        navigate(`/CultureFriendDetail/${friend.roomId}`, {
+          replace: false,
+          state: { ...friend, chats: res.data.chats },
+        });
+        return;
+      }
+
+      alert(res.data.message);
+    });
   };
 
   if (loading) return <div>Loading...</div>;
@@ -96,9 +137,7 @@ function Home(props) {
         </div>
       </div>
       <div>
-        <h4>
-          {isLogin ? data.category + " 문화 생활" : "곧 끝나는 문화 생활"}
-        </h4>
+        <h4>{isLogin ? data.category + " 문화 생활" : "곧 끝나는 문화 생활"}</h4>
       </div>
       <div className={styles.home_upper}>
         <div className={styles.home_upper_content}>
@@ -158,15 +197,7 @@ function Home(props) {
                       }}
                     />
                   </div>
-                  <div
-                    className={styles.inner_content}
-                    onClick={() => {
-                      navigate(`/reviewDetail/${review.id}`, {
-                        replace: false,
-                        state: review,
-                      });
-                    }}
-                  >
+                  <div className={styles.inner_content}>
                     <span className={styles.inner_content_title}>
                       {review.reviewTitle}
                       <hr style={{ border: 0 }} />
@@ -174,131 +205,19 @@ function Home(props) {
                     <div className={styles.container_star_ratings}>
                       <span className={styles.star_ratings_title}>평점:</span>
                       <div className={styles.star_ratings}>
-                        <div className={styles.star_ratings_fill}>
-                          {starCount(parseInt(review.reviewGrade))}
-                        </div>
-                        <div className={styles.star_ratings_base}>
-                          {starBase()}
-                        </div>
+                        <div className={styles.star_ratings_fill}>{starCount(parseInt(review.reviewGrade))}</div>
+                        <div className={styles.star_ratings_base}>{starBase()}</div>
                       </div>
                     </div>
                     <span>작성자: {review.nickname}</span>
                     <br />
-                    <span>
-                      작성일자:{" "}
-                      {new Date(review.reviewDateTime).toLocaleDateString()}
-                    </span>
+                    <span>작성일자: {new Date(review.reviewDateTime).toLocaleDateString()}</span>
                     <br />
-                    <span className={styles.user_short_text}>
-                      {review.reviewContents}
-                    </span>
+                    <span className={styles.user_short_text}>{review.reviewContents}</span>
                   </div>
                 </div>
               );
             })}
-            {/* <div className={styles.content_both_inner}>
-              <div>
-                <Link>
-                  <img className={styles.review_img} src={`/img/눈의꽃 사진.png`} />
-                </Link>
-              </div>
-              <div className={styles.inner_content}>
-                <span className={styles.inner_content_title}>
-                  [뮤지컬/오페라]레미제라블
-                  <hr style={{ border: 0 }} />
-                </span>
-                <div className={styles.container_star_ratings}>
-                  <span className={styles.star_ratings_title}>평점:</span>
-                  <div className={styles.star_ratings}>
-                    <div className={styles.star_ratings_fill}>{starCount()}</div>
-                    <div className={styles.star_ratings_base}>{starBase()}</div>
-                  </div>
-                </div>
-                <span>작성자: 오미크론</span>
-                <br />
-                <span>작성일자: 2023/06/06</span>
-                <br />
-                <span className={styles.user_short_text}>정말 멋있어요 강추!!!!합니다.</span>
-              </div>
-            </div>
-            <div className={styles.content_both_inner}>
-              <div>
-                <Link>
-                  <img className={styles.review_img} src={`/img/눈의꽃 사진.png`} />
-                </Link>
-              </div>
-              <div className={styles.inner_content}>
-                <span className={styles.inner_content_title}>
-                  [뮤지컬/오페라]레미제라블
-                  <hr style={{ border: 0 }} />
-                </span>
-                <div className={styles.container_star_ratings}>
-                  <span className={styles.star_ratings_title}>평점:</span>
-                  <div className={styles.star_ratings}>
-                    <div className={styles.star_ratings_fill}>{starCount()}</div>
-                    <div className={styles.star_ratings_base}>{starBase()}</div>
-                  </div>
-                </div>
-                <span>작성자: 오미크론</span>
-                <br />
-                <span>작성일자: 2023/06/06</span>
-                <br />
-                <div className={styles.user_short_text}>
-                  정말 멋있어요 강추!!!!합니다. 너무좋아요 사랑해요 레미제라블 너는 나의 하나뿐인 뮤지컬이야. 제발
-                  후속작 이만개 내줘요 제작자님!!
-                </div>
-              </div>
-            </div>
-            <div className={styles.content_both_inner}>
-              <div>
-                <Link>
-                  <img className={styles.review_img} src={`/img/눈의꽃 사진.png`} />
-                </Link>
-              </div>
-              <div className={styles.inner_content}>
-                <span className={styles.inner_content_title}>
-                  [뮤지컬/오페라]레미제라블
-                  <hr style={{ border: 0 }} />
-                </span>
-                <div className={styles.container_star_ratings}>
-                  <span className={styles.star_ratings_title}>평점:</span>
-                  <div className={styles.star_ratings}>
-                    <div className={styles.star_ratings_fill}>{starCount()}</div>
-                    <div className={styles.star_ratings_base}>{starBase()}</div>
-                  </div>
-                </div>
-                <span>작성자: 오미크론</span>
-                <br />
-                <span>작성일자: 2023/06/06</span>
-                <br />
-                <span className={styles.user_short_text}>정말 멋있어요 강추!!!!합니다.</span>
-              </div>
-            </div>
-            <div className={styles.content_both_inner}>
-              <div>
-                <Link>
-                  <img className={styles.review_img} src={`/img/눈의꽃 사진.png`} />
-                </Link>
-              </div>
-              <div className={styles.inner_content}>
-                <span className={styles.inner_content_title}>
-                  [뮤지컬/오페라]레미제라블
-                  <hr style={{ border: 0 }} />
-                </span>
-                <div className={styles.container_star_ratings}>
-                  <span className={styles.star_ratings_title}>평점:</span>
-                  <div className={styles.star_ratings}>
-                    <div className={styles.star_ratings_fill}>{starCount()}</div>
-                    <div className={styles.star_ratings_base}>{starBase()}</div>
-                  </div>
-                </div>
-                <span>작성자: 오미크론</span>
-                <br />
-                <span>작성일자: 2023/06/06</span>
-                <br />
-                <span className={styles.user_short_text}>정말 멋있어요 강추!!!!합니다.</span>
-              </div>
-            </div> */}
           </div>
           <div className={styles.lower_content_right}>
             <div className={styles.culture_friend}>
@@ -309,110 +228,47 @@ function Home(props) {
                 </Link>
               </div>
             </div>
-            <div className={styles.content_both_inner}>
-              <div>
-                <Link>
-                  <img
-                    className={styles.review_img}
-                    src={`/img/사랑했나봐.png`}
-                  />
-                </Link>
-              </div>
-              <div className={styles.inner_content}>
-                <span className={styles.inner_content_title}>
-                  [뮤지컬/오페라]레미제라블
-                  <hr style={{ border: 0 }} />
-                </span>
-                <span>작성자 제목: 우리 같이 즐겨욧</span>
-                <br />
-                <span>관람 날짜: 2023/06/12</span>
-                <br />
-                <span>작성자: 오미크론/남/20대</span>
-                <br />
-                <span>원하는 사람: 여/20대</span>
-                <br />
-                <span>구하는 인원: 1 / 2</span>
-                <br />
-              </div>
-            </div>
-            <div className={styles.content_both_inner}>
-              <div>
-                <Link>
-                  <img
-                    className={styles.review_img}
-                    src={`/img/사랑했나봐.png`}
-                  />
-                </Link>
-              </div>
-              <div className={styles.inner_content}>
-                <span className={styles.inner_content_title}>
-                  [뮤지컬/오페라]레미제라블
-                  <hr style={{ border: 0 }} />
-                </span>
-                <span>작성자 제목: 우리 같이 즐겨욧</span>
-                <br />
-                <span>관람 날짜: 2023/06/12</span>
-                <br />
-                <span>작성자: 오미크론/남/20대</span>
-                <br />
-                <span>원하는 사람: 여/20대</span>
-                <br />
-                <span>구하는 인원: 1 / 2</span>
-                <br />
-              </div>
-            </div>
-            <div className={styles.content_both_inner}>
-              <div>
-                <Link>
-                  <img
-                    className={styles.review_img}
-                    src={`/img/사랑했나봐.png`}
-                  />
-                </Link>
-              </div>
-              <div className={styles.inner_content}>
-                <span className={styles.inner_content_title}>
-                  [뮤지컬/오페라]레미제라블
-                  <hr style={{ border: 0 }} />
-                </span>
-                <span>작성자 제목: 우리 같이 즐겨욧</span>
-                <br />
-                <span>관람 날짜: 2023/06/12</span>
-                <br />
-                <span>작성자: 오미크론/남/20대</span>
-                <br />
-                <span>원하는 사람: 여/20대</span>
-                <br />
-                <span>구하는 인원: 1 / 2</span>
-                <br />
-              </div>
-            </div>
-            <div className={styles.content_both_inner}>
-              <div>
-                <Link>
-                  <img
-                    className={styles.review_img}
-                    src={`/img/사랑했나봐.png`}
-                  />
-                </Link>
-              </div>
-              <div className={styles.inner_content}>
-                <span className={styles.inner_content_title}>
-                  [뮤지컬/오페라]레미제라블
-                  <hr style={{ border: 0 }} />
-                </span>
-                <span>작성자 제목: 우리 같이 즐겨욧</span>
-                <br />
-                <span>관람 날짜: 2023/06/12</span>
-                <br />
-                <span>작성자: 오미크론/남/20대</span>
-                <br />
-                <span>원하는 사람: 여/20대</span>
-                <br />
-                <span>구하는 인원: 1 / 2</span>
-                <br />
-              </div>
-            </div>
+            {data.friends.map((friend) => {
+              return (
+                <div className={styles.content_both_inner}>
+                  <div>
+                    <img
+                      className={styles.review_img}
+                      src={friend.cultureImg}
+                      onClick={(e) => {
+                        onClickCultureFriendItem(e, friend);
+                      }}
+                    />
+                  </div>
+                  <div
+                    className={styles.inner_content}
+                    onClick={(e) => {
+                      onClickCultureFriendItem(e, friend);
+                    }}
+                  >
+                    <span className={styles.inner_content_title}>
+                      {friend.cultureTitle}
+                      <hr style={{ border: 0 }} />
+                    </span>
+                    <span>제목: {friend.title}</span>
+                    <br />
+                    <span>관람 날짜: {new Date(friend.meetDate).toLocaleDateString()}</span>
+                    <br />
+                    <span>작성자: {friend.authorNickname}</span>
+                    <br />
+                    <span>
+                      원하는 사람: {friend.gender === "any" ? "아무나" : friend.gender === "male" ? "남" : "여"} /{" "}
+                      {getAgeRange(friend.availableAgeRange)}
+                    </span>
+                    <br />
+                    <span>
+                      구하는 인원: {Object.keys(friend.participants).length} / {friend.max}
+                    </span>
+                    <br />
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

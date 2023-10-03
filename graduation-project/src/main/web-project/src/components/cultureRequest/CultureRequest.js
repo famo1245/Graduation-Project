@@ -22,9 +22,9 @@ function CultureRequest() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`/api/chatRooms`)
+      .get(`/api/culture-request/list`)
       .then((response) => {
-        setInputD(response.data);
+        setInputD(response.data.requests);
         setLoading(false);
       })
       .catch((err) => setError(err));
@@ -40,16 +40,12 @@ function CultureRequest() {
         <div className={styles.container_body_inner}>
           <div>
             <h1>
-              문화요청 게시판
+              문화요청
               <hr style={{ border: 0 }} />
             </h1>
           </div>
           <div className={styles.searchbarcontainer}>
-            <CultureRequestSearch
-              inputD={inputD.chatRooms}
-              checkId={checkId}
-              state={location.state}
-            />
+            <CultureRequestSearch inputD={inputD} checkId={checkId} state={location.state} />
           </div>
         </div>
       </div>

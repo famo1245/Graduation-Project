@@ -46,6 +46,9 @@ public class Member {
 //    @JsonBackReference
     private Review jimReview;
 
+//    @OneToMany(mappedBy = "member")
+//    private List<Culture> cultures = new ArrayList<>();
+
     //==create logic==//
     public void create(Long id, String email, String nickName, String gender, String district, String age_range,
                                String favoriteCategory) {

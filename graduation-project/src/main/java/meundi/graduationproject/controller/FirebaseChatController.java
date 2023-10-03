@@ -27,13 +27,6 @@ public class FirebaseChatController {
     private final CultureService cultureService;
     private final MemberService memberService;
 
-    @GetMapping("/chats/create/{culture_id}")
-    public String createForm(@PathVariable Long culture_id, Model model) {
-        model.addAttribute("culture_id", culture_id);
-        model.addAttribute("create_form", new ChatRoomDTO());
-        return "friend/create-chatroom";
-    }
-
     @PostMapping("/chats/create/{culture_id}")
     @ResponseBody
     public ResponseEntity<?> createChatRoom(@PathVariable Long culture_id, @RequestBody Map<String, Object> body,
@@ -59,53 +52,52 @@ public class FirebaseChatController {
         fbService.createChatRoom(chatRoomDTO);
         log.info("user: {} created {} chat room", userId, roomId);
         Map<String, Object> data = new HashMap<>();
-//        data.put("chatRoom", chatRoomDTO);
         return ResponseEntity.ok().body(data);
     }
 
     @GetMapping("/chats/{roomId}")
-    public String showChatRoom(@PathVariable String roomId, HttpSession session,
-                               Model model) throws Exception {
-        if (session.getAttribute("userId") == null) {
-            log.info("login first");
-            return "redirect:/members/login";
-        }
-
-        Long userId = (Long) session.getAttribute("userId");
+    public ResponseEntity<?> showChatRoom(@PathVariable String roomId, @RequestParam Long userId) throws Exception {
         ChatRoomDTO chatRoom = fbService.findChatRoom(roomId);
         Member currentUser = memberService.findById(userId);
         log.info("find chat room {}", roomId);
 
-        if (fbService.joinRoom(chatRoom, currentUser)) {
-            log.info("user: {} can't enter the room {}", userId, chatRoom.getRoomId());
-            return "redirect:/";
+        Map<String, Object> result = fbService.joinRoom(chatRoom, currentUser);
+        if ((boolean) result.get("accessible")) {
+            List<MessagesDTO> messages = fbService.getMessages(chatRoom.getRoomId());
+            result.put("chats", messages);
         }
 
-        List<MessagesDTO> messages = fbService.getMessages(chatRoom.getRoomId());
-        model.addAttribute("chatRoom", chatRoom);
-        model.addAttribute("messages", messages);
-        log.info("user: {} enter the room {}", userId, chatRoom.getRoomId());
-        return "friend/chatroom";
+        return ResponseEntity.ok().body(result);
     }
 
     // send Message
     @PostMapping("/chats/new-message/{roomId}")
-    public String sendMessage(MessagesDTO message, @PathVariable String roomId,
-                              HttpSession session) throws Exception {
-        Long userId = (Long) session.getAttribute("userId");
+    public ResponseEntity<?> sendMessage(@RequestBody MessagesDTO message, @PathVariable String roomId, @RequestParam Long userId)
+            throws Exception {
+        log.info("message={}", message);
         Member find = memberService.findById(userId);
         message.setRoomId(roomId);
         message.setNickName(find.getNickName());
         message.setAuthor(userId);
         message.setCreated_at(new Date());
         fbService.sendMessage(message);
-        return "redirect:/chats/{roomId}";
+        Map<String, Object> data = new HashMap<>();
+        data.put("chat", message);
+        return ResponseEntity.ok().body(data);
     }
 
     @GetMapping("/chatRooms")
     public ResponseEntity<?> getChatRoomAll() throws Exception {
         Map<String, Object> data = new HashMap<>();
         List<ChatRoomDTO> chatRooms = fbService.getChatRoomAll();
+        data.put("chatRooms", chatRooms);
+        return ResponseEntity.ok().body(data);
+    }
+
+    @GetMapping("/chatRooms/user/{userId}")
+    public ResponseEntity<?> getUserChatRoom(@PathVariable Long userId) throws Exception {
+        Map<String, Object> data = new HashMap<>();
+        List<ChatRoomDTO> chatRooms = fbService.getUserChatRooms(userId);
         data.put("chatRooms", chatRooms);
         return ResponseEntity.ok().body(data);
     }

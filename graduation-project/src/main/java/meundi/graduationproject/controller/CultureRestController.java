@@ -2,6 +2,7 @@ package meundi.graduationproject.controller;
 
 import java.util.*;
 import javax.annotation.PostConstruct;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
@@ -80,6 +81,7 @@ public class CultureRestController {
         message.put("category", result);
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
+
     @GetMapping("/cultures/favorite")
     public ResponseEntity<Map<String, Object>> cultureListByFavorite(@RequestParam Long user_id) {
         List<CultureDTO> result = new ArrayList<>();
@@ -90,6 +92,27 @@ public class CultureRestController {
         }
         message.put("favorite", result);
         return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+
+    @GetMapping("/cultures/user/{userId}")
+    public ResponseEntity<?> cultureUserLiked(@PathVariable Long userId) {
+        List<CultureDTO> result = new ArrayList<>();
+        Map<String, Object> data = new HashMap<>();
+        CultureDTO dto = new CultureDTO();
+        Culture temp = cultureService.findOneByTitle("푸치니 [투란도트]").get();
+        dto.setCultureDTO(temp);
+        result.add(dto);
+        dto = new CultureDTO();
+        temp = cultureService.findOneByTitle("[돈의문박물관마을] 2023년 시민갤러리 이별 박물관 展").get();
+        dto.setCultureDTO(temp);
+        result.add(dto);
+        dto = new CultureDTO();
+        temp = cultureService.findOneByTitle("[2023 카즈미 타테이시 트리오 내한공연] 크리스마스, 재즈를 만나다").get();
+        dto.setCultureDTO(temp);
+        result.add(dto);
+
+        data.put("likedCultures", result);
+        return ResponseEntity.ok().body(data);
     }
 
     @ModelAttribute("categories")
