@@ -158,7 +158,15 @@ function Home(props) {
                       }}
                     />
                   </div>
-                  <div className={styles.inner_content}>
+                  <div
+                    className={styles.inner_content}
+                    onClick={() => {
+                      navigate(`/reviewDetail/${review.id}`, {
+                        replace: false,
+                        state: review,
+                      });
+                    }}
+                  >
                     <span className={styles.inner_content_title}>
                       {review.reviewTitle}
                       <hr style={{ border: 0 }} />

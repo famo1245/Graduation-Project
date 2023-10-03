@@ -16,7 +16,7 @@ function MunhwaDetail(props) {
   const [clickCultureFriend, setClickCultureFriend] = useState(false);
   const [visible, setVisible] = useState(styles.join_none);
   const [isLogin, setIsLogin] = useState(false);
-
+  // const review = data.reviews;
   const navigate = useNavigate();
 
   const onClickReviewCreatePost = () => {
@@ -30,13 +30,6 @@ function MunhwaDetail(props) {
     navigate(`/ReviewBoard`, {
       replace: false,
       state: data,
-    });
-  };
-
-  const onClickReviewDetail = () => {
-    navigate(`/ReviewDetail/${state.id}`, {
-      replace: false,
-      state: props,
     });
   };
 
@@ -93,6 +86,9 @@ function MunhwaDetail(props) {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error...</div>;
   if (!data) return null;
+
+  console.log(state);
+  console.log(data);
 
   return (
     <div className={styles.container}>
@@ -216,7 +212,12 @@ function MunhwaDetail(props) {
                 <div className={styles.box_review_preview_content}>
                   <div
                     className={styles.review_preview_title}
-                    onClick={onClickReviewDetail}
+                    onClick={() => {
+                      navigate(`/ReviewDetail/${review.id}`, {
+                        replace: false,
+                        state: review,
+                      });
+                    }}
                   >
                     {review.reviewTitle}
                   </div>
