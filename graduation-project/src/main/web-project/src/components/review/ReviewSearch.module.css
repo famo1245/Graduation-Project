@@ -21,12 +21,10 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* margin-bottom: 20px; */
 }
 
 .inputWrapper {
   background-color: white;
-  /* background-color: #2051c2; */
   width: 27%;
   border-radius: 10px;
   height: 2.5rem;
@@ -123,7 +121,6 @@ button:focus {
 .row {
   display: flex;
   flex-direction: row;
-  /* justify-content: flex-start; */
   flex-wrap: wrap;
 }
 
@@ -134,14 +131,12 @@ button:focus {
   font-weight: 600;
   display: flex;
   justify-content: center;
-  /* background-color: #2051c2; */
 }
 
 .paginationBttns a {
   padding: 3px;
   border-radius: 5px;
   outline: none;
-  /* border: 1px solid #2051c2; */
   color: #2c2c2c;
   cursor: pointer;
 }
@@ -153,5 +148,4 @@ button:focus {
 
 .paginationActive a {
   color: #2051c2;
-  /* background-color: #2051c2; */
 }

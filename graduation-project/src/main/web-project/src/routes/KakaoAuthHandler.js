@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 // import { useDispatch } from "react-redux";
 // import { actionCreators as userAction } from "../redux/modules/user";
-// import Spinner from "../elements/Spinner";
 
 export default function KakaoAuthHandler() {
   const [error, setError] = useState(null);
@@ -45,12 +44,3 @@ export default function KakaoAuthHandler() {
 
   return <></>;
 }
-
-// return (
-//   <div>
-//     {/* <h1>is Member: {isMember}</h1> */}
-//     {/* <h1>{data[0].id}</h1>s */}
-//     <h2>{data.id}</h2>
-//     {/* <h2>{data.age_range}</h2> */}
-//   </div>
-// );

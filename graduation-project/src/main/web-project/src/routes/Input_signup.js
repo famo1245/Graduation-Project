@@ -82,7 +82,6 @@ function Input_signup(props) {
                     className={duplicateFirst ? styles.duplicateName : styles.notDuplicateName}
                     type="text"
                     name="nickName"
-                    // defaultValue={myInfo.nickName}
                   />
                   <div className={styles.Duplicate_check} onClick={checkDuplicated}>
                     중복확인

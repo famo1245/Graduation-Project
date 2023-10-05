@@ -5,9 +5,7 @@ function Footer(props) {
   return (
     <div className={styles.footer}>
       <div className={styles.contents_nav}>
-        <div className={styles.left}>
-          <Link className={styles.left_click}>◀</Link>
-        </div>
+        <div className={styles.left}>{/* <Link className={styles.left_click}>◀</Link> */}◀</div>
         <h2 className={styles.content}>
           <div>
             <span className={styles.content_a}>대한민국 근로소득자라면, 누구나 누리고, 연말정산 돌려받자!</span>
@@ -27,7 +25,10 @@ function Footer(props) {
           </a>
         </div>
         <div className={styles.right}>
-          <Link className={styles.right_click}>▶</Link>
+          <Link to={`/input_signup`} className={styles.right_click}>
+            ▶
+          </Link>
+          ▶
         </div>
       </div>
       <div className={styles.contents_count}>

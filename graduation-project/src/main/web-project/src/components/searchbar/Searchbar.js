@@ -9,15 +9,10 @@ import ReactPaginate from "react-paginate";
 function Searchbar({ inputD }) {
   const [data, setData] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
-  // const [searchData, setSearchData] = useState([]);
-  // const [pageCount, setPageCount] = useState();
 
   const culturePerPage = 18;
   let pagesVisited = pageNumber * culturePerPage;
 
-  // useEffect(() => {
-  //   setPageCount(Math.ceil(inputD.length / culturePerPage));
-  // }, []);
   let pageCount = Math.ceil(inputD.length / culturePerPage);
 
   const changePage = ({ selected }) => {
@@ -89,51 +84,3 @@ function Searchbar({ inputD }) {
 }
 
 export default Searchbar;
-
-{
-  /* <tr key={key} className={styles.json_data}>
-<td></td>
-<td>
-  
-</td>
-<td></td>
-<td>{val.singer}</td>
-</tr> */
-}
-
-// let i = 0;
-// let dataArray = [];
-
-// while (i < pageCount) {
-//   if (i === pageCount - 1) {
-//     for (let j = i * culturePerPage; j < cnt; j++) {
-//       dataItems.push(dataItem[j]);
-//     }
-//   } else {
-//     for (let j = i * culturePerPage; j < (i + 1) * culturePerPage; j++) {
-//       dataItems.push(dataItem[j]);
-//     }
-//   }
-//   dataArray.push(dataItems);
-//   i++;
-// }
-
-// try {
-//   let cnt = 0;
-//   let dataItem = [];
-
-//   for (let i = 0; i < inputD.length; i++) {
-//     if (inputD[i].title.includes(data.toLowerCase())) {
-//       dataItem.push(inputD[i]);
-//       cnt = cnt + 1;
-//     }
-//   }
-//   if (cnt === 0 || data === "") {
-//     return setSearchData(inputD);
-//   } else {
-//     setPageCount(Math.ceil(dataItem.length / culturePerPage));
-//     return setSearchData(dataItem);
-//   }
-// } catch (error) {
-//   console.log(error);
-// }

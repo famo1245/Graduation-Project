@@ -5,7 +5,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* margin-left: 1%; */
 }
 
 .home div h4 {
@@ -44,7 +43,6 @@
 }
 
 .home_upper_content div img {
-  /* background-color: green; */
   margin: 20px 10px;
   width: 170px;
   height: 200px;
@@ -52,13 +50,11 @@
 }
 
 .prev_arrow {
-  /* transform: rotateY(180deg); */
   color: lightblue;
 }
 
 .angle_right {
   color: lightblue;
-  /* background-color: blue; */
 }
 
 .prev {
@@ -120,8 +116,6 @@ Button {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* align-items: center; */
-  /* background-color: aqua; */
 }
 
 .lower_content_left {
@@ -130,7 +124,6 @@ Button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* align-items: center; */
   background-color: ghostwhite;
   padding: 35px;
 }
@@ -141,23 +134,19 @@ Button {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
-  /* background-color: beige; */
 }
 
 .lower_content_left .review_notice_board div {
   font-weight: 600;
   color: gray;
-  /* background-color: aqua; */
 }
 
 .lower_content_left .review_notice_board .a {
-  /* padding-right: 550px; */
   font-size: 23px;
 }
 
 .lower_content_left .review_notice_board .b .see_more {
   cursor: pointer;
-  /* text-decoration: none; */
   color: gray;
   font-size: 30px;
 }
@@ -171,13 +160,11 @@ Button {
   align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
-  /* background-color: #2b2a29; */
 }
 
 .review_img {
   width: 170px;
   height: 200px;
-  /* background-color: blue; */
   box-shadow: none;
   text-shadow: none;
   object-fit: cover;
@@ -187,10 +174,6 @@ Button {
 .inner_content {
   width: 400px;
   cursor: pointer;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: space-evenly; */
-  /* background-color: #fff58c; */
 }
 
 .inner_content_title {
@@ -211,7 +194,6 @@ Button {
 
 .star_ratings {
   /* position: relative; */
-
   width: max-content;
   /* -webkit-text-fill-color: transparent;
   -webkit-text-stroke-width: 1px;
@@ -219,13 +201,11 @@ Button {
 }
 
 .star_ratings_fill {
-  /* color: #fff58c; */
   padding: 0;
   position: absolute;
   z-index: 1;
   display: flex;
   overflow: hidden;
-  /* -webkit-text-fill-color: black; */
 }
 
 .star_ratings_base {
@@ -266,7 +246,6 @@ Button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* align-items: center; */
   background-color: ghostwhite;
   padding: 35px;
 }
@@ -275,25 +254,20 @@ Button {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* align-items: center; */
   margin-bottom: 25px;
-  /* background-color: beige; */
 }
 
 .lower_content_right .culture_friend div {
   font-weight: 600;
   color: gray;
-  /* background-color: aqua; */
 }
 
 .lower_content_right .culture_friend .a {
-  /* padding-right: 540px; */
   font-size: 23px;
 }
 
 .lower_content_right .culture_friend .b .see_more {
   cursor: pointer;
-  /* text-decoration: none; */
   color: gray;
   margin-left: 20px;
   font-size: 30px;

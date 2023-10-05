@@ -22,7 +22,6 @@ function MyPage() {
   const [dummyData, setDummyData] = useState(null);
   const [myReviews, setMyReviews] = useState([]);
   const [isLogin, setIsLogin] = useState(false);
-  // const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -32,12 +31,9 @@ function MyPage() {
       .get(`/api/home?userId=${userId}`)
       .then((response) => {
         setDummyData(response.data);
-        // setLoading(false);
       })
       .catch((err) => setError(err));
   }, []);
-
-  // console.log(dummyData);
 
   useEffect(() => {
     setLoading(true);
@@ -219,11 +215,3 @@ function MyPage() {
 }
 
 export default MyPage;
-
-// {viewPoint === 1 ? (
-//   <MyPickCulture />
-// ) : viewPoint === 2 ? (
-//   <MyReview />
-// ) : (
-//   <MyCultureFriend />
-// )}

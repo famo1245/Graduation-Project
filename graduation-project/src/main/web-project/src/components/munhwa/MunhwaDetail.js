@@ -16,7 +16,6 @@ function MunhwaDetail(props) {
   const [clickCultureFriend, setClickCultureFriend] = useState(false);
   const [visible, setVisible] = useState(styles.join_none);
   const [isLogin, setIsLogin] = useState(false);
-  // const review = data.reviews;
   const navigate = useNavigate();
 
   const onClickReviewCreatePost = () => {
@@ -55,9 +54,6 @@ function MunhwaDetail(props) {
   };
 
   const toggleCultureFriend = async () => {
-    // const res = await axios.post(
-    //   ""
-    // ); /* [POST] 사용자가 좋아요를 누름 -> DB 갱신 */
     setClickCultureFriend(!clickCultureFriend);
     if (clickCultureFriend === true) {
       setVisible(styles.join_none);

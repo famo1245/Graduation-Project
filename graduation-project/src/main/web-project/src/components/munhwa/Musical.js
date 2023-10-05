@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import styles from "./Musical.module.css";
 import Searchbar from "../searchbar/Searchbar";
-import SearchResultsList from "../searchbar/SearchResultsList";
 import axios from "axios";
 import { Link, useLocation, useParams } from "react-router-dom";
 
+//문화 카테고리별 추출
 function Musical() {
   let location = useLocation();
   const [inputD, setInputD] = useState(null);

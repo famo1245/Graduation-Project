@@ -121,9 +121,6 @@ function CultureFriendDetail(props) {
                   </div>
                 </div>
               </div>
-              {/* <div className={styles.body_left_bottom}>
-                <span>{cultureFriend.title}</span>
-              </div> */}
             </div>
             <div className={styles.body_right}>
               <div className={styles.talk_box}>{renderList}</div>

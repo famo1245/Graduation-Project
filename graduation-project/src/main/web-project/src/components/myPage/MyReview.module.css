@@ -5,11 +5,9 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* margin-left: 1%; */
 }
 
 .body_inner_bottom div h4 {
-  /* position: absolute; */
   margin-left: 13px;
   font-size: 20px;
   color: grey;
@@ -56,7 +54,6 @@
 }
 
 .box div img {
-  /* background-color: green; */
   position: relative;
   margin: 20px 10px 13px 10px;
   width: 170px;

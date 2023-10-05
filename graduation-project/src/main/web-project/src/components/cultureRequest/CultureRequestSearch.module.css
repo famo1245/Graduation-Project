@@ -21,12 +21,10 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* margin-bottom: 20px; */
 }
 
 .inputWrapper {
   background-color: white;
-  /* background-color: #2051c2; */
   width: 27%;
   border-radius: 10px;
   height: 2.5rem;
@@ -65,17 +63,9 @@
   border-radius: 15px;
   color: #2051c2;
   position: relative;
-  /* padding: 10px 10px; */
-  /* border-radius: 15px; */
   font-family: "paybooc-Light", sans-serif;
-  /* box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); */
-  /* text-decoration: none; */
   font-weight: 700;
   transition: 0.25s;
-  /* margin-left: 30px; */
-  /* border: 3px solid dodgerblue; */
-  /* color: #707070; */
-  /* background-color: whitesmoke; */
 }
 
 .review_input_button:hover {
@@ -122,7 +112,6 @@ button:focus {
 .row {
   display: flex;
   flex-direction: row;
-  /* justify-content: flex-start; */
   flex-wrap: wrap;
 }
 
@@ -133,14 +122,12 @@ button:focus {
   font-weight: 600;
   display: flex;
   justify-content: center;
-  /* background-color: #2051c2; */
 }
 
 .paginationBttns a {
   padding: 3px;
   border-radius: 5px;
   outline: none;
-  /* border: 1px solid #2051c2; */
   color: #2c2c2c;
   cursor: pointer;
 }
@@ -152,5 +139,4 @@ button:focus {
 
 .paginationActive a {
   color: #2051c2;
-  /* background-color: #2051c2; */
 }

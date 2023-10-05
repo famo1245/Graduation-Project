@@ -10,21 +10,11 @@ function ReviewContent(props) {
   const [likeCount, setLikeCount] = useState(0);
   const [isLogin, setIsLogin] = useState(false);
 
-  //   useEffect(async () => {
-  //     const fetchData = async () => {
-  //       const res = await axios.get("");
-  //       if (res.data.type === "liked") setLike(true);
-  //     };
-  //     fetchData();
-  //   }, []);
-
   const toggleLike = async () => {
     // const res = await axios.post(
     //   ""
     // ); /* [POST] 사용자가 좋아요를 누름 -> DB 갱신 */
-    axios.get(
-      `/api/review/jim/${props.id}?userId=${sessionStorage.getItem("userId")}`
-    );
+    axios.get(`/api/review/jim/${props.id}?userId=${sessionStorage.getItem("userId")}`);
     setLike(!like);
     if (like === true) {
       setLikeCount(likeCount + 1);
@@ -60,9 +50,7 @@ function ReviewContent(props) {
           <div className={styles.content_box_inner} id={styles.culture_title}>
             {props.reviewTitle}
           </div>
-          <div className={styles.content_box_inner}>
-            문화 제목: {props.cultureTitle}
-          </div>
+          <div className={styles.content_box_inner}>문화 제목: {props.cultureTitle}</div>
           <div className={styles.content_box_inner} id={styles.user_name}>
             작성자: {props.nickname}
           </div>
@@ -76,10 +64,7 @@ function ReviewContent(props) {
             className={isLogin ? styles.content_box_inner : styles.none_content}
             id={isLogin ? styles.like : styles.none_content}
           >
-            <img
-              src={like ? "img/heart.png" : "img/heart (2).png"}
-              onClick={toggleLike}
-            />
+            <img src={like ? "img/heart.png" : "img/heart (2).png"} onClick={toggleLike} />
             <span>{likeCount}</span>
           </div>
         </div>

@@ -7,7 +7,6 @@ import CultureFriendSearchbar from "./CultureFriendSearchbar";
 function CultureFriend() {
   let location = useLocation();
   const [inputD, setInputD] = useState(null);
-  //   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { id } = useParams();

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import styles from "./CultureAndCulture.module.css";
+import styles from "./Musical.module.css";
 import Searchbar from "../searchbar/Searchbar";
-import SearchResultsList from "../searchbar/SearchResultsList";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+//관심문화
 function Classic() {
   const [inputD, setInputD] = useState([]);
 

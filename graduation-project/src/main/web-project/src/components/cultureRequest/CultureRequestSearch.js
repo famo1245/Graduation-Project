@@ -9,8 +9,6 @@ import ReactPaginate from "react-paginate";
 function CultureRequestSearch({ inputD, checkId, state }) {
   const [data, setData] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
-  // const [searchData, setSearchData] = useState([]);
-  // const [pageCount, setPageCount] = useState();
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
 
@@ -26,10 +24,6 @@ function CultureRequestSearch({ inputD, checkId, state }) {
       setIsLogin(true);
     }
   }, []);
-
-  // useEffect(() => {
-  //   setPageCount(Math.ceil(inputD.length / culturePerPage));
-  // }, []);
 
   const changePage = ({ selected }) => {
     setPageNumber(selected);

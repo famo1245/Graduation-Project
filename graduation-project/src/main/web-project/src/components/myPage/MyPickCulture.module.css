@@ -5,7 +5,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* margin-left: 1%; */
 }
 
 .body_inner_bottom div h4 {
@@ -46,7 +45,6 @@
 }
 
 .home_upper_content div img {
-  /* background-color: green; */
   margin: 20px 10px;
   width: 170px;
   height: 200px;

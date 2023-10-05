@@ -1,5 +1,4 @@
 .container {
-  /* background-color: blue; */
   box-sizing: border-box;
   height: 100%;
   width: 100%;
@@ -8,21 +7,17 @@
 .container_body {
   width: 100%;
   height: 100%;
-  /* background-color: aquamarine; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* max-height: 1600px; */
 }
 
 .container_body_inner {
   width: 100%;
   height: 100%;
   max-width: 1600px;
-  /* max-height: 600px; */
   display: flex;
-  /* background-color: red; */
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
@@ -30,17 +25,13 @@
   margin-bottom: 140px;
 }
 
-/* .container_body_inner div h1 {
-        color: dodgerblue;
-      } */
-
 .title1 {
   font-size: 20pt;
-  color: dodgerblue;
+  color: #2051c2;
 }
 
 .title2 {
-  color: #2260ff;
+  color: #2051c2;
   font-size: 24pt;
 }
 
@@ -51,7 +42,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  /* background-color: blueviolet; */
   border-top: 2.5px solid #707070;
   padding-top: 20px;
   padding-bottom: 10px;
@@ -167,9 +157,6 @@
   margin-top: 15px;
 }
 
-/* .lower_content_image input {
-      display: none;
-    } */
 .lower_content_image div {
   width: 45%;
 }
@@ -216,14 +203,14 @@
   font-weight: 600;
   transition: 0.25s;
   margin-left: 30px;
-  border: 3px solid dodgerblue;
+  border: 3px solid #2051c2;
   color: #707070;
   background-color: whitesmoke;
 }
 
 .text_link:hover {
   color: #d4dfe6;
-  background-color: dodgerblue;
+  background-color: #2051c2;
   letter-spacing: 2px;
   transform: scale(1.2);
   cursor: pointer;

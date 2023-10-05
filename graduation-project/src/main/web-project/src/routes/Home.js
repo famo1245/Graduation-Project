@@ -10,7 +10,6 @@ import { type } from "@testing-library/user-event/dist/type";
 import axios from "axios";
 import { HiPlus } from "react-icons/hi";
 
-// const scrollVisibilityApiType = React.ContextType(VisibilityContext);
 const url = "/dataList/OA-15486/S/1/datasetView.do";
 
 function Home(props) {
@@ -127,13 +126,6 @@ function Home(props) {
                   </div>
                 );
               })}
-          {/* <div className={styles.prev}>
-            <i className={styles.prev_arrow}>◀</i>
-          </div>
-          <div className={styles.next}>
-            <i className={styles.angle_right}>▶</i>
-          </div> */}
-          {/* </ScrollMenu> */}
         </div>
       </div>
       <div>
@@ -162,13 +154,6 @@ function Home(props) {
                   </div>
                 );
               })}
-
-          {/* <div className={styles.prev}>
-            <i className={styles.prev_arrow}>◀</i>
-          </div>
-          <div className={styles.next}>
-            <i className={styles.angle_right}>▶</i>
-          </div> */}
         </div>
       </div>
       <div className={styles.home_lower}>

@@ -4,11 +4,6 @@ import axios from "axios";
 import { useLocation, useParams, Link, useNavigate, redirect } from "react-router-dom";
 import styles from "./CreatePost.module.css";
 
-// async function productFetch(id){
-//     const response = await axios.get(`http://localhost:8080/products/${id}`);
-//     return response.data
-// }
-
 function CreatePost() {
   const { id } = useParams();
   const [data, setData] = useState(null);
@@ -89,26 +84,7 @@ function CreatePost() {
     });
   };
 
-  //   const imageInput1 = useRef();
-  //   const imageInput2 = useRef();
-
-  //   const onClickImageUpload1 = () => {
-  //     imageInput1.current.click();
-  //   };
-
-  //   const onClickImageUpload2 = () => {
-  //     imageInput2.current.click();
-  //   };
-
   const onGoReviewBoard = (e) => {
-    // const form = document.querySelector("#");
-    // console.log(form);
-    // const formData = new FormData(form);
-    // const contents = {};
-    // formData.forEach((value, key) => {
-    //   contents[key] = value;
-    // });
-    // axios.post("", contents);
     e.preventDefault();
     const form = document.querySelector("#reviewForm");
     const formData = new FormData(form);
@@ -124,8 +100,6 @@ function CreatePost() {
     navigate(`/reviewBoard`, {
       replace: true,
     });
-    // window.location.href = "http://localhost:3000/reviewBoard";
-    // <redirect to="/reviewBoard" />;
   };
 
   console.log(imageURL1);
@@ -181,32 +155,22 @@ function CreatePost() {
               <div>사진파일 업로드</div>
               <div className={styles.lower_content_image}>
                 <div>
-                  {/* <button type="text" onClick={onClickImageUpload1}>
-                    이미지 선택
-                  </button> */}
                   <input
-                    // ref={imageInput1}
                     type="file"
                     name=""
                     id=""
                     onChange={onChange1}
-                    //   value={imageURL1}
                     encType="multipart/form-data"
                     multiple="file"
                     accept="image/*"
                   />
                 </div>
                 <div className={styles.image1}>
-                  {/* <button type="text" onClick={onClickImageUpload2}>
-                    이미지 선택
-                  </button> */}
                   <input
-                    // ref={imageInput2}
                     type="file"
                     name=""
                     id=""
                     onChange={onChange2}
-                    //   value={imageURL2}
                     encType="multipart/form-data"
                     multiple="file"
                     accept="image/*"

@@ -3,7 +3,6 @@ import React from "react";
 import axios from "axios";
 import styles from "./Login.module.css";
 import logo from "../imgs/kakao_login_medium_narrow.png";
-// import KakaoLoginButton from "../components/login/KakaoLoginButton";
 
 function Login() {
   const REST_API_KEY = "92fbf81b06d378a41d55ee603e5b6bd0";

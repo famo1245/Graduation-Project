@@ -27,7 +27,6 @@ function ReviewDetailComment({ addList }) {
         <div className={styles.ps_box}>
           <input type="text" className={styles.int} placeholder="댓글 달기..." onChange={handleChange} value={value} />
           <button type="submit" className={styles.comment_btn} value="댓글등록">
-            {/* <img src="/img/right-chevron.png" id={styles.s_comment_btn} /> */}
             <span id={styles.s_comment_btn}>›</span>
           </button>
         </div>

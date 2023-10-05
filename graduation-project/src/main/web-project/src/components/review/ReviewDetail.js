@@ -166,7 +166,6 @@ function ReviewDetail() {
 
   const toggleLike = async () => {
     // const res = await axios.post(
-    //   ""
     // ); /* [POST] 사용자가 좋아요를 누름 -> DB 갱신 */
     axios.get(`/api/review/jim/${reviewInfo.id}?userId=${sessionStorage.getItem("userId")}`);
     setLike(!like);
@@ -197,7 +196,6 @@ function ReviewDetail() {
               <div className={styles.info}>
                 <div className={styles.star_ratings_fill}>
                   <div>추천도</div> {starCount()}
-                  {/* <div className={styles.star_ratings_fill}>{starCount()}</div> */}
                 </div>
               </div>
               <div className={styles.info_active}>
@@ -222,10 +220,7 @@ function ReviewDetail() {
           </div>
           <div className={styles.lower_content}>
             <div className={styles.lower_content_text}>{reviewInfo.reviewContents}</div>
-            <div className={styles.lower_content_img}>
-              {/* <img src="/img/눈의꽃 사진.png" alt="" />
-              <img src="/img/사랑했나봐.png" alt="" /> */}
-            </div>
+            <div className={styles.lower_content_img}></div>
           </div>
           <div className={styles.comment_container}>
             <div className={styles.comment_title}>댓글</div>

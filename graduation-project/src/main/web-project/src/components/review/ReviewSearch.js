@@ -11,8 +11,6 @@ function ReviewSearch({ inputD, state }) {
   const [pageNumber, setPageNumber] = useState(0);
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
-  // const [searchData, setSearchData] = useState([]);
-  // const [pageCount, setPageCount] = useState();
 
   useEffect(() => {
     if (state) {
@@ -86,12 +84,7 @@ function ReviewSearch({ inputD, state }) {
         <div className={styles.for_the_review_button}>
           <div className={styles.inputWrapper}>
             <div className={styles.searchLogo}>검색 |</div>
-            <input
-              type="text"
-              value={data}
-              onChange={handleChange}
-              onKeyDown={handleOnKeyPress}
-            />
+            <input type="text" value={data} onChange={handleChange} onKeyDown={handleOnKeyPress} />
             <FaSearch id={styles.searchIcon} />
           </div>
           {isLogin ? (

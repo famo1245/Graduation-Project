@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
-// import styles from "./Sign_up.module.css";
 import styles from "./Login.module.css";
 import React from "react";
 import axios from "axios";
 import logo from "../imgs/kakao_login_medium_narrow.png";
-// import KakaoLoginButton from "../components/login/KakaoLoginButton";
 
 function Sign_up() {
   const REST_API_KEY = "92fbf81b06d378a41d55ee603e5b6bd0";
