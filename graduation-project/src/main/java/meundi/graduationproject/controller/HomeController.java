@@ -85,14 +85,15 @@ public class HomeController {
         return result;
     }
 
-    private List<ChatRoomDTO> getRecentChatRoom(List<ChatRoomDTO> list) {
+    private List<ChatRoomDTO> getRecentChatRoom() throws Exception {
+        List<ChatRoomDTO> list = firebaseService.getChatRoomAll();
         int size = list.size();
-        List<ChatRoomDTO> result = list;
+        log.info("size={}", size);
         if (size > 4) {
-            result.subList(0, 5);
+            list = list.subList(0, 4);
         }
 
-        return result;
+        return list;
     }
 
     @GetMapping("/api/home")
@@ -123,7 +124,7 @@ public class HomeController {
         }
 
         List<ReviewDTO> reviews = getRecentReview();
-        List<ChatRoomDTO> friends = getRecentChatRoom(firebaseService.getChatRoomAll());
+        List<ChatRoomDTO> friends = getRecentChatRoom();
         data.put("reviews", reviews);
         data.put("friends", friends);
         return data;
