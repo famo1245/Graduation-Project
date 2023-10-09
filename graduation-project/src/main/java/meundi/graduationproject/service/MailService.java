@@ -2,6 +2,7 @@ package meundi.graduationproject.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,9 @@ public class MailService {
 
     private final JavaMailSender javaMailSender;
     private final TemplateEngine templateEngine;
-    private final String ROOM_URL = "http://localhost:8080/chats/";
+
+    @Value("${api.chat.base.url}")
+    private String ROOM_URL;
 
     public void sendNotify(String roomId, List<String> receivers) {
         String chatRoomUrl = ROOM_URL + roomId;
@@ -29,7 +32,7 @@ public class MailService {
 
         MimeMessagePreparator preparator = mimeMessage -> {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
-            String content = templateEngine.process("templates/mail/chat-notify", context);
+            String content = templateEngine.process("templates/mail/chat-notify.html", context);
 
             helper.setTo(receiveList);
             helper.setSubject("[문화 인 서울] 새로운 채팅이 있습니다.");
