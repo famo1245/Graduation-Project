@@ -41,13 +41,8 @@ public class Member {
 //    @JsonManagedReference
     private List<Review> reviews = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "review_id")
-//    @JsonBackReference
-    private Review jimReview;
-
-//    @OneToMany(mappedBy = "member")
-//    private List<Culture> cultures = new ArrayList<>();
+    @Column(length = 1000)
+    private String likedCulture;
 
     //==create logic==//
     public void create(Long id, String email, String nickName, String gender, String district, String age_range,
@@ -101,5 +96,52 @@ public class Member {
         } else if (this.tierScore >= 100) {
             this.tiers = Tiers.BRONZE;
         }
+    }
+
+    public List<Long> getLikedCulture() {
+        List<Long> culture = new ArrayList<>();
+        if (this.likedCulture == null || this.likedCulture.isEmpty()) {
+            return culture;
+        }
+
+        String[] temp = this.likedCulture.split(", ");
+        for (String s : temp) {
+            culture.add(Long.parseLong(s));
+        }
+        return culture;
+    }
+
+    public void addLikedCulture(Long id) {
+        List<Long> likeCulture = getLikedCulture();
+        likeCulture.add(id);
+        String result = "";
+        for (int i=0; i<likeCulture.size(); i++) {
+            result += likeCulture.get(i).toString();
+
+            if (i == likeCulture.size() - 1) {
+                continue;
+            }
+
+            result += ", ";
+        }
+
+        this.likedCulture = result;
+    }
+
+    public void removeLikedCulture(Long id) {
+        List<Long> likeCulture = getLikedCulture();
+        likeCulture.remove(id);
+        String result = "";
+        for (int i=0; i<likeCulture.size(); i++) {
+            result += likeCulture.get(i).toString();
+
+            if (i == likeCulture.size() - 1) {
+                continue;
+            }
+
+            result += ", ";
+        }
+
+        this.likedCulture = result;
     }
 }

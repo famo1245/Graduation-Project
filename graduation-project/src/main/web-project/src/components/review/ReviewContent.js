@@ -17,8 +17,15 @@ function ReviewContent(props) {
     axios.get(`/api/review/jim/${props.id}?userId=${sessionStorage.getItem("userId")}`);
     setLike(!like);
     if (like === true) {
+      props.jimMember.push(parseInt(sessionStorage.getItem("userId")));
       setLikeCount(likeCount + 1);
     } else {
+      for (let i = 0; i < props.jimMember.length; i++) {
+        if (props.jimMember[i] === parseInt(sessionStorage.getItem("userId"))) {
+          props.jimMember.splice(i, 1);
+          break;
+        }
+      }
       setLikeCount(likeCount - 1);
     }
   };
@@ -32,7 +39,7 @@ function ReviewContent(props) {
 
   useEffect(() => {
     setLikeCount(props.jimCount);
-    if (props.jimMember.includes(sessionStorage.getItem("userId"))) {
+    if (props.jimMember.includes(parseInt(sessionStorage.getItem("userId")))) {
       setLike(false);
     }
     if (sessionStorage.getItem("userId")) {

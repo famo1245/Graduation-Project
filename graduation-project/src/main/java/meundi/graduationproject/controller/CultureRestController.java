@@ -96,22 +96,44 @@ public class CultureRestController {
 
     @GetMapping("/cultures/user/{userId}")
     public ResponseEntity<?> cultureUserLiked(@PathVariable Long userId) {
+        Member user = memberService.findById(userId);
+        List<Long> likedCulture = user.getLikedCulture();
         List<CultureDTO> result = new ArrayList<>();
         Map<String, Object> data = new HashMap<>();
-        CultureDTO dto = new CultureDTO();
-        Culture temp = cultureService.findOneByTitle("푸치니 [투란도트]").get();
-        dto.setCultureDTO(temp);
-        result.add(dto);
-        dto = new CultureDTO();
-        temp = cultureService.findOneByTitle("[돈의문박물관마을] 2023년 시민갤러리 이별 박물관 展").get();
-        dto.setCultureDTO(temp);
-        result.add(dto);
-        dto = new CultureDTO();
-        temp = cultureService.findOneByTitle("[2023 카즈미 타테이시 트리오 내한공연] 크리스마스, 재즈를 만나다").get();
-        dto.setCultureDTO(temp);
-        result.add(dto);
+        for (Long cid : likedCulture) {
+            Culture temp = cultureService.findOne(cid);
+            CultureDTO dto = new CultureDTO();
+            dto.setCultureDTO(temp);
+            result.add(dto);
+        }
 
         data.put("likedCultures", result);
+        return ResponseEntity.ok().body(data);
+    }
+
+    @GetMapping("/cultures/like/{culture_id}")
+    public ResponseEntity<?> getCultureLike(@RequestParam Long userId, @PathVariable Long culture_id) {
+        Member user = memberService.findById(userId);
+        List<Long> likedCulture = user.getLikedCulture();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("liked", likedCulture.contains(culture_id));
+        return ResponseEntity.ok().body(data);
+    }
+
+    @GetMapping("/cultures/add/like/{culture_id}")
+    public ResponseEntity<?> cultureLike(@RequestParam Long userId, @PathVariable Long culture_id) {
+        Member user = memberService.findById(userId);
+        List<Long> likedCulture = user.getLikedCulture();
+        if (likedCulture.contains(culture_id)) {
+            user.removeLikedCulture(culture_id);
+        } else {
+            user.addLikedCulture(culture_id);
+        }
+
+        memberService.join(user);
+        Map<String, Object> data = new HashMap<>();
+        data.put("status", "ok");
         return ResponseEntity.ok().body(data);
     }
 

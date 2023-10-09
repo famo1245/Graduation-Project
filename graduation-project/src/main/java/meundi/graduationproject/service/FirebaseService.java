@@ -108,7 +108,9 @@ public class FirebaseService {
                     }
                 }
 
-                mailService.sendNotify(room.getRoomId(), receivers);
+                if (!receivers.isEmpty()) {
+                    mailService.sendNotify(room.getRoomId(), receivers);
+                }
                 room.setIsUpdated(false);
                 firebaseRepositoryDao.updateRoomInfo(room);
             }

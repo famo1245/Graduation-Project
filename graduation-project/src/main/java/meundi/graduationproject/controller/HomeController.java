@@ -88,7 +88,6 @@ public class HomeController {
     private List<ChatRoomDTO> getRecentChatRoom() throws Exception {
         List<ChatRoomDTO> list = firebaseService.getChatRoomAll();
         int size = list.size();
-        log.info("size={}", size);
         if (size > 4) {
             list = list.subList(0, 4);
         }
@@ -101,7 +100,6 @@ public class HomeController {
         log.info("userId={}", userId);
         Map<String, Object> data = new HashMap<>();
         if (userId != -1L) {
-            log.info("true");
             MemberForm myInfo = memberService.research(userId);
             List<CultureDTO> guList = cultureConverter(cultureService.findByDistrict(myInfo.getDistrict()));
             data.put("district", myInfo.getDistrict() + " 최신 문화 생활");

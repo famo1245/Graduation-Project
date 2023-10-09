@@ -50,6 +50,7 @@ function MunhwaDetail(props) {
     // const res = await axios.post(
     //   ""
     // ); /* [POST] 사용자가 좋아요를 누름 -> DB 갱신 */
+    axios.get(`/api/cultures/add/like/${data.id}?userId=${sessionStorage.getItem("userId")}`);
     setLike(!like);
   };
 
@@ -74,7 +75,14 @@ function MunhwaDetail(props) {
       .get(`/api/cultures/detail/${id}`)
       .then((res) => {
         setData(res.data);
-        setLoading(false);
+        if (sessionStorage.getItem("userId")) {
+          axios.get(`/api/cultures/like/${res.data.id}?userId=${sessionStorage.getItem("userId")}`).then((res) => {
+            setLike(res.data.liked);
+            setLoading(false);
+          });
+        } else {
+          setLoading(false);
+        }
       })
       .catch((err) => setError(err));
   }, []);
