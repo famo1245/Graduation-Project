@@ -16,16 +16,16 @@ import meundi.graduationproject.repository.ReviewSearch;
 import meundi.graduationproject.service.CultureService;
 import meundi.graduationproject.service.MemberService;
 import meundi.graduationproject.service.ReviewService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -170,9 +170,42 @@ public class ReviewRestController {
         review.setCulture(culture); /*리뷰 객체에 문화 객체 넣기 */
         review.setJim(0);
         Review savedReview = reviewService.insertReview(review, member);
-        message.put("data", savedReview);
+        message.put("reviewId", savedReview.getId());
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
+
+    @PostMapping("/upload/image")
+    public ResponseEntity<?> uploadImage(@RequestParam Long reviewId,
+                                        @RequestPart(value = "image1", required = false) MultipartFile image1,
+                                        @RequestPart(value = "image2", required = false) MultipartFile image2) throws IOException {
+        Map<String, Object> message = new HashMap<>();
+        Review find = reviewService.findOne(reviewId);
+        String imageUrl1 = "";
+        String imageUrl2 = "";
+
+        if (image1 != null) {
+            imageUrl1 = reviewService.saveReviewImage(image1);
+        }
+
+        if (image2 != null) {
+            imageUrl2 = reviewService.saveReviewImage(image2);
+        }
+
+        if (!imageUrl1.isEmpty()) {
+            find.setImage1Url(imageUrl1);
+        }
+
+        if (!imageUrl2.isEmpty()) {
+            find.setImage2Url(imageUrl2);
+        }
+
+        log.info("imageUrl1={}", find.getImage1Url());
+        log.info("imageUrl2={}", find.getImage2Url());
+        reviewService.save(find);
+        message.put("data", "ok");
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+
 
     //  리뷰 수정
     @GetMapping("reviewDetail/{review_id}/edit")

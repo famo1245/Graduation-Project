@@ -68,6 +68,8 @@ function ReviewSearch({ inputD, state }) {
           jimMember={val.jimMember}
           reviewComments={val.reviewComments}
           culture_id={val.culture_id}
+          image1Url={val.image1Url}
+          image2Url={val.image2Url}
         />
       );
     });
