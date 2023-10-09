@@ -171,3 +171,6 @@ gradle-app.setting
 # secret keys
 src/main/resources/application-secret.yml
 src/main/resources/FirebaseServiceKey.json
+
+# uploaded
+images/
