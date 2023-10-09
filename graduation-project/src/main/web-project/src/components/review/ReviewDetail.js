@@ -156,8 +156,8 @@ function ReviewDetail() {
       list: [...reviewInfo.reviewComments],
     });
     setStar(parseInt(reviewInfo.reviewGrade));
-    if (reviewInfo.jimMember.includes(sessionStorage.getItem("userId"))) {
-      setLike(false);
+    if (reviewInfo.jimMember.includes(parseInt(sessionStorage.getItem("userId")))) {
+      setLike(true);
     }
     if (sessionStorage.getItem("userId")) {
       setIsLogin(true);
@@ -220,7 +220,10 @@ function ReviewDetail() {
           </div>
           <div className={styles.lower_content}>
             <div className={styles.lower_content_text}>{reviewInfo.reviewContents}</div>
-            <div className={styles.lower_content_img}></div>
+            <div className={styles.lower_content_img}>
+              {reviewInfo.image1Url === null ? "" : <img src={`${reviewInfo.image1Url}`}></img>}
+              {reviewInfo.image2Url === null ? "" : <img src={`${reviewInfo.image2Url}`}></img>}
+            </div>
           </div>
           <div className={styles.comment_container}>
             <div className={styles.comment_title}>댓글</div>

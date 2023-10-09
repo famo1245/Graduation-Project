@@ -31,6 +31,8 @@ public class ReviewDTO {
     private String main_img;
     private List<ReviewCommentDTO> reviewComments;
     private Long culture_id;
+    private String image1Url;
+    private String image2Url;
 
     public void setReviewDTO(Review review, String nickname, String main_img) {
         this.id = review.getId();
@@ -41,11 +43,8 @@ public class ReviewDTO {
         this.nickname = nickname;
         this.main_img = main_img;
         this.jimCount = review.getJim();
-        this.jimMember = new ArrayList<>();
+        this.jimMember = review.getJimMember();
         this.reviewComments = new ArrayList<>();
-        for (Member m : review.getJimMember()) {
-            jimMember.add(m.getId());
-        }
         for (ReviewComment c : review.getReviewComments()) {
             ReviewCommentDTO temp = new ReviewCommentDTO();
             temp.setReviewCommentDTO(c);
@@ -53,5 +52,7 @@ public class ReviewDTO {
         }
         this.culture_id = review.getCulture().getId();
         this.cultureTitle = review.getCulture().getTitle();
+        this.image1Url = review.getImage1Url();
+        this.image2Url = review.getImage2Url();
     }
 }

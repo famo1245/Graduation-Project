@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.tomcat.util.buf.StringUtils;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
@@ -13,6 +14,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,27 +49,29 @@ public class Review {
     private Integer jim;
 
     /* 찜한 유저 */
-    @OneToMany(mappedBy = "jimReview")
-//    @JsonManagedReference
-    private List<Member> jimMember;
+    @Column(length = 1000)
+    private String jimMember;
 
     /*userId for 어떤유저가 작성했는지 알기 위해*/
     @ManyToOne
-//    @JsonBackReference
     @JoinColumn(name = "member_id")
     private Member member;
 
     /*cultureId for 어떤 문화에 대한 리뷰인지*/
     @ManyToOne
-//    @JsonBackReference
     @JoinColumn(name = "culture_id")
     private Culture culture;
 
     @NotBlank
     private String cultureTitle;
 
+    @Column(length = 500)
+    private String image1Url;
+
+    @Column(length = 500)
+    private String image2Url;
+
     @OneToMany(mappedBy = "review")
-//    @JsonManagedReference
     private List<ReviewComment>  reviewComments;
 
 
@@ -96,5 +100,52 @@ public class Review {
         this.reviewTitle = reviewTitle;
         this.reviewGrade = reviewGrade;
         this.reviewContents = reviewContents;
+    }
+
+    public List<Long> getJimMember() {
+        List<Long> jimMember = new ArrayList<>();
+        if (this.jimMember == null || this.jimMember.isEmpty()) {
+            return jimMember;
+        }
+
+        String[] temp = this.jimMember.split(", ");
+        for (String s : temp) {
+            jimMember.add(Long.parseLong(s));
+        }
+        return jimMember;
+    }
+
+    public void addJimMember(Long id) {
+        List<Long> likeMember = getJimMember();
+        likeMember.add(id);
+        String result = "";
+        for (int i=0; i<likeMember.size(); i++) {
+            result += likeMember.get(i).toString();
+
+            if (i == likeMember.size() - 1) {
+                continue;
+            }
+
+            result += ", ";
+        }
+
+        this.jimMember = result;
+    }
+
+    public void minusJimMember(Long id) {
+        List<Long> likeMember = getJimMember();
+        likeMember.remove(id);
+        String result = "";
+        for (int i=0; i<likeMember.size(); i++) {
+            result += likeMember.get(i).toString();
+
+            if (i == likeMember.size() - 1) {
+                continue;
+            }
+
+            result += ", ";
+        }
+
+        this.jimMember = result;
     }
 }

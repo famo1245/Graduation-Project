@@ -96,14 +96,33 @@ function CreatePost() {
     const reviewContents = reviewContentValue.replaceAll("<br>", "\r\n");
     contents.userId = sessionStorage.getItem("userId");
     contents.reviewContents = reviewContents;
-    axios.post(`api/review/reviewWrite`, contents);
-    navigate(`/reviewBoard`, {
-      replace: true,
+    const image1 = document.querySelector("#image1").files[0];
+    const image2 = document.querySelector("#image2").files[0];
+    axios.post(`/api/review/reviewWrite`, contents).then((res) => {
+      if (image1 !== undefined || image2 !== undefined) {
+        const data = new FormData();
+        data.append("image1", image1);
+        data.append("image2", image2);
+        axios({
+          method: "post",
+          url: `api/review/upload/image?reviewId=${res.data.reviewId}`,
+          contentType: false,
+          data: data,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }).then((res) => {
+          navigate(`/reviewBoard`, {
+            replace: true,
+          });
+        });
+      } else {
+        navigate(`/reviewBoard`, {
+          replace: true,
+        });
+      }
     });
   };
-
-  console.log(imageURL1);
-  console.log(imageURL2);
 
   return (
     <div className={styles.container}>
@@ -158,7 +177,7 @@ function CreatePost() {
                   <input
                     type="file"
                     name=""
-                    id=""
+                    id="image1"
                     onChange={onChange1}
                     encType="multipart/form-data"
                     multiple="file"
@@ -169,7 +188,7 @@ function CreatePost() {
                   <input
                     type="file"
                     name=""
-                    id=""
+                    id="image2"
                     onChange={onChange2}
                     encType="multipart/form-data"
                     multiple="file"
