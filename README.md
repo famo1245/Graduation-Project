@@ -1,5 +1,16 @@
-# 메운디 7.4
-
+# 메운디 Team
+- About Team
+  <table>
+    <tbody>
+      <tr>
+        <td align="center"><a href="https://github.com/famo1245"><img src="https://github.com/famo1245.png" width='100px;' alt=""/><br /><sub><b>팀장 김지영</b></sub></a><br /></td>
+        <td align="center"><a href="https://github.com/KwonJuHwan"><img src="https://github.com/KwonJuHwan.png" width="100px;" alt=""/><br /><sub><b>팀원 권주환</b></sub></a><br /></td>
+        <td align="center"><a href="https://github.com/Bumgul"><img src="https://github.com/Bumgul.png" width="100px;" alt=""/><br /><sub><b>팀원 박범준</b></sub></a><br /></td>
+        <td align="center"><a href="https://github.com/yhwoooo"><img src="https://github.com/yhwoooo.png" width="100px;" alt=""/><br /><sub><b>팀원 양현우</b></sub></a><br /></td>
+        <td align="center"><a href="https://github.com/LeeJaejun98"><img src="https://github.com/LeeJaejun98.png" width="100px;" alt=""/><br /><sub><b>팀원 이재준</b></sub></a><br /></td>
+      </tr>
+    </tbody>
+  </table>
 - 문화 생활 공공 데이터를 이용한 커뮤니티 서비스
 ---
 ## Rule
