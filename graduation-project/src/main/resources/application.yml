@@ -1,18 +1,46 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   datasource:
-    url: jdbc:h2:tcp://localhost/~/gradu
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+#    url: jdbc:mariadb://127.0.0.1:3306/cis
+    driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
+    database-platform: org.hibernate.dialect.MariaDBDialect
   h2:
     console:
       enabled: true
+  thymeleaf:
+    cache: false
+  output:
+    ansi:
+      enabled: always
+  messages:
+    basename: messages, errors
+  profiles:
+    include: secret
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail.smtp:
+        auth: true
+        starttls:
+          enable: true
+          required: true
+          timeout: 5000
 
 logging.level:
-  org.hibernate.SQL: debug
+  org.hibernate.SQL: info
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true

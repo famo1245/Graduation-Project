@@ -2,70 +2,129 @@ package meundi.graduationproject.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import meundi.graduationproject.repository.MemberRepository;
-import meundi.graduationproject.service.KaKaoAPI;
-import org.springframework.beans.factory.annotation.Autowired;
+import meundi.graduationproject.domain.Culture;
+import meundi.graduationproject.domain.DTO.ChatRoomDTO;
+import meundi.graduationproject.domain.DTO.CultureDTO;
+import meundi.graduationproject.domain.DTO.MemberForm;
+import meundi.graduationproject.domain.DTO.ReviewDTO;
+import meundi.graduationproject.domain.Member;
+import meundi.graduationproject.domain.Review;
+import meundi.graduationproject.service.CultureService;
+import meundi.graduationproject.service.FirebaseService;
+import meundi.graduationproject.service.MemberService;
+import meundi.graduationproject.service.ReviewService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
+import java.util.*;
 
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final KaKaoAPI kakao;
-    private final MemberRepository memberRepository;
+    private final CultureService cultureService;
+    private final MemberService memberService;
+    private final ReviewService reviewService;
+    private final FirebaseService firebaseService;
 
-    @RequestMapping("/")
-    public String home() {
-        return "index";
+    private List<CultureDTO> getRecentCultures() {
+        List<Culture> cultureListAll = cultureService.findCultureAll();
+        int lastIndex = cultureListAll.size();
+        List<Culture> cultureList = cultureListAll.subList(lastIndex - 10, lastIndex);
+        List<CultureDTO> result = new ArrayList<>();
+        Collections.reverse(cultureList);
+        for (Culture c : cultureList) {
+            CultureDTO temp = new CultureDTO();
+            temp.setCultureDTO(c);
+            result.add(temp);
+        }
+        return result;
     }
 
-    @GetMapping("/home/member")
-    public String home(@RequestParam("code") String code,
-                       HttpSession session,
-                       RedirectAttributes redirectAttributes,
-                       Model model) {
-        String accessToken = kakao.getAccessToken(code);
-        log.info("access token={}", accessToken);
-        HashMap<String, Object> userInfo = kakao.getUserInfo(accessToken);
-        log.info("userInfo={}", userInfo);
-
-        if (userInfo.get("email") != null) {
-            if(memberRepository.findById((Long) userInfo.get("id")) == null) {
-                model.addAttribute("id", userInfo.get("id"));
-                model.addAttribute("email", userInfo.get("email"));
-                model.addAttribute("gender", userInfo.get("gender"));
-                model.addAttribute("age_range", userInfo.get("age_range"));
-                return "/members/createMemberForm";
-            }
-            session.setAttribute("userId", userInfo.get("id"));
-            session.setAttribute("access_Token", accessToken);
-            redirectAttributes.addAttribute("status", true);
+    private List<CultureDTO> cultureConverter(List<Culture> list) {
+        List<CultureDTO> result = new ArrayList<>();
+        for (Culture c : list) {
+            CultureDTO dto = new CultureDTO();
+            dto.setCultureDTO(c);
+            result.add(dto);
         }
 
-        return "redirect:/";
+        return result;
     }
 
-    @RequestMapping("/members/login")
-    public String login() {
-        return "members/loginForm";
+    private List<ReviewDTO> getRecentReview() {
+        List<Review> temp = reviewService.findReviewAll();
+        List<ReviewDTO> temp2 = new ArrayList<>();
+        int lastIndex = temp.size();
+        for (Review r : temp) {
+            ReviewDTO rdto = new ReviewDTO();
+            rdto.setReviewDTO(r, r.getMember().getNickName(), r.getCulture().getMain_img());
+            temp2.add(rdto);
+        }
+        if (lastIndex < 4) {
+            Collections.reverse(temp2);
+            return temp2;
+        }
+        List<ReviewDTO> recentReviews = temp2.subList(lastIndex - 4, lastIndex);
+        Collections.reverse(recentReviews);
+        return recentReviews;
     }
 
-    @RequestMapping("/members/logout")
-    public String logout(HttpSession session) {
-        kakao.kakaoLogout((String)session.getAttribute("access_Token"));
-        session.removeAttribute("access_Token");
-        session.removeAttribute("userId");
-        session.invalidate();
-        return "redirect:/";
+    private List<CultureDTO> getSoonEnd() {
+        List<Culture> temp = cultureService.findSoonEndAll();
+        List<CultureDTO> result = new ArrayList<>();
+        for (Culture c : temp) {
+            CultureDTO dto = new CultureDTO();
+            dto.setCultureDTO(c);
+            result.add(dto);
+        }
+
+        return result;
+    }
+
+    private List<ChatRoomDTO> getRecentChatRoom() throws Exception {
+        List<ChatRoomDTO> list = firebaseService.getChatRoomAll();
+        int size = list.size();
+        if (size > 4) {
+            list = list.subList(0, 4);
+        }
+
+        return list;
+    }
+
+    @GetMapping("/api/home")
+    public Map<String, Object> home(@RequestParam(name = "userId") Long userId) throws Exception {
+        log.info("userId={}", userId);
+        Map<String, Object> data = new HashMap<>();
+        if (userId != -1L) {
+            MemberForm myInfo = memberService.research(userId);
+            List<CultureDTO> guList = cultureConverter(cultureService.findByDistrict(myInfo.getDistrict()));
+            data.put("district", myInfo.getDistrict() + " 최신 문화 생활");
+            data.put("guList", guList);
+            List<String> favoriteCategoryList = myInfo.getFavoriteCategoryList();
+
+            // 사용자가 선호 카테고리를 선택하지 않은 경우
+            if (favoriteCategoryList != null) {
+                int randomIndex = (int) (Math.random() * favoriteCategoryList.size());
+                List<CultureDTO> recommendList = cultureConverter(
+                        cultureService.findByCategory(favoriteCategoryList.get(randomIndex)));
+                data.put("category", favoriteCategoryList.get(randomIndex));
+                data.put("recommendList", recommendList);
+            }
+        } else {
+            List<CultureDTO> recentCultures = getRecentCultures();
+            data.put("recentCultures", recentCultures);
+            List<CultureDTO> soonEnd = getSoonEnd();
+            data.put("soonEnd", soonEnd);
+        }
+
+        List<ReviewDTO> reviews = getRecentReview();
+        List<ChatRoomDTO> friends = getRecentChatRoom();
+        data.put("reviews", reviews);
+        data.put("friends", friends);
+        return data;
     }
 }

@@ -2,6 +2,7 @@ package meundi.graduationproject.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import meundi.graduationproject.domain.DTO.MemberForm;
 import meundi.graduationproject.domain.Member;
 import meundi.graduationproject.repository.MemberRepository;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,6 @@ public class MemberService {
     * 회원 가입
     */
     public void join(Member member) {
-        validateDuplicated(member);
         memberRepository.save(member);
     }
 
@@ -28,13 +28,34 @@ public class MemberService {
     * 중복 확인
     */
     @Transactional(readOnly = true)
-    public void validateDuplicated(Member member) {
-        if (memberRepository.findById(member.getId()) != null) {
-            throw new IllegalArgumentException("이미 사용중인 아이디입니다");
-        }
+    public boolean validateDuplicatedNickName(String nickname) {
+        return !memberRepository.findByNickName(nickname).isEmpty();
+    }
 
-        if (!memberRepository.findByNickName(member.getNickName()).isEmpty()) {
-            throw new IllegalArgumentException("이미 사용중인 닉네임입니다");
-        }
+    @Transactional(readOnly = true)
+    public Member findById(Long id) {
+        return memberRepository.findById(id);
+    }
+
+    public MemberForm research(Long id) {
+        Member member = findById(id);
+        MemberForm findMember = new MemberForm();
+        findMember.setMember(member);
+
+        return findMember;
+    }
+
+    //== create logic ==//
+    public Member createMember(MemberForm form) {
+        Member member = new Member();
+        member.create(form.getId(), form.getEmail(), form.getNickName(),
+                form.getGender(), form.getDistrict(), form.getAge_range(), form.getFavoriteCategory());
+
+        return member;
+    }
+
+    public void updateMember(Long userId, MemberForm myInfo) {
+        Member member = findById(userId);
+        member.update(myInfo);
     }
 }

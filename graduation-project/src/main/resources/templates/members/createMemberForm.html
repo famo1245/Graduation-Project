@@ -1,38 +1,84 @@
-<!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>회원가입</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        .field-error-border{
+            border-color: #dc3545;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-
-    <form th:action="@{/members/new}" th:method="post">
-        <div class="form-group">
-            <label for="id">아이디: </label>
-            <input id="id" name="id" th:value="${id}">
-            <br>
-            <label for="email">이메일: </label>
-            <input id="email" name="email" th:value="${email}">
-            <br>
-            <label for="gender">성별: </label>
-            <input id="gender" name="gender" th:value="${gender}">
-            <br>
-            <label for="age_range">나이대: </label>
-            <input id="age_range" name="age_range" th:value="${age_range}">
-            <br>
-            <label for="nickName">닉네임: </label>
-            <input type="text" id="nickName" name="nickName" placeholder="닉네임 입력">
-            <br>
-            <label for="district">거주 지역: </label>
-            <input type="text" id="district" name="district" placeholder="거주지 입력">
-            <br>
-            <label for="favoriteCategory">선호 카테고리: </label>
-            <input type="text" id="favoriteCategory" name="favoriteCategory" placeholder="선호하는 카테고리 입력">
+    <div class="py-5 text-center">
+        <h2>회원가입</h2>
+    </div>
+    <hr class="my-4">
+    <form th:action="@{/members/new}" th:method="post" th:object="${memberForm}">
+        <div>
+            <label for="id">아이디</label>
+            <input id="id" name="id" th:value="${id}" class="form-control" readonly>
         </div>
-        <button type="submit">확인</button>
+        <div>
+            <label for="email">이메일</label>
+            <input id="email" name="email" th:value="${email}" class="form-control" readonly>
+        </div>
+        <div>
+            <label for="gender">성별</label>
+            <input id="gender" name="gender" th:value="${gender}" class="form-control" readonly>
+        </div>
+        <div>
+            <label for="age_range">연령</label>
+            <input id="age_range" name="age_range" th:value="${age_range}" class="form-control" readonly>
+        </div>
+        <div>
+            <label for="nickName">닉네임</label>
+            <input type="text" id="nickName" th:field="*{nickName}" class="form-control" th:errorclass="field-error">
+            <div th:class="field-error" th:errors="*{nickName}">닉네임 오류</div>
+        </div>
+        <div>
+            <div>거주 지역</div>
+            <select id="district" class="form-select" th:field="*{district}" th:errorclass="field-error-border">
+                <option value="">-----거주 지역 선택-----</option>
+                <option th:each="district : ${districts}" th:value="${district}"
+                        th:text="${district}">지역구
+                </option>
+            </select>
+            <div th:class="field-error" th:errors="*{district}">지역구 오류</div>
+        </div>
+        <div>
+            <div>선호 카테고리</div>
+            <div th:each="category : ${categories}" class="form-check form-check-inline">
+                <input type="checkbox" th:field="*{favoriteCategory}" th:value="${category}" class="form-check-input">
+                <label th:for="${#ids.prev('favoriteCategory')}" th:text="${category}" class="form-check-label">카테고리</label>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-primary float-start"
+                        style="margin-right: 5px"
+                        type="submit">확인
+                </button>
+                <button class="btn btn-primary float-start"
+                        onclick="location.href='index.html'"
+                        th:onclick="|location.href='@{/}'|"
+                        type="button">취소
+                </button>
+            </div>
+        </div>
     </form>
-
 </div> <!-- /container -->
 </body>
 </html>

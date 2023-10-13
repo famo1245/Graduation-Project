@@ -8,6 +8,10 @@
         .container {
             max-width: 560px;
         }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
     </style>
 </head>
 <body>
@@ -22,26 +26,96 @@
 
     <div>
         <label for="reviewTitle">리뷰 제목</label>
-        <input type="text" id="reviewTitle" name="reviewTitle" class="form-control" value="1" th:value="${reviewDetail.reviewTitle}" readonly>
+        <input type="text" id="reviewTitle" name="reviewTitle" class="form-control"
+               value="1" th:value="${reviewDetail.reviewTitle}" readonly>
     </div>
     <div>
-        <label for="cultureId">리뷰 문화</label>
-        <input type="text" id="cultureId" name="cultureId" class="form-control" value="1" th:value="${reviewDetail.cultureId}" readonly>
+        <table class="table">
+            <tr>
+                <td><img th:src="${reviewDetail.culture.main_img}" alt="대표이미지">
+                </td>
+            </tr>
+            <tr>
+                <td th:text="${reviewDetail.culture.getTitle()}">제목</td>
+            </tr>
+        </table>
     </div>
     <div>
         <label for="reviewGrade">리뷰 별점</label>
-        <input type="text" id="reviewGrade" name="reviewGrade" class="form-control" value="1" th:value="${reviewDetail.reviewGrade}" readonly>
+        <input type="text" id="reviewGrade" name="reviewGrade"
+               class="form-control" value="1" th:value="${reviewDetail.reviewGrade}" readonly>
     </div>
     <div>
         <label for="reviewContents">리뷰 내용</label>
-        <input type="text" id="reviewContents" name="reviewContents" class="form-control" value="1" th:value="${reviewDetail.reviewContents}" readonly>
+        <input type="text" id="reviewContents" name="reviewContents"
+               class="form-control" value="1" th:value="${reviewDetail.reviewContents}" readonly>
+    </div>
+    <div>
+        <label for="reviewDateTime">작성자</label>
+        <input type="text" id="member" name="member"
+               class="form-control" value="1" th:value="${reviewDetail.member.nickName}" readonly>
     </div>
     <div>
         <label for="reviewDateTime">리뷰 작성일자</label>
-        <input type="text" id="reviewDateTime" name="reviewDateTime" class="form-control" value="1" th:value="${reviewDetail.reviewDateTime}" readonly>
+        <input type="text" id="reviewDateTime" name="reviewDateTime"
+               class="form-control" value="1" th:value="${reviewDetail.reviewDateTime}" readonly>
     </div>
 
+
     <hr class="my-4">
+
+    <div class="row">
+        <div class="col">
+        <a th:if="${reviewDetail.member?.id == sessionUser?.id}"
+           href="#" th:href="@{/review/reviewDetail/{reviewId}/edit(reviewId=${reviewDetail.id})}"
+           class="btn btn-primary" role="button">수정</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a th:if="${reviewDetail.member?.id == sessionUser?.id}"
+               href="#" th:href="@{/review/reviewDetail/{reviewId}/delete(reviewId=${reviewDetail.id})}"
+               class="btn btn-primary" role="button">삭제</a>
+        </div>
+    </div>
+    <div>
+        <form th:if="${session.status}" action="reviewDetail.html" th:action th:object="${reviewComment}" method="post">
+            <div>
+                <label for="content">댓글 내용</label>
+                <input type="text" id="content" th:field="*{content}"
+                        th:errorclass="field-error" class="form-control" placeholder="댓글을 입력하세요.">
+                <div class="field-error" th:errors="*{content}"> 댓글 내용 오류
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">댓글 등록</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>댓쓴이</th>
+                <th>댓글내용</th>
+                <th> </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="comment : ${reviewDetail.getReviewComments()}">
+                <td th:if="${comment.member != null}" th:text="${comment?.member?.nickName}"></td>
+                <td th:text="${comment?.getContent()}"></td>
+                <td> <button class="w-100 btn btn-secondary btn-lg"
+                             th:if="${comment.member?.id == sessionUser?.id}"
+                             th:onclick="|location.href='@{/review/reviewComment/{review_id}/{reviewComment_id}/delete(review_id=${reviewDetail.id},reviewComment_id=${comment?.id})}'|"
+                             type="button">삭제</button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
     <div class="row">
         <div class="col">
@@ -51,6 +125,7 @@
                     type="button">목록으로</button>
         </div>
     </div>
+
 
 
 </div>

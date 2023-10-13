@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <title>문화 리스트</title>
+</head>
+<body>
+
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>문화 리스트</h2>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='index.html'"
+                    th:onclick="|location.href='@{/}'|" type="button">홈으로
+            </button>
+        </div>
+    </div>
+
+    <hr class="my-4">
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th> 분류</th>
+                <th> 시작/종료일</th>
+                <th> 지역구</th>
+                <th> 제목</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="culture : ${cultureList}">
+                <td th:text="${culture.codeName}">분류</td>
+                <td th:text="${culture.date}">시작/종료일</td>
+                <td th:text="${culture.guname}">지역구</td>
+                <td><a href="cultureDetail.html"
+                       th:href="@{/cultures/detail/{culture_id}(culture_id=${culture.id})}"
+                       th:text="${culture.title}">제목</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <!-- 일단 최신 3개만 화면에 표시 -->
+        <nav aria-label="...">
+            <ul class="pagination pagination-sm">
+                <li class="page-item">
+                    <a class="page-link" href="cultureList.html" th:href="@{/cultures/1}">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="cultureList.html" th:href="@{/cultures/2}">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="cultureList.html" th:href="@{/cultures/3}">3</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</div> <!-- /container -->
+
+</body>
+</html>
